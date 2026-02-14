@@ -1,0 +1,25 @@
+package com.cinema.controller;
+
+import com.cinema.model.SeatEditor;
+import com.cinema.model.User;
+import com.cinema.service.SeatService;
+import com.cinema.view.SeatComponent;
+import com.cinema.view.SeatMapPanel;
+
+import javax.swing.*;
+import java.util.ArrayList;
+
+public class ScreeningViewController {
+    private final User user;
+    private final ArrayList<SeatEditor> seats;
+
+    public ScreeningViewController(int screeningId, User user) {
+        this.user = user;
+        this.seats = SeatService.getSeatsStatusByScreeningId(screeningId, user);
+    }
+
+    public JPanel getView() {
+        SeatMapPanel seatMapPanel = new SeatMapPanel(this.seats, false, this.user);
+        return seatMapPanel.getView();
+    }
+}
