@@ -23,7 +23,5 @@ public class SecurityAuthenticationProxy implements IAuthenticationService {
     }
 
     @Override
-    public boolean logout() {
-        return false;
-    }
+    public boolean logout() { return realService.logout(); }
 }
