@@ -3,6 +3,7 @@ package com.cinema.view;
 import com.cinema.controller.MovieListController;
 import com.cinema.controller.ScreenListController;
 import com.cinema.controller.ScreeningListController;
+import com.cinema.controller.auth.LoginController;
 import com.cinema.model.User;
 import com.cinema.util.constants.DimensionConstants;
 import com.cinema.util.constants.TextConstants;
@@ -21,7 +22,7 @@ public class CinemaUIHandler extends JFrame {
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
         JButton refreshButton = new JButton("Logout");
-        refreshButton.addActionListener(e -> {});
+        refreshButton.addActionListener(e -> LoginController.getInstance().logout(this));
         buttonPanel.add(refreshButton);
 
         add(buttonPanel, BorderLayout.NORTH);
