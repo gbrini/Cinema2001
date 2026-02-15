@@ -1,4 +1,4 @@
-package com.cinema.model.auth;
+package com.cinema.service.auth;
 
 import com.cinema.model.User;
 

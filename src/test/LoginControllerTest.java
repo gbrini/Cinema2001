@@ -23,7 +23,7 @@ class LoginControllerTest {
 
     @Test
     void simpleLogin() throws SQLException {
-        User user = loginController.login("utente@me.it", "prova");
+        User user = loginController.login("utente@me.it", "password");
         assertNotNull(user);
     }
 

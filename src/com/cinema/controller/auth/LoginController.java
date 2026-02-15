@@ -1,8 +1,8 @@
 package com.cinema.controller.auth;
 
-import com.cinema.model.auth.IAuthenticationService;
-import com.cinema.model.auth.core.AuthenticationService;
-import com.cinema.model.auth.security.SecurityAuthenticationProxy;
+import com.cinema.service.auth.IAuthenticationService;
+import com.cinema.service.auth.core.AuthenticationService;
+import com.cinema.service.auth.security.SecurityAuthenticationProxy;
 import com.cinema.model.User;
 
 import java.sql.SQLException;
