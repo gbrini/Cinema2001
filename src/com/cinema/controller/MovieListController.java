@@ -3,6 +3,7 @@ package com.cinema.controller;
 import com.cinema.model.Movie;
 import com.cinema.model.User;
 import com.cinema.service.MovieService;
+import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.view.EditMoviePanel;
 import com.cinema.view.ListMoviePanel;
@@ -16,8 +17,8 @@ public class MovieListController implements PanelActionListener<Movie>, DialogCl
     private final User user;
     private final ListMoviePanel view;
 
-    public MovieListController(User user) {
-        this.user = user;
+    public MovieListController() {
+        this.user = UserSession.getInstance().getCurrentUser();
         this.view = new ListMoviePanel(this, this.user.getRole().getRoleName());
         this.onRefreshRequested();
     }
@@ -37,7 +38,7 @@ public class MovieListController implements PanelActionListener<Movie>, DialogCl
 
         JDialog dialog = new JDialog(ownerFrame, (item == null ? "Add" : "Edit") + " movie", true);
 
-        MovieController movieController = new MovieController(item, this.user);
+        MovieController movieController = new MovieController(item);
         movieController.addObserver(this);
 
         dialog.setContentPane(movieController.getView());

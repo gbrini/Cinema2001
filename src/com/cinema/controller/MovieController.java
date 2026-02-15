@@ -3,6 +3,7 @@ package com.cinema.controller;
 import com.cinema.model.Movie;
 import com.cinema.model.User;
 import com.cinema.service.MovieService;
+import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.util.Observable;
 import com.cinema.view.EditMoviePanel;
@@ -17,8 +18,8 @@ public class MovieController implements Observable<DialogCloseObserver> {
     private final EditMoviePanel view;
     private final List<DialogCloseObserver> observers = new ArrayList<>();
 
-    public MovieController(Movie movie, User user) {
-        this.user = user;
+    public MovieController(Movie movie) {
+        this.user = UserSession.getInstance().getCurrentUser();
         this.view = new EditMoviePanel(movie, this.user);
         this.attachListener();
     }

@@ -79,7 +79,7 @@ public class ListScreeningPanel extends AbstractTabularGroupView<LocalDate, Scre
         Frame ownerFrame = (ownerWindow instanceof Frame) ? (Frame) ownerWindow : JOptionPane.getRootFrame();
 
         JDialog dialog = new JDialog(ownerFrame, "View screening", true);
-        ScreeningViewController screeningViewController = new ScreeningViewController(screeningId, this.user);
+        ScreeningViewController screeningViewController = new ScreeningViewController(screeningId);
 
         dialog.setContentPane(screeningViewController.getView());
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

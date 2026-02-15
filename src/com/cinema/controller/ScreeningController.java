@@ -6,6 +6,7 @@ import com.cinema.model.User;
 import com.cinema.service.MovieService;
 import com.cinema.service.ScreenService;
 import com.cinema.service.ScreeningService;
+import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.util.Observable;
 import com.cinema.util.TimeSlot;
@@ -20,8 +21,8 @@ public class ScreeningController implements Observable<DialogCloseObserver> {
     private final EditScreeningPanel view;
     private final ArrayList<DialogCloseObserver> observers = new ArrayList<>();
 
-    public ScreeningController(Screening screening, User user) {
-        this.user = user;
+    public ScreeningController(Screening screening) {
+        this.user = UserSession.getInstance().getCurrentUser();
         this.view = new EditScreeningPanel(screening, user);
 
         this.fillComboBox();

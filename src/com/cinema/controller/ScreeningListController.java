@@ -4,6 +4,7 @@ import com.cinema.model.Screening;
 import com.cinema.model.ScreeningRecord;
 import com.cinema.model.User;
 import com.cinema.service.ScreeningService;
+import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.view.ListScreeningPanel;
 import com.cinema.view.listener.PanelActionListener;
@@ -21,8 +22,8 @@ public class ScreeningListController implements PanelActionListener<Screening>, 
     private final User user;
     private final ListScreeningPanel view;
 
-    public ScreeningListController(User user) {
-        this.user = user;
+    public ScreeningListController() {
+        this.user = UserSession.getInstance().getCurrentUser();
         this.view = new ListScreeningPanel(this, this.user);
 
         this.onRefreshRequested();
@@ -47,7 +48,7 @@ public class ScreeningListController implements PanelActionListener<Screening>, 
 
         JDialog dialog = new JDialog(ownerFrame, (item == null ? "Add" : "Edit") + " screening", true);
 
-        ScreeningController screeningController = new ScreeningController(item, this.user);
+        ScreeningController screeningController = new ScreeningController(item);
         screeningController.addObserver(this);
 
         dialog.setContentPane(screeningController.getView());

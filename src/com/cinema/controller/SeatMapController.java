@@ -6,6 +6,7 @@ import com.cinema.model.SeatEditor;
 import com.cinema.model.User;
 import com.cinema.service.ScreenService;
 import com.cinema.service.SeatService;
+import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.util.Observable;
 import com.cinema.view.SeatComponent;
@@ -23,8 +24,8 @@ public class SeatMapController implements Observable<DialogCloseObserver> {
     private final Screen screen;
     private final List<DialogCloseObserver> observers = new ArrayList<>();
 
-    public SeatMapController(Screen screen, User user) {
-        this.user = user;
+    public SeatMapController(Screen screen) {
+        this.user = UserSession.getInstance().getCurrentUser();
         this.screen = screen;
 
         if (this.screen == null) {

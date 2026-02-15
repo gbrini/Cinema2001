@@ -3,6 +3,7 @@ package com.cinema.controller;
 import com.cinema.model.Screen;
 import com.cinema.model.User;
 import com.cinema.service.ScreenService;
+import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.view.ListScreenPanel;
 import com.cinema.view.listener.PanelActionListener;
@@ -15,8 +16,8 @@ public class ScreenListController implements PanelActionListener<Screen>, Dialog
     private final User user;
     private final ListScreenPanel view;
 
-    public ScreenListController(User user) {
-        this.user = user;
+    public ScreenListController() {
+        this.user = UserSession.getInstance().getCurrentUser();
         this.view = new ListScreenPanel(this, this.user.getRole().getRoleName());
         this.onRefreshRequested();
     }
@@ -36,7 +37,7 @@ public class ScreenListController implements PanelActionListener<Screen>, Dialog
 
         JDialog dialog = new JDialog(ownerFrame, (item == null ? "Add" : "Edit") + " screen", true);
 
-        SeatMapController seatMapController = new SeatMapController(item, this.user);
+        SeatMapController seatMapController = new SeatMapController(item);
         seatMapController.addObserver(this);
 
         dialog.setContentPane(seatMapController.getView());
