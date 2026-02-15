@@ -17,6 +17,14 @@ public class CinemaUIHandler extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(DimensionConstants.MAIN_FRAME_DIMENSION);
 
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
+
+        JButton refreshButton = new JButton("Logout");
+        refreshButton.addActionListener(e -> {});
+        buttonPanel.add(refreshButton);
+
+        add(buttonPanel, BorderLayout.NORTH);
         JTabbedPane mainTabbedPane = new JTabbedPane();
 
         switch (user.getRole().getRoleId()) {
