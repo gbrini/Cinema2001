@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ScreenService {
     public static int addScreen(Screen screen, User user) {
-        if (PermissionService.hasPermission(user, "screen:add"))
+        if (PermissionService.hasPermission("screen:add"))
             return ScreenDAO.addScreen(screen);
         return -1;
     }
@@ -18,7 +18,7 @@ public class ScreenService {
     }
 
     public static ArrayList<Screen> getAllScreen(User user) {
-        if (PermissionService.hasPermission(user, "screen:view"))
+        if (PermissionService.hasPermission("screen:view"))
             return ScreenDAO.getAllScreen();
         return new ArrayList<>();
     }

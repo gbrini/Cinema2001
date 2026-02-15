@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class ScreeningService {
     public static boolean validateAndSchedule(ScreeningRecord screeningRecord, User user) {
-        if (!PermissionService.hasPermission(user, "screening:add")) {
+        if (!PermissionService.hasPermission("screening:add")) {
             return false;
         }
 
@@ -48,13 +48,13 @@ public class ScreeningService {
     }
 
     public static ArrayList<Screening> getScreeningByDateAndScreen(LocalDate date, int screenId, User user) {
-        if (PermissionService.hasPermission(user, "screening:view"))
+        if (PermissionService.hasPermission("screening:view"))
             return ScreeningDAO.getScreeningByDateAndScreen(date, screenId);
         return new ArrayList<>();
     }
 
     public static HashMap<LocalDate, ArrayList<ScreeningRecord>> getScreeningByDateRange(Date from, Date to, User user) {
-        if (PermissionService.hasPermission(user, "screening:view"))
+        if (PermissionService.hasPermission("screening:view"))
             return ScreeningDAO.getScreeningByDateRange(from, to);
         return new HashMap<>();
     }

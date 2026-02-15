@@ -9,25 +9,25 @@ import java.util.ArrayList;
 
 public class SeatService {
     public static boolean addSeats(ArrayList<Seat> seats, User user) {
-        if (PermissionService.hasPermission(user, "seat:add"))
+        if (PermissionService.hasPermission("seat:add"))
             return SeatDAO.addSeats(seats);
         return false;
     }
 
     public static boolean upsertSeats(ArrayList<Seat> seats, User user) {
-        if (PermissionService.hasPermission(user, "seat:add") && PermissionService.hasPermission(user, "seat:edit"))
+        if (PermissionService.hasPermission("seat:add") && PermissionService.hasPermission("seat:edit"))
             return SeatDAO.upsertSeats(seats);
         return false;
     }
 
     public static boolean removeSeatsByScreenId(int screenId, User user) {
-        if (PermissionService.hasPermission(user, "seat:remove"))
+        if (PermissionService.hasPermission("seat:remove"))
             return SeatDAO.removeSeatsByScreenId(screenId);
         return false;
     }
 
     public static ArrayList<Seat> getSeatsByScreenId(int screenId, User user) {
-        if (PermissionService.hasPermission(user, "seat:view"))
+        if (PermissionService.hasPermission("seat:view"))
             return SeatDAO.getSeatsByScreenId(screenId);
         return new ArrayList<>();
     }

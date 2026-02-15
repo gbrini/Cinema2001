@@ -8,31 +8,31 @@ import java.util.ArrayList;
 
 public class MovieService {
     public static int addMovie(Movie movie, User user) {
-        if (PermissionService.hasPermission(user, "movie:add"))
+        if (PermissionService.hasPermission("movie:add"))
             return MovieDAO.addMovie(movie);
         return -1;
     }
 
     public static boolean updateMovie(Movie movie, User user) {
-        if (PermissionService.hasPermission(user, "movie:edit"))
+        if (PermissionService.hasPermission("movie:edit"))
             return MovieDAO.updateMovie(movie);
         return false;
     }
 
     public static boolean deleteMovie(int movieId, User user) {
-        if (PermissionService.hasPermission(user, "movie:delete"))
+        if (PermissionService.hasPermission("movie:delete"))
             return MovieDAO.deleteMovie(movieId);
         return false;
     }
 
     public static Movie getMovieById(int movieId, User user) {
-        if (PermissionService.hasPermission(user, "movie:view"))
+        if (PermissionService.hasPermission("movie:view"))
             return MovieDAO.getMovieById(movieId);
         return null;
     }
 
     public static ArrayList<Movie> getAllMovies(User user) {
-        if (PermissionService.hasPermission(user, "movie:view"))
+        if (PermissionService.hasPermission("movie:view"))
             return MovieDAO.getAllMovies();
         return new ArrayList<>();
     }
