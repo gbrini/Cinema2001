@@ -31,8 +31,7 @@ public class LoginController {
 
         if(currentFrame != null) {
             currentFrame.dispose();
+            new LoginFrame().setVisible(true);
         }
-
-        new LoginFrame().setVisible(true);
     }
 }
