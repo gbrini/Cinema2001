@@ -9,9 +9,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class EditScreeningPanel extends JPanel {
     private final Screening screening;
@@ -27,7 +25,7 @@ public class EditScreeningPanel extends JPanel {
     public EditScreeningPanel(Screening screening, User user) {
         this.screening = screening;
         this.user = user;
-        this.movies = MovieService.getAllMovies(this.user);
+        this.movies = MovieService.getAllMovies();
 
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

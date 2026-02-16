@@ -5,7 +5,6 @@ import com.cinema.model.User;
 import com.cinema.service.MovieService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
-import com.cinema.view.EditMoviePanel;
 import com.cinema.view.ListMoviePanel;
 import com.cinema.view.listener.PanelActionListener;
 
@@ -27,7 +26,7 @@ public class MovieListController implements PanelActionListener<Movie>, DialogCl
 
     @Override
     public void onRefreshRequested() {
-        ArrayList<Movie> movies = MovieService.getAllMovies(this.user);
+        ArrayList<Movie> movies = MovieService.getAllMovies();
         this.view.setContentList(movies);
     }
 

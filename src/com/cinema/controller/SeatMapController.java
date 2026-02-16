@@ -38,7 +38,7 @@ public class SeatMapController implements Observable<DialogCloseObserver> {
     }
 
     private List<SeatEditor> loadInitialModels(int screenId) {
-        ArrayList<Seat> seats = SeatService.getSeatsByScreenId(screenId, this.user);
+        ArrayList<Seat> seats = SeatService.getSeatsByScreenId(screenId);
 
         if(seats.isEmpty()) {
             return this.generateDefaultLayout();
@@ -148,7 +148,7 @@ public class SeatMapController implements Observable<DialogCloseObserver> {
 
         if (this.screen == null) {
             Screen screen = new Screen(screenName, seatsEditorToSave.size(), false);
-            screenId = ScreenService.addScreen(screen, this.user);
+            screenId = ScreenService.addScreen(screen);
 
             if (screenId < 1) {
                 JOptionPane.showMessageDialog(this.view, "There was an error saving this screen.");
@@ -169,7 +169,7 @@ public class SeatMapController implements Observable<DialogCloseObserver> {
             ));
         }
 
-        boolean addedSeats = SeatService.upsertSeats(seatsToAdd, this.user);
+        boolean addedSeats = SeatService.upsertSeats(seatsToAdd);
         this.notifyObservers(addedSeats);
         this.closeDialog();
     }

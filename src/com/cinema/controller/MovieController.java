@@ -71,10 +71,10 @@ public class MovieController implements Observable<DialogCloseObserver> {
         boolean isOk;
 
         if (newMovie.getMovieId() == 0) {
-            isOk = MovieService.addMovie(newMovie, this.user) != 0;
+            isOk = MovieService.addMovie(newMovie) != 0;
 
         } else {
-            isOk = MovieService.updateMovie(newMovie, this.user);
+            isOk = MovieService.updateMovie(newMovie);
         }
 
         this.notifyObservers(isOk);

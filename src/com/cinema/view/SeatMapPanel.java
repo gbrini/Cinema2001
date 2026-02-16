@@ -17,7 +17,7 @@ public class SeatMapPanel extends JPanel {
     private boolean canEdit = false;
 
     public SeatMapPanel(int screeningId, boolean canEdit, User user) {
-        this.seats = SeatService.getSeatsStatusByScreeningId(screeningId, user);
+        this.seats = SeatService.getSeatsStatusByScreeningId(screeningId);
         this.canEdit = canEdit;
     }
 

@@ -36,7 +36,7 @@ public class ScreeningListController implements PanelActionListener<Screening>, 
         Instant todayInstant = Instant.now();
         Instant nextWeekInstant = todayInstant.plus(7, ChronoUnit.DAYS);
 
-        HashMap<LocalDate, ArrayList<ScreeningRecord>> screenings = ScreeningService.getScreeningByDateRange(Date.from(todayInstant), Date.from(nextWeekInstant), this.user);
+        HashMap<LocalDate, ArrayList<ScreeningRecord>> screenings = ScreeningService.getScreeningByDateRange(Date.from(todayInstant), Date.from(nextWeekInstant));
 
         this.view.setGroupedContent(screenings, true);
     }

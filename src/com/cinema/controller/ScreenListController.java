@@ -26,7 +26,7 @@ public class ScreenListController implements PanelActionListener<Screen>, Dialog
 
     @Override
     public void onRefreshRequested() {
-        ArrayList<Screen> screens = ScreenService.getAllScreen(this.user);
+        ArrayList<Screen> screens = ScreenService.getAllScreen();
         this.view.setContentList(screens);
     }
 

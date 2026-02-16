@@ -30,8 +30,8 @@ public class ScreeningController implements Observable<DialogCloseObserver> {
     }
 
     private void fillComboBox() {
-        this.view.setAvailableMovies(MovieService.getAllMovies(this.user));
-        this.view.setAvailableScreens(ScreenService.getAllScreen(this.user));
+        this.view.setAvailableMovies(MovieService.getAllMovies());
+        this.view.setAvailableScreens(ScreenService.getAllScreen());
         this.view.setAvailableTimeSlots(TimeSlot.SLOTS);
     }
 
@@ -44,7 +44,7 @@ public class ScreeningController implements Observable<DialogCloseObserver> {
     private void save() {
         ScreeningRecord screeningRecord = this.view.getScreeningData();
 
-        boolean isOk = ScreeningService.validateAndSchedule(screeningRecord, this.user);
+        boolean isOk = ScreeningService.validateAndSchedule(screeningRecord);
 
         this.closeDialog();
         this.notifyObservers(isOk);
