@@ -19,17 +19,22 @@ public class CinemaUIHandler extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(DimensionConstants.MAIN_FRAME_DIMENSION);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
+        User user = UserSession.getInstance().getCurrentUser();
+
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
+
+        JLabel label = new JLabel(user.getFirstName() + " - " + user.getRole().getRoleName());
+        infoPanel.add(label);
 
         JButton refreshButton = new JButton("Logout");
         refreshButton.addActionListener(e -> LoginController.getInstance().logout(this));
-        buttonPanel.add(refreshButton);
+        infoPanel.add(refreshButton);
 
-        add(buttonPanel, BorderLayout.NORTH);
+        add(infoPanel, BorderLayout.NORTH);
         JTabbedPane mainTabbedPane = new JTabbedPane();
 
-        switch (UserSession.getInstance().getCurrentUser().getRole().getRoleId()) {
+        switch (user.getRole().getRoleId()) {
             case 1:
                 mainTabbedPane.addTab(TextConstants.SCREEN_PANEL, new ScreenListController().getView());
                 mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
