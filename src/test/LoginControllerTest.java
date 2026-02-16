@@ -49,6 +49,26 @@ class LoginControllerTest {
         assertEquals(1, UserSession.getInstance().getCurrentUser().getRole().getRoleId());
     }
 
+    @Test
+    void testEmployeeLogin() throws SQLException {
+        LoginController loginController = LoginController.getInstance();
+
+        User user = loginController.login("employee@me.com", "password");
+
+        assertEquals(2, user.getRole().getRoleId());
+        assertEquals(2, UserSession.getInstance().getCurrentUser().getRole().getRoleId());
+    }
+
+    @Test
+    void testUserLogin() throws SQLException {
+        LoginController loginController = LoginController.getInstance();
+
+        User user = loginController.login("user1@me.com", "password");
+
+        assertEquals(3, user.getRole().getRoleId());
+        assertEquals(3, UserSession.getInstance().getCurrentUser().getRole().getRoleId());
+    }
+
     @AfterEach
     void clearSession() {
         LoginController loginController = LoginController.getInstance();
