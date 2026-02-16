@@ -11,6 +11,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LoginControllerTest {
     @Test
+    void testLoginErrorFlowUpdateSession() throws SQLException {
+        LoginController loginController = LoginController.getInstance();
+
+        User user = loginController.login("employee@me.com", "sbagliata");
+
+        assertNull(user);
+        assertNull(UserSession.getInstance().getCurrentUser(), "La sessione deve essere nulla con login errato");
+    }
+
+    @Test
     void testLoginFlowUpdateSession() throws SQLException {
         LoginController loginController = LoginController.getInstance();
 
@@ -21,11 +31,27 @@ class LoginControllerTest {
     }
 
     @Test
-    void testLogoutFlowUpdateSession() throws SQLException {
+    void testLogoutFlowUpdateSession() {
         LoginController loginController = LoginController.getInstance();
 
         loginController.logout(null);
 
         assertNull(UserSession.getInstance().getCurrentUser(), "La sessione deve essere nulla dopo il logout utente");
+    }
+
+    @Test
+    void testAdminLogin() throws SQLException {
+        LoginController loginController = LoginController.getInstance();
+
+        User user = loginController.login("admin@me.com", "password");
+
+        assertEquals(3, user.getRole().getRoleId());
+        assertEquals(3, UserSession.getInstance().getCurrentUser().getRole().getRoleId());
+    }
+
+    @AfterEach
+    void clearSession() {
+        LoginController loginController = LoginController.getInstance();
+        loginController.logout(null);
     }
 }
