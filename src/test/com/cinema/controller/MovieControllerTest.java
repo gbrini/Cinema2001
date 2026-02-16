@@ -18,7 +18,18 @@ public class MovieControllerTest {
 
     @Test
     void testControllerInitialization() {
+        //test con admin
         MovieController controller = new MovieController(testMovie);
         assertNotNull(controller.getView(), "Il pannello ci deve essere");
+    }
+
+    @Test
+    void testAddMovie() {
+        //test add con employee -> si
+    }
+
+    @Test
+    void testAddMovieUser() {
+        //test add con user -> no
     }
 }
