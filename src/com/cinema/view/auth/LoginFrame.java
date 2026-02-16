@@ -70,7 +70,7 @@ public class LoginFrame extends JFrame implements ActionListener {
                     pswField.setText("");
                 } else {
                     this.dispose();
-                    openMainWindow(user);
+                    openMainWindow();
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
@@ -78,7 +78,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         }
     }
 
-    private void openMainWindow(User user) {
-        new CinemaUIHandler(user);
+    private void openMainWindow() {
+        new CinemaUIHandler();
     }
 }

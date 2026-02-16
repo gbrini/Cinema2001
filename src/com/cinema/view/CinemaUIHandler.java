@@ -5,6 +5,7 @@ import com.cinema.controller.ScreenListController;
 import com.cinema.controller.ScreeningListController;
 import com.cinema.controller.auth.LoginController;
 import com.cinema.model.User;
+import com.cinema.service.auth.UserSession;
 import com.cinema.util.constants.DimensionConstants;
 import com.cinema.util.constants.TextConstants;
 
@@ -13,7 +14,7 @@ import java.awt.*;
 
 public class CinemaUIHandler extends JFrame {
 
-    public CinemaUIHandler(User user) {
+    public CinemaUIHandler() {
         super(TextConstants.TITLE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(DimensionConstants.MAIN_FRAME_DIMENSION);
@@ -28,7 +29,7 @@ public class CinemaUIHandler extends JFrame {
         add(buttonPanel, BorderLayout.NORTH);
         JTabbedPane mainTabbedPane = new JTabbedPane();
 
-        switch (user.getRole().getRoleId()) {
+        switch (UserSession.getInstance().getCurrentUser().getRole().getRoleId()) {
             case 1:
                 mainTabbedPane.addTab(TextConstants.SCREEN_PANEL, new ScreenListController().getView());
                 mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
