@@ -53,19 +53,23 @@ public class MovieControllerTest {
 
     @Test
     void testAddMovie() throws SQLException {
-        //test add con employee -> si
         User user = LoginController.getInstance().login("employee@me.com", "password");
+        int count = MovieDAO.getAllMovies().size();
         MovieController controller = new MovieController(testMovie);
         controller.getView().getAddButton().doClick();
-
-        Movie saved = MovieDAO.getMovieById(testMovie.getMovieId());
+        Movie saved = MovieDAO.getAllMovies().getLast();
+        
+        assertEquals(count + 1, MovieDAO.getAllMovies().size());
         assertNotNull(saved, "Il film deve essere salvato sul db");
     }
 
     @Test
     void testAddMovieUser() throws SQLException {
-        //test add con user -> no
-        //User user = LoginController.getInstance().login("user@me.com", "password");
-        //MovieController controller = new MovieController(testMovie);
+        User user = LoginController.getInstance().login("user@me.com", "password");
+        int count = MovieDAO.getAllMovies().size();
+        MovieController controller = new MovieController(testMovie);
+        controller.getView().getAddButton().doClick();
+
+        assertEquals(count, MovieDAO.getAllMovies().size());
     }
 }
