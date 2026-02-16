@@ -72,7 +72,6 @@ public class MovieController implements Observable<DialogCloseObserver> {
 
         if (newMovie.getMovieId() == 0) {
             isOk = MovieService.addMovie(newMovie) != 0;
-
         } else {
             isOk = MovieService.updateMovie(newMovie);
         }

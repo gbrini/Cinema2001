@@ -81,6 +81,7 @@ public class EditMoviePanel extends JPanel {
         gbc.weightx = 1.0;
         dateField = new JFormattedTextField(this.DATE_FORMAT);
         dateField.setColumns(20);
+        //maskformatter
         dateField.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
@@ -92,7 +93,7 @@ public class EditMoviePanel extends JPanel {
                 }
             }
         });
-        dateField.setText(this.movie == null ? "" : movie.getReleaseDate().toString());
+        dateField.setValue(this.movie == null ? null : java.sql.Date.valueOf(movie.getReleaseDate()));
         add(dateField, gbc);
 
         //genre string
@@ -217,4 +218,6 @@ public class EditMoviePanel extends JPanel {
     }
 
     public void addSaveListener(ActionListener listener) { this.addButton.addActionListener(listener); }
+
+    public JButton getAddButton() { return this.addButton; }
 }
