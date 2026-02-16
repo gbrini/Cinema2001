@@ -50,7 +50,7 @@ class LoginControllerTest {
     }
 
     @Test
-    void testEmployeeLogin() throws SQLException {
+    void testEmpoyeeLogin() throws SQLException {
         LoginController loginController = LoginController.getInstance();
 
         User user = loginController.login("employee@me.com", "password");
@@ -63,7 +63,7 @@ class LoginControllerTest {
     void testUserLogin() throws SQLException {
         LoginController loginController = LoginController.getInstance();
 
-        User user = loginController.login("user1@me.com", "password");
+        User user = loginController.login("user@me.com", "password");
 
         assertEquals(3, user.getRole().getRoleId());
         assertEquals(3, UserSession.getInstance().getCurrentUser().getRole().getRoleId());
