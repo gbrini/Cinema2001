@@ -18,7 +18,7 @@ public class ScreenListController implements PanelActionListener<Screen>, Dialog
 
     public ScreenListController() {
         this.user = UserSession.getInstance().getCurrentUser();
-        this.view = new ListScreenPanel(this, this.user.getRole().getRoleName());
+        this.view = new ListScreenPanel(this, this.user.getRole().getRoleId());
         this.onRefreshRequested();
     }
 
