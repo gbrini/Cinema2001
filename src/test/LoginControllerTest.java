@@ -19,4 +19,13 @@ class LoginControllerTest {
         assertNotNull(user);
         assertEquals(user, UserSession.getInstance().getCurrentUser());
     }
+
+    @Test
+    void testLogoutFlowUpdateSession() throws SQLException {
+        LoginController loginController = LoginController.getInstance();
+
+        loginController.logout(null);
+
+        assertNull(UserSession.getInstance().getCurrentUser(), "La sessione deve essere nulla dopo il logout utente");
+    }
 }
