@@ -1,4 +1,4 @@
-package test;
+package test.com.cinema.controller.auth;
 
 import com.cinema.controller.auth.LoginController;
 import com.cinema.model.User;
