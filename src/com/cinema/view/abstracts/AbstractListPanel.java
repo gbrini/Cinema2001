@@ -7,13 +7,13 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class AbstractListPanel<T> extends JPanel {
-    private final String roleName;
+    private final int roleId;
     protected final PanelActionListener<T> actionListener;
     protected final JPanel listContentPanel;
     private final JScrollPane scrollPane;
 
-    public AbstractListPanel(PanelActionListener<T> actionListener, String roleName) {
-        this.roleName = roleName;
+    public AbstractListPanel(PanelActionListener<T> actionListener, int roleId) {
+        this.roleId = roleId;
         this.actionListener = actionListener;
         setLayout(new BorderLayout());
 
@@ -36,7 +36,7 @@ public abstract class AbstractListPanel<T> extends JPanel {
         refreshButton.addActionListener(e -> actionListener.onRefreshRequested());
         buttonPanel.add(refreshButton);
 
-        if (!this.roleName.equals("USER")) {
+        if (this.roleId == 1 || this.roleId == 2) {
             JButton addButton = new JButton("Add");
             addButton.addActionListener(e -> actionListener.onEditRequested(null));
             buttonPanel.add(addButton);
