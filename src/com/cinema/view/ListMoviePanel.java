@@ -11,8 +11,8 @@ import java.awt.*;
 import java.util.Objects;
 
 public class ListMoviePanel extends AbstractListPanel<Movie> {
-    public ListMoviePanel(PanelActionListener<Movie> actionListener, String roleName) {
-        super(actionListener, roleName);
+    public ListMoviePanel(PanelActionListener<Movie> actionListener, int roleId) {
+        super(actionListener, roleId);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ListMoviePanel extends AbstractListPanel<Movie> {
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         controlPanel.setBackground(backgroundColor);
 
-        if (Objects.equals(this.getRoleName(), "USER")) {
+        if (this.getRoleId() == 3) {
             JButton editButton = new JButton("Buy tickets");
             editButton.addActionListener(e -> this.actionListener.onEditRequested(movie));
             controlPanel.add(editButton);

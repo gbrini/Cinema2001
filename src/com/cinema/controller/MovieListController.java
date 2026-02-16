@@ -18,7 +18,7 @@ public class MovieListController implements PanelActionListener<Movie>, DialogCl
 
     public MovieListController() {
         this.user = UserSession.getInstance().getCurrentUser();
-        this.view = new ListMoviePanel(this, this.user.getRole().getRoleName());
+        this.view = new ListMoviePanel(this, this.user.getRole().getRoleId());
         this.onRefreshRequested();
     }
 

@@ -59,5 +59,5 @@ public abstract class AbstractListPanel<T> extends JPanel {
 
     protected abstract JPanel createItemRowPanel(T item, int index);
 
-    protected String getRoleName() { return this.roleName; }
+    protected int getRoleId() { return this.roleId; }
 }
