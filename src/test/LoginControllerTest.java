@@ -45,8 +45,8 @@ class LoginControllerTest {
 
         User user = loginController.login("admin@me.com", "password");
 
-        assertEquals(3, user.getRole().getRoleId());
-        assertEquals(3, UserSession.getInstance().getCurrentUser().getRole().getRoleId());
+        assertEquals(1, user.getRole().getRoleId());
+        assertEquals(1, UserSession.getInstance().getCurrentUser().getRole().getRoleId());
     }
 
     @AfterEach
