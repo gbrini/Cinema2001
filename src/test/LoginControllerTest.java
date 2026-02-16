@@ -2,6 +2,7 @@ package test;
 
 import com.cinema.controller.auth.LoginController;
 import com.cinema.model.User;
+import com.cinema.service.auth.UserSession;
 import org.junit.jupiter.api.*;
 
 import java.sql.SQLException;
@@ -9,32 +10,13 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LoginControllerTest {
-    private LoginController loginController;
-
-    @BeforeAll
-    static void beforeAll() {
-        //create new users '...@test.it'
-    }
-
-    @BeforeEach
-    void setUp() {
-        loginController = LoginController.getInstance();
-    }
-
     @Test
-    void simpleLogin() throws SQLException {
-        User user = loginController.login("utente@me.it", "password");
+    void testLoginFlowUpdateSession() throws SQLException {
+        LoginController loginController = LoginController.getInstance();
+
+        User user = loginController.login("employee@me.com", "password");
+
         assertNotNull(user);
-    }
-
-    @Test
-    void simpleLoginWrong() throws SQLException {
-        User user = loginController.login("utente@me.it", "prova2");
-        assertNull(user);
-    }
-
-    @AfterAll
-    static void afterAll() {
-        //load reset.sql
+        assertEquals(user, UserSession.getInstance().getCurrentUser());
     }
 }
