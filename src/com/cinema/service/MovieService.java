@@ -2,6 +2,7 @@ package com.cinema.service;
 
 import com.cinema.model.Movie;
 import com.cinema.model.dao.MovieDAO;
+import com.cinema.util.UnauthorizedAccessException;
 
 import java.util.ArrayList;
 
@@ -31,8 +32,8 @@ public class MovieService {
     }
 
     public static ArrayList<Movie> getAllMovies() {
-        if (PermissionService.hasPermission("movie:view"))
-            return MovieDAO.getAllMovies();
-        return new ArrayList<>();
+        if (!PermissionService.hasPermission("movie:view"))
+            throw new UnauthorizedAccessException("Accesso negato");
+        return MovieDAO.getAllMovies();
     }
 }
