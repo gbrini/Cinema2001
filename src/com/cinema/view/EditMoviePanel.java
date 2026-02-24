@@ -88,10 +88,10 @@ public class EditMoviePanel extends JPanel {
             dateField = new JFormattedTextField(dateMask);
             dateField.setColumns(10);
 
-            if (this.movie != null && this.movie.getReleaseDate() != null) {
+            if(this.movie != null && this.movie.getReleaseDate() != null) {
                 dateField.setValue(this.movie.getReleaseDate());
             }
-        } catch (Exception e) {
+        } catch (ParseException e) {
             throw new RuntimeException(e);
         }
 
