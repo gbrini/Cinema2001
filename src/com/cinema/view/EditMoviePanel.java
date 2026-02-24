@@ -5,6 +5,7 @@ import com.cinema.model.Movie;
 import com.cinema.model.User;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -79,21 +80,21 @@ public class EditMoviePanel extends JPanel {
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
-        dateField = new JFormattedTextField(this.DATE_FORMAT);
-        dateField.setColumns(20);
-        //maskformatter
-        dateField.addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (!((c >= '0') && (c <= '9') ||
-                        (c == KeyEvent.VK_BACK_SPACE) ||
-                        (c == KeyEvent.VK_DELETE) || (c == '-')))
-                {
-                    e.consume();
-                }
+
+        try {
+            MaskFormatter dateMask = new MaskFormatter("####-##-##");
+            dateMask.setPlaceholderCharacter('_');
+
+            dateField = new JFormattedTextField(dateMask);
+            dateField.setColumns(10);
+
+            if (this.movie != null && this.movie.getReleaseDate() != null) {
+                dateField.setValue(this.movie.getReleaseDate());
             }
-        });
-        dateField.setValue(this.movie == null ? null : java.sql.Date.valueOf(movie.getReleaseDate()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         add(dateField, gbc);
 
         //genre string
