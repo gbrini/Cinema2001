@@ -33,6 +33,8 @@ public class SeatService {
     }
 
     public static ArrayList<SeatEditor> getSeatsStatusByScreeningId(int screeningId) {
+        if (!PermissionService.hasPermission("seat:view"))
+            throw new UnauthorizedAccessException("Accesso non consentito");
         return SeatDAO.getSeatsStatusByScreeningId(screeningId);
     }
 }
