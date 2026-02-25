@@ -3,7 +3,6 @@ package com.cinema.model;
 import com.cinema.util.ComboBoxMethods;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Movie implements ComboBoxMethods {
     private int movieId;
@@ -72,7 +71,7 @@ public class Movie implements ComboBoxMethods {
         return director;
     }
 
-    public boolean is_Deleted() {
+    public boolean isDeleted() {
         return isDeleted;
     }
 

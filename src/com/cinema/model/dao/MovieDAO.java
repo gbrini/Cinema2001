@@ -59,7 +59,7 @@ public class MovieDAO {
             stmt.setString(6, movie.getDescription());
             stmt.setString(7, movie.getDirector());
             stmt.setInt(8, movie.getMovieId());
-            stmt.setBoolean(9, movie.is_Deleted());
+            stmt.setBoolean(9, movie.isDeleted());
 
             return stmt.executeUpdate() == 1;
         } catch (SQLException ex) {
