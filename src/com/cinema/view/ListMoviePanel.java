@@ -66,7 +66,7 @@ public class ListMoviePanel extends AbstractListPanel<Movie> {
             editButton.addActionListener(e -> this.actionListener.onEditRequested(movie));
             controlPanel.add(editButton);
             JButton removeButton = new JButton("Remove");
-            //removeButton.addActionListener(e -> this.actionListener.onRefreshRequested());
+            removeButton.addActionListener(e -> this.actionListener.onDeleteRequested(movie));
             controlPanel.add(removeButton);
         }
 

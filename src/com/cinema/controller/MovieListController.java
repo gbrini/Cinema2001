@@ -49,7 +49,13 @@ public class MovieListController implements PanelActionListener<Movie>, DialogCl
 
     @Override
     public void onDeleteRequested(Movie item) {
+        boolean ok = MovieService.deleteMovie(item.getMovieId());
 
+        if (ok) {
+            this.onRefreshRequested();
+        } else {
+            JOptionPane.showMessageDialog(this.view, "Errore!");
+        }
     }
 
     @Override
