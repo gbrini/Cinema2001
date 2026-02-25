@@ -14,21 +14,21 @@ public class MovieService {
     }
 
     public static boolean updateMovie(Movie movie) {
-        if (PermissionService.hasPermission("movie:edit"))
-            return MovieDAO.updateMovie(movie);
-        return false;
+        if (!PermissionService.hasPermission("movie:edit"))
+            throw new UnauthorizedAccessException("Accesso non consentito");
+        return MovieDAO.updateMovie(movie);
     }
 
     public static boolean deleteMovie(int movieId) {
-        if (PermissionService.hasPermission("movie:delete"))
-            return MovieDAO.deleteMovie(movieId);
-        return false;
+        if (!PermissionService.hasPermission("movie:delete"))
+            throw new UnauthorizedAccessException("Accesso non consentito");
+        return MovieDAO.deleteMovie(movieId);
     }
 
     public static Movie getMovieById(int movieId) {
-        if (PermissionService.hasPermission("movie:view"))
-            return MovieDAO.getMovieById(movieId);
-        return null;
+        if (!PermissionService.hasPermission("movie:view"))
+            throw new UnauthorizedAccessException("Accesso non consentito");
+        return MovieDAO.getMovieById(movieId);
     }
 
     public static ArrayList<Movie> getAllMovies() {
