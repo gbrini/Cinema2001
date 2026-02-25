@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class MovieService {
     public static int addMovie(Movie movie) {
-        if (PermissionService.hasPermission("movie:add"))
-            return MovieDAO.addMovie(movie);
-        return -1;
+        if (!PermissionService.hasPermission("movie:add"))
+            throw new UnauthorizedAccessException("Accesso neagto");
+        return MovieDAO.addMovie(movie);
     }
 
     public static boolean updateMovie(Movie movie) {
