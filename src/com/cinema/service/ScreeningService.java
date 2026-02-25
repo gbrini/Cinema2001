@@ -4,6 +4,7 @@ import com.cinema.model.Movie;
 import com.cinema.model.Screening;
 import com.cinema.model.ScreeningRecord;
 import com.cinema.model.dao.ScreeningDAO;
+import com.cinema.util.UnauthorizedAccessException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 public class ScreeningService {
     public static boolean validateAndSchedule(ScreeningRecord screeningRecord) {
         if (!PermissionService.hasPermission("screening:add")) {
-            return false;
+            throw new UnauthorizedAccessException("Accesso non consentito");
         }
 
         ArrayList<Screening> screenings = ScreeningDAO.getScreeningByDateAndScreen(screeningRecord.screening().getStartTimeDate(), screeningRecord.screening().getScreenId());
@@ -46,14 +47,14 @@ public class ScreeningService {
     }
 
     public static ArrayList<Screening> getScreeningByDateAndScreen(LocalDate date, int screenId) {
-        if (PermissionService.hasPermission("screening:view"))
-            return ScreeningDAO.getScreeningByDateAndScreen(date, screenId);
-        return new ArrayList<>();
+        if (!PermissionService.hasPermission("screening:view"))
+            throw new UnauthorizedAccessException("Accesso non consentito");
+        return ScreeningDAO.getScreeningByDateAndScreen(date, screenId);
     }
 
     public static HashMap<LocalDate, ArrayList<ScreeningRecord>> getScreeningByDateRange(Date from, Date to) {
-        if (PermissionService.hasPermission("screening:view"))
-            return ScreeningDAO.getScreeningByDateRange(from, to);
-        return new HashMap<>();
+        if (!PermissionService.hasPermission("screening:view"))
+            throw new UnauthorizedAccessException("Accesso non consentito");
+        return ScreeningDAO.getScreeningByDateRange(from, to);
     }
 }
