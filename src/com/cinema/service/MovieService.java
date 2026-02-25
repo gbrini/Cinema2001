@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class MovieService {
     public static int addMovie(Movie movie) {
         if (!PermissionService.hasPermission("movie:add"))
-            throw new UnauthorizedAccessException("Accesso neagto");
+            throw new UnauthorizedAccessException("Accesso non consentito");
         return MovieDAO.addMovie(movie);
     }
 
