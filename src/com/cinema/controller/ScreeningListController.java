@@ -59,6 +59,11 @@ public class ScreeningListController implements PanelActionListener<Screening>, 
     }
 
     @Override
+    public void onDeleteRequested(Screening item) {
+
+    }
+
+    @Override
     public void onDialogClosed(boolean changedSaved) {
         if (changedSaved) {
             this.onRefreshRequested();

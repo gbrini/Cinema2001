@@ -48,6 +48,11 @@ public class ScreenListController implements PanelActionListener<Screen>, Dialog
     }
 
     @Override
+    public void onDeleteRequested(Screen item) {
+
+    }
+
+    @Override
     public void onDialogClosed(boolean changedSaved) {
         String message = changedSaved ? "Screen saved successfully" : "Editing cancelled or failed";
         JOptionPane.showMessageDialog(this.view, message);

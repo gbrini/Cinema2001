@@ -48,6 +48,11 @@ public class MovieListController implements PanelActionListener<Movie>, DialogCl
     }
 
     @Override
+    public void onDeleteRequested(Movie item) {
+
+    }
+
+    @Override
     public void onDialogClosed(boolean changedSaved) {
         String message = changedSaved ? "Movie saved successfully" : "Editing cancelled or failed";
         JOptionPane.showMessageDialog(this.view, message);
