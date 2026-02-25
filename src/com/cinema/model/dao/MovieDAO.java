@@ -45,7 +45,7 @@ public class MovieDAO {
     }
 
     public static boolean updateMovie(Movie movie) {
-        String sql = "UPDATE movie SET title = ?, duration_minutes = ?, release_date = ?, genre = ?, rating = ?, description = ?, director = ? WHERE movie_id = ? ";
+        String sql = "UPDATE movie SET title = ?, duration_minutes = ?, release_date = ?, genre = ?, rating = ?, description = ?, director = ?, is_deleted = ? WHERE movie_id = ? ";
 
         try {
             Connection conn = DatabaseConnection.getInstance();
@@ -59,6 +59,7 @@ public class MovieDAO {
             stmt.setString(6, movie.getDescription());
             stmt.setString(7, movie.getDirector());
             stmt.setInt(8, movie.getMovieId());
+            stmt.setBoolean(9, movie.is_Deleted());
 
             return stmt.executeUpdate() == 1;
         } catch (SQLException ex) {
