@@ -5,38 +5,40 @@ import com.cinema.util.ComboBoxMethods;
 import java.time.LocalDate;
 
 public class Movie implements ComboBoxMethods {
-    private int movieId;
-    private String title;
-    private int durationMinutes;
-    private LocalDate releaseDate;
-    private String genre;
-    private String rating;
-    private String description;
-    private String director;
-    private boolean isDeleted;
+    private final int movieId;
+    private final String title;
+    private final int durationMinutes;
+    private final LocalDate releaseDate;
+    private final String genre;
+    private final String rating;
+    private final String description;
+    private final String director;
+    private final boolean isDeleted;
 
-    public Movie(int movieId, String title, int durationMinutes, LocalDate releaseDate, String genre, String rating, String description, String director, boolean isDeleted) {
-        this.movieId = movieId;
-        this.title = title;
-        this.durationMinutes = durationMinutes;
-        this.releaseDate = releaseDate;
-        this.genre = genre;
-        this.rating = rating;
-        this.description = description;
-        this.director = director;
-        this.isDeleted = isDeleted;
+    public Movie(Builder builder) {
+        this.movieId = builder.movieId;
+        this.title = builder.title;
+        this.durationMinutes = builder.durationMinutes;
+        this.releaseDate = builder.releaseDate;
+        this.genre = builder.genre;
+        this.rating = builder.rating;
+        this.description = builder.description;
+        this.director = builder.director;
+        this.isDeleted = builder.isDeleted;
     }
 
-    public Movie(String title, int durationMinutes, LocalDate releaseDate, String genre, String rating, String description, String director, boolean isDeleted) {
-        this.movieId = 0;
-        this.title = title;
-        this.durationMinutes = durationMinutes;
-        this.releaseDate = releaseDate;
-        this.genre = genre;
-        this.rating = rating;
-        this.description = description;
-        this.director = director;
-        this.isDeleted = isDeleted;
+    public static class Builder {
+        private int movieId;
+        private String title;
+        private int durationMinutes;
+        private LocalDate releaseDate;
+        private String genre;
+        private String rating;
+        private String description;
+        private String director;
+        private boolean isDeleted;
+
+        public Movie build() { return new Movie(this); }
     }
 
     public int getMovieId() {
