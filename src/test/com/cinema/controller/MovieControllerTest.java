@@ -32,15 +32,15 @@ public class MovieControllerTest {
 
     @BeforeEach
     void setup() {
-        testMovie = new Movie(0,
-        "Prova",
-        99,
-        LocalDate.now(),
-        "action",
-        "PG-13",
-        "TEst dscrizione",
-        "Test regista",
-        false);
+//        testMovie = new Movie(0,
+//        "Prova",
+//        99,
+//        LocalDate.now(),
+//        "action",
+//        "PG-13",
+//        "TEst dscrizione",
+//        "Test regista",
+//        false);
         UserSession.getInstance().cleanSession();
     }
 

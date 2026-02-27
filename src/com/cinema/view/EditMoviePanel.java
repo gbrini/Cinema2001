@@ -201,17 +201,17 @@ public class EditMoviePanel extends JPanel {
             selectedRating = this.ratingField.getSelectedItem().toString();
         }
 
-        return new Movie(
-            this.movie == null ? 0 : this.movie.getMovieId(),
-            this.titleField.getText().trim(),
-            durationMinute,
-            LocalDate.parse(parsedDate),
-            this.genreField.getText().trim(),
-            selectedRating,
-            this.descriptionField.getText().trim(),
-            this.directorField.getText().trim(),
-            false
-        );
+        return new Movie.Builder()
+                .setMovieId(this.movie == null ? 0 : this.movie.getMovieId())
+                .setTitle(this.titleField.getText().trim())
+                .setDurationMinutes(durationMinute)
+                .setReleaseDate(LocalDate.parse(parsedDate))
+                .setGenre(this.genreField.getText().trim())
+                .setRating(selectedRating)
+                .setDescription(this.descriptionField.getText().trim())
+                .setDirector(this.directorField.getText().trim())
+                .setIsDeleted(false)
+                .build();
     }
 
     public void displayError(String errorMsg) {
