@@ -38,6 +38,8 @@ public class Movie implements ComboBoxMethods {
         private String director;
         private boolean isDeleted;
 
+        public Builder setMovieId(int movieId) { this.movieId = movieId; return this; }
+
         public Movie build() { return new Movie(this); }
     }
 
