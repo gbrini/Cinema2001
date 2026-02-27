@@ -129,7 +129,7 @@ public class MovieDAO {
                         .setMovieId(results.getInt("movie_id"))
                         .setTitle(results.getString("title"))
                         .setDurationMinutes(results.getInt("duration_minutes"))
-                        .setReleaseDate(results.getTimestamp("start_time").toLocalDateTime().toLocalDate())
+                        .setReleaseDate(LocalDate.parse(results.getDate("release_date").toString()))
                         .setGenre(results.getString("genre"))
                         .setRating(results.getString("rating"))
                         .setDescription(results.getString("description"))
