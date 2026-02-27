@@ -125,17 +125,17 @@ public class MovieDAO {
             ResultSet results = stmt.getResultSet();
 
             while (results.next()) {
-                movies.add(new Movie(
-                    results.getInt("movie_id"),
-                    results.getString("title"),
-                    results.getInt("duration_minutes"),
-                    LocalDate.parse(results.getDate("release_date").toString()),
-                    results.getString("genre"),
-                    results.getString("rating"),
-                    results.getString("description"),
-                    results.getString("director"),
-                    results.getBoolean("is_deleted")
-                ));
+                movies.add(new Movie.Builder()
+                        .setMovieId(results.getInt("movie_id"))
+                        .setTitle(results.getString("title"))
+                        .setDurationMinutes(results.getInt("duration_minutes"))
+                        .setReleaseDate(LocalDate.parse(results.getDate("release_date").toString()))
+                        .setGenre(results.getString("genre"))
+                        .setRating(results.getString("rating"))
+                        .setDescription(results.getString("description"))
+                        .setDirector(results.getString("director"))
+                        .setIsDeleted(results.getBoolean("is_deleted"))
+                        .build(););
             }
 
         } catch (SQLException ex) {
