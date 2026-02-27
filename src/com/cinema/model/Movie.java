@@ -87,42 +87,6 @@ public class Movie implements ComboBoxMethods {
         return isDeleted;
     }
 
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDurationMinutes(int durationMinutes) {
-        this.durationMinutes = durationMinutes;
-    }
-
-    public void setReleaseDate(LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDirector(String director) {
-        this.director = director;
-    }
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
     @Override
     public String toString() {
         return String.format("%s - %d min", this.title, this.durationMinutes);
