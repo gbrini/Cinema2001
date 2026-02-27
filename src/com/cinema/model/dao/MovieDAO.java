@@ -129,13 +129,13 @@ public class MovieDAO {
                         .setMovieId(results.getInt("movie_id"))
                         .setTitle(results.getString("title"))
                         .setDurationMinutes(results.getInt("duration_minutes"))
-                        .setReleaseDate(LocalDate.parse(results.getDate("release_date").toString()))
+                        .setReleaseDate(results.getTimestamp("start_time").toLocalDateTime().toLocalDate())
                         .setGenre(results.getString("genre"))
                         .setRating(results.getString("rating"))
                         .setDescription(results.getString("description"))
                         .setDirector(results.getString("director"))
-                        .setIsDeleted(results.getBoolean("is_deleted"))
-                        .build(););
+                        .setIsDeleted(results.getBoolean("mv_is_del"))
+                        .build());
             }
 
         } catch (SQLException ex) {
