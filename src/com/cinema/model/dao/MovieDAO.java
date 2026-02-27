@@ -75,7 +75,16 @@ public class MovieDAO {
         if (movie == null)
             return false;
 
-        movie.setDeleted(true);
+        movie = new Movie.Builder()
+                .setMovieId(movie.getMovieId())
+                .setTitle(movie.getTitle())
+                .setDurationMinutes(movie.getDurationMinutes())
+                .setGenre(movie.getGenre())
+                .setRating(movie.getRating())
+                .setDescription(movie.getDescription())
+                .setDirector(movie.getDirector())
+                .setIsDeleted(true)
+                .build();
 
         return MovieDAO.updateMovie(movie);
     }
