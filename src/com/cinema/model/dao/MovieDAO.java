@@ -143,7 +143,7 @@ public class MovieDAO {
                         .setRating(results.getString("rating"))
                         .setDescription(results.getString("description"))
                         .setDirector(results.getString("director"))
-                        .setIsDeleted(results.getBoolean("mv_is_del"))
+                        .setIsDeleted(results.getBoolean("is_deleted"))
                         .build());
             }
 
