@@ -39,6 +39,14 @@ public class Movie implements ComboBoxMethods {
         private boolean isDeleted;
 
         public Builder setMovieId(int movieId) { this.movieId = movieId; return this; }
+        public Builder setTitle(String title) { this.title = title; return this; }
+        public Builder setDurationMinutes(int durationMinutes) { this.durationMinutes = durationMinutes; return this; }
+        public Builder setReleaseDate(LocalDate releaseDate) { this.releaseDate = releaseDate; return this; }
+        public Builder setGenre(String genre) { this.genre = genre; return this; }
+        public Builder setRating(String rating) { this.rating = rating; return this; }
+        public Builder setDescription(String description) { this.description = description; return this; }
+        public Builder setDirector(String director) { this.director = director; return this; }
+        public Builder setIsDeleted(boolean isDeleted) { this.isDeleted = isDeleted; return this; }
 
         public Movie build() { return new Movie(this); }
     }
