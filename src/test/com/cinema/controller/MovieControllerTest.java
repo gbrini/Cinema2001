@@ -6,6 +6,7 @@ import com.cinema.model.Movie;
 import com.cinema.model.User;
 import com.cinema.model.dao.MovieDAO;
 import com.cinema.service.auth.UserSession;
+import com.cinema.util.EnvConfig;
 import com.cinema.view.EditMoviePanel;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -46,14 +47,14 @@ public class MovieControllerTest {
 
     @Test
     void testControllerInitialization() throws SQLException {
-        User user = LoginController.getInstance().login("admin@me.com", "password");
+        User user = LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
         MovieController controller = new MovieController(testMovie);
         assertNotNull(controller.getView(), "Il pannello ci deve essere");
     }
 
     @Test
     void testAddMovie() throws SQLException {
-        User user = LoginController.getInstance().login("employee@me.com", "password");
+        User user = LoginController.getInstance().login("employee@me.com", EnvConfig.getInstance().get("password"));
         int count = MovieDAO.getAllMovies().size();
         MovieController controller = new MovieController(testMovie);
         controller.getView().getAddButton().doClick();
@@ -65,7 +66,7 @@ public class MovieControllerTest {
 
     @Test
     void testAddMovieUser() throws SQLException {
-        User user = LoginController.getInstance().login("user@me.com", "password");
+        User user = LoginController.getInstance().login("user@me.com", EnvConfig.getInstance().get("password"));
         int count = MovieDAO.getAllMovies().size();
         MovieController controller = new MovieController(testMovie);
         controller.getView().getAddButton().doClick();

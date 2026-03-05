@@ -3,6 +3,7 @@ package test.com.cinema.controller.auth;
 import com.cinema.controller.auth.LoginController;
 import com.cinema.model.User;
 import com.cinema.service.auth.UserSession;
+import com.cinema.util.EnvConfig;
 import org.junit.jupiter.api.*;
 
 import java.sql.SQLException;
@@ -24,7 +25,7 @@ class LoginControllerTest {
     void testLoginFlowUpdateSession() throws SQLException {
         LoginController loginController = LoginController.getInstance();
 
-        User user = loginController.login("employee@me.com", "password");
+        User user = loginController.login("employee@me.com", EnvConfig.getInstance().get("password"));
 
         assertNotNull(user);
         assertEquals(user, UserSession.getInstance().getCurrentUser());
@@ -43,7 +44,7 @@ class LoginControllerTest {
     void testAdminLogin() throws SQLException {
         LoginController loginController = LoginController.getInstance();
 
-        User user = loginController.login("admin@me.com", "password");
+        User user = loginController.login("admin@me.com", EnvConfig.getInstance().get("password"));
 
         assertEquals(1, user.getRole().getRoleId());
         assertEquals(1, UserSession.getInstance().getCurrentUser().getRole().getRoleId());
@@ -53,7 +54,7 @@ class LoginControllerTest {
     void testEmpoyeeLogin() throws SQLException {
         LoginController loginController = LoginController.getInstance();
 
-        User user = loginController.login("employee@me.com", "password");
+        User user = loginController.login("employee@me.com", EnvConfig.getInstance().get("password"));
 
         assertEquals(2, user.getRole().getRoleId());
         assertEquals(2, UserSession.getInstance().getCurrentUser().getRole().getRoleId());
@@ -63,7 +64,7 @@ class LoginControllerTest {
     void testUserLogin() throws SQLException {
         LoginController loginController = LoginController.getInstance();
 
-        User user = loginController.login("user@me.com", "password");
+        User user = loginController.login("user@me.com", EnvConfig.getInstance().get("password"));
 
         assertEquals(3, user.getRole().getRoleId());
         assertEquals(3, UserSession.getInstance().getCurrentUser().getRole().getRoleId());
