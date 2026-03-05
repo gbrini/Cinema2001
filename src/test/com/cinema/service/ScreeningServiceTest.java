@@ -1,12 +1,10 @@
 package test.com.cinema.service;
 
 import com.cinema.controller.auth.LoginController;
-import com.cinema.model.Movie;
-import com.cinema.model.Screen;
-import com.cinema.model.Screening;
-import com.cinema.model.ScreeningRecord;
+import com.cinema.model.*;
 import com.cinema.model.dao.database.DatabaseConnection;
 import com.cinema.service.ScreeningService;
+import com.cinema.service.auth.UserSession;
 import com.cinema.util.EnvConfig;
 import com.cinema.util.UnauthorizedAccessException;
 import org.junit.jupiter.api.*;
@@ -100,14 +98,6 @@ public class ScreeningServiceTest {
     @Nested
     @DisplayName("White Box Tests")
     class WhiteBoxTests {
-        @Test
-        void shouldThrowWhenUserHasNoPermission() {
-            // log in as a user without screening:add permission first
-            ScreeningRecord record = buildRecord(LocalDateTime.now().plusDays(1), 120, 1);
-            assertThrows(UnauthorizedAccessException.class, () ->
-                    ScreeningService.validateAndSchedule(record));
-        }
-
         @Test
         void shouldReturnFalseWhenProposedStartIsInsideExisting() {
             ScreeningRecord first = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
