@@ -1,6 +1,9 @@
 package com.cinema.util;
 
+import com.cinema.model.dao.database.DatabaseConfig;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,10 +15,16 @@ public class EnvConfig {
 
     private EnvConfig() {
         Path envFile = Paths.get("env.properties");
-        try(var inputStream = Files.newInputStream(envFile)) {
-            properties.load(inputStream);
-        } catch (IOException exc) {
-            throw new RuntimeException(exc);
+
+        try (InputStream input = DatabaseConfig.class.getClassLoader().getResourceAsStream("env.properties")) {
+            if (input == null) {
+                System.out.println("Sorry, unable to find env.properties");
+                System.exit(1);
+            }
+
+            properties.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

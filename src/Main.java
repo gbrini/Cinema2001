@@ -4,7 +4,8 @@ import javax.swing.SwingUtilities;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(EnvConfig.);
+        System.out.println(EnvConfig.getInstance().get("test"));
+        System.out.println(EnvConfig.getInstance().get("password"));
         SwingUtilities.invokeLater(() -> {
             new LoginFrame().setVisible(true);
         });
