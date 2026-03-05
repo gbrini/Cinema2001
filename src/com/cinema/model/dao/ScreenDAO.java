@@ -13,7 +13,7 @@ public class ScreenDAO {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO screen (screen_name, capacity) VALUES (?, ?) RETURNING screen_id");
 
             stmt.setString(1, screen.getScreenName());
-            stmt.setInt(2, screen.getcapacity());
+            stmt.setInt(2, screen.getCapacity());
 
             stmt.execute();
 

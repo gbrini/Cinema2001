@@ -1,6 +1,10 @@
 package test.com.cinema.service;
 
 import com.cinema.controller.auth.LoginController;
+import com.cinema.model.Movie;
+import com.cinema.model.Screen;
+import com.cinema.model.Screening;
+import com.cinema.model.ScreeningRecord;
 import com.cinema.model.dao.database.DatabaseConnection;
 import com.cinema.util.EnvConfig;
 import org.junit.jupiter.api.*;
@@ -8,8 +12,27 @@ import org.junit.jupiter.api.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ScreeningServiceTest {
+    private ScreeningRecord buildRecord(LocalDateTime startTime, int movieDuration, int screenId) {
+        Screening screening = new Screening();
+        screening.setScreenId(screenId);
+        screening.setStartTime(startTime);
+        screening.setTicketPrice(10.00);
+
+        Movie movie = new Movie(1, "Test Movie", movieDuration, LocalDate.now(),
+                "Action", "PG", "Description", "Director", false);
+
+        Screen screen = new Screen();
+        screen.setScreenId(screenId);
+        screen.setScreenName("Screen " + screenId);
+        screen.setCapacity(100);
+
+        return new ScreeningRecord(screening, movie, startTime.toLocalDate(),
+                startTime.toLocalTime(), screen, 0, 100);
+    }
 
     @BeforeEach
     void setup() throws SQLException {
@@ -17,7 +40,7 @@ public class ScreeningServiceTest {
         PreparedStatement stmt = conn.prepareStatement("TRUNCATE TABLE ticket, ticket_type, screening, seat, screen, movie CASCADE");
         stmt.execute();
 
-        LoginController.getInstance().logout(null);
+        //LoginController.getInstance().logout(null);
         LoginController.getInstance().login("employee@me.com", EnvConfig.getInstance().get("password"));
     }
 
