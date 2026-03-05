@@ -2,6 +2,7 @@ package com.cinema.util;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
@@ -10,7 +11,7 @@ public class EnvConfig {
     private final Properties properties = new Properties();
 
     private EnvConfig() {
-        var envFile = Paths.get(System.getProperty("user.home"), ".env", "config.properties");
+        Path envFile = Paths.get(System.getProperty("user.home"), ".cinema.util", "env.properties");
         try(var inputStream = Files.newInputStream(envFile)) {
             properties.load(inputStream);
         } catch (IOException exc) {
