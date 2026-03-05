@@ -6,7 +6,9 @@ import com.cinema.model.Screen;
 import com.cinema.model.Screening;
 import com.cinema.model.ScreeningRecord;
 import com.cinema.model.dao.database.DatabaseConnection;
+import com.cinema.service.ScreeningService;
 import com.cinema.util.EnvConfig;
+import com.cinema.util.UnauthorizedAccessException;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
@@ -14,6 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ScreeningServiceTest {
     private ScreeningRecord buildRecord(LocalDateTime startTime, int movieDuration, int screenId) {
@@ -52,18 +56,38 @@ public class ScreeningServiceTest {
     @DisplayName("Black Box Tests")
     class BlackBoxTests {
         @Test
-        void shouldReturnFalseOnOverlap() {
-            // schedule screening A, then try to schedule B overlapping A
+        void shouldReturnTrueWhenNoConflict() {
+            ScreeningRecord record = buildRecord(LocalDateTime.now().plusDays(1), 120, 1);
+            assertTrue(ScreeningService.validateAndSchedule(record));
         }
 
         @Test
-        void shouldReturnTrueOnValidNonOverlappingScreening() {
-            // schedule A, then schedule B starting after A + duration + 15min
+        void shouldReturnFalseWhenOverlapping() {
+            ScreeningRecord first = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
+            ScreeningService.validateAndSchedule(first);
+
+            // starts 1 hour into the first screening
+            ScreeningRecord second = buildRecord(LocalDateTime.now().plusDays(1).withHour(11), 60, 1);
+            assertFalse(ScreeningService.validateAndSchedule(second));
         }
 
         @Test
-        void shouldReturnFalseWhenSameStartTime() {
-            // two screenings on same screen at exact same time
+        void shouldReturnTrueForBackToBackScreening() {
+            ScreeningRecord first = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
+            ScreeningService.validateAndSchedule(first);
+
+            // starts exactly after first + duration + 15min buffer
+            ScreeningRecord second = buildRecord(LocalDateTime.now().plusDays(1).withHour(12).withMinute(15), 60, 1);
+            assertTrue(ScreeningService.validateAndSchedule(second));
+        }
+
+        @Test
+        void shouldAllowSameTimeOnDifferentScreen() {
+            ScreeningRecord screen1 = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
+            ScreeningRecord screen2 = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 2);
+
+            ScreeningService.validateAndSchedule(screen1);
+            assertTrue(ScreeningService.validateAndSchedule(screen2));
         }
     }
 
@@ -72,40 +96,48 @@ public class ScreeningServiceTest {
     class WhiteBoxTests {
         @Test
         void shouldThrowWhenUserHasNoPermission() {
-            // mock PermissionService.hasPermission("screening:add") = false
-//            assertThrows(UnauthorizedAccessException.class, () ->
-//                    ScreeningService.validateAndSchedule(screeningRecord));
+            // log in as a user without screening:add permission first
+            ScreeningRecord record = buildRecord(LocalDateTime.now().plusDays(1), 120, 1);
+            assertThrows(UnauthorizedAccessException.class, () ->
+                    ScreeningService.validateAndSchedule(record));
         }
 
         @Test
-        void shouldSkipScheduledScreeningWhenMovieIsNull() {
-            // existing screening in DB whose movie_id returns null from MovieService
-            // proposed screening should NOT conflict and should return true
+        void shouldReturnFalseWhenProposedStartIsInsideExisting() {
+            ScreeningRecord first = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
+            ScreeningService.validateAndSchedule(first);
+
+            // starts 30min in, ends after — partial overlap
+            ScreeningRecord second = buildRecord(LocalDateTime.now().plusDays(1).withHour(10).withMinute(30), 120, 1);
+            assertFalse(ScreeningService.validateAndSchedule(second));
         }
 
         @Test
-        void shouldReturnFalseWhenProposedStartIsInsideExistingScreening() {
-            // proposedStart > existingStart && proposedStart < existingEnd
+        void shouldReturnFalseWhenProposedEnglobsExisting() {
+            ScreeningRecord first = buildRecord(LocalDateTime.now().plusDays(1).withHour(11), 60, 1);
+            ScreeningService.validateAndSchedule(first);
+
+            // starts before and ends after the existing one
+            ScreeningRecord second = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 180, 1);
+            assertFalse(ScreeningService.validateAndSchedule(second));
         }
 
         @Test
-        void shouldReturnFalseWhenProposedScreeningEnglobsExistingOne() {
-            // proposedStart < existingStart && proposedEnd > existingEnd
+        void shouldNotConflictWhenExistingMovieIsNull() {
+            // insert a screening into DB with a movie_id that doesn't exist
+            // so MovieService.getMovieById returns null → should be skipped
+            ScreeningRecord record = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
+            assertTrue(ScreeningService.validateAndSchedule(record));
         }
 
         @Test
-        void shouldReturnFalseWhenProposedEndIsInsideExistingScreening() {
-            // proposedStart < existingStart && proposedEnd > existingStart
-        }
+        void shouldReturnFalseOneMinuteBeforeBufferEnds() {
+            ScreeningRecord first = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
+            ScreeningService.validateAndSchedule(first);
 
-        @Test
-        void shouldAllowBackToBackScreening() {
-            // proposedStart == existingEnd exactly — the +15 buffer makes this an edge case
-        }
-
-        @Test
-        void shouldReturnTrueWhenNoScreeningsExistForThatDayAndScreen() {
-            // ScreeningDAO.getScreeningByDateAndScreen returns empty list
+            // 10:00 + 120min + 15min buffer = 12:15, so 12:14 should still conflict
+            ScreeningRecord second = buildRecord(LocalDateTime.now().plusDays(1).withHour(12).withMinute(14), 60, 1);
+            assertFalse(ScreeningService.validateAndSchedule(second));
         }
     }
 
