@@ -25,14 +25,12 @@ public class ScreeningServiceTest {
         Movie movie = new Movie(1, "Test Movie", movieDuration, LocalDate.now(),
                 "Action", "PG", "Description", "Director", false);
 
-        Screen screen = new Screen();
-        screen.setScreenId(screenId);
-        screen.setScreenName("Screen " + screenId);
-        screen.setCapacity(100);
+        Screen screen = new Screen(screenId, "Screen " + screenId, 100, false);
 
         return new ScreeningRecord(screening, movie, startTime.toLocalDate(),
                 startTime.toLocalTime(), screen, 0, 100);
     }
+
 
     @BeforeEach
     void setup() throws SQLException {
