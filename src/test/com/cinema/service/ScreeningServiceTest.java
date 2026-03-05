@@ -41,15 +41,21 @@ public class ScreeningServiceTest {
                 startTime.toLocalTime(), screen, 0, 100);
     }
 
+    @BeforeAll
+    static void start() throws SQLException {
+        LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
+    }
+
+    @AfterAll
+    static void end() throws SQLException {
+        LoginController.getInstance().logout(null);
+    }
 
     @BeforeEach
     void setup() throws SQLException {
         Connection conn = DatabaseConnection.getInstance();
         PreparedStatement stmt = conn.prepareStatement("TRUNCATE TABLE ticket, ticket_type, screening, seat, screen, movie CASCADE");
         stmt.execute();
-
-        //LoginController.getInstance().logout(null);
-        LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
     }
 
     @Nested
