@@ -82,6 +82,7 @@ public class MovieDAO {
                 .setGenre(movie.getGenre())
                 .setRating(movie.getRating())
                 .setDescription(movie.getDescription())
+                .setReleaseDate(movie.getReleaseDate())
                 .setDirector(movie.getDirector())
                 .setIsDeleted(true)
                 .build();
