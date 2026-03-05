@@ -19,7 +19,7 @@ public class EnvConfig {
         }
     }
 
-    private EnvConfig getInstance() {
+    public static EnvConfig getInstance() {
         if (instance == null) {
             instance = new EnvConfig();
         }
