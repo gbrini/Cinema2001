@@ -49,7 +49,7 @@ public class ScreeningServiceTest {
         stmt.execute();
 
         //LoginController.getInstance().logout(null);
-        LoginController.getInstance().login("employee@me.com", EnvConfig.getInstance().get("password"));
+        LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
     }
 
     @Nested
