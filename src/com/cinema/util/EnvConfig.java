@@ -11,7 +11,7 @@ public class EnvConfig {
     private final Properties properties = new Properties();
 
     private EnvConfig() {
-        Path envFile = Paths.get(System.getProperty("user.home"), ".cinema.util", "env.properties");
+        Path envFile = Paths.get("env.properties");
         try(var inputStream = Files.newInputStream(envFile)) {
             properties.load(inputStream);
         } catch (IOException exc) {
