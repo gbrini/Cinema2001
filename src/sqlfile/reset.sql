@@ -1,0 +1,1 @@
+TRUNCATE TABLE ticket, ticket_type, screening, seat, screen, movie CASCADE;
