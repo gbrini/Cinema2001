@@ -1,8 +1,25 @@
 package test.com.cinema.service;
 
+import com.cinema.controller.auth.LoginController;
+import com.cinema.model.dao.database.DatabaseConnection;
+import com.cinema.util.EnvConfig;
 import org.junit.jupiter.api.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class ScreeningServiceTest {
+
+    @BeforeEach
+    void setup() throws SQLException {
+        Connection conn = DatabaseConnection.getInstance();
+        PreparedStatement stmt = conn.prepareStatement("TRUNCATE TABLE ticket, ticket_type, screening, seat, screen, movie CASCADE");
+        stmt.execute();
+
+        LoginController.getInstance().logout(null);
+        LoginController.getInstance().login("employee@me.com", EnvConfig.getInstance().get("password"));
+    }
 
     @Nested
     @DisplayName("Black Box Tests")
