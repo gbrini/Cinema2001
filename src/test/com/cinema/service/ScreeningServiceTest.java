@@ -17,9 +17,18 @@ import java.time.LocalDateTime;
 
 public class ScreeningServiceTest {
     private ScreeningRecord buildRecord(LocalDateTime startTime, int movieDuration, int screenId) {
-        Movie movie = new Movie(1, "Test Movie", movieDuration, LocalDate.now(),
-                "Action", "PG", "Description", "Director", false);
-        
+        Movie movie = new Movie.Builder()
+                .setMovieId(1)
+                .setTitle("Test Movie")
+                .setDurationMinutes(movieDuration)
+                .setReleaseDate(LocalDate.now())
+                .setGenre("Action")
+                .setRating("PG")
+                .setDescription("Test description")
+                .setDirector("Test Director")
+                .setIsDeleted(false)
+                .build();
+
         Screening screening = new Screening(movie.getMovieId(), screenId, startTime, 10.00, false);
 
         Screen screen = new Screen(screenId, "Screen " + screenId, 100, false);
