@@ -145,6 +145,19 @@ public class ScreeningServiceTest {
             // insert a screening into DB with a movie_id that doesn't exist
             // so MovieService.getMovieById returns null → should be skipped
             ScreeningRecord record = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
+            Movie newMovie = new Movie.Builder()
+                    .setMovieId(6)
+                    .setTitle("Test Movie")
+                    .setDurationMinutes(200)
+                    .setReleaseDate(LocalDate.now())
+                    .setGenre("Action")
+                    .setRating("PG")
+                    .setDescription("Test description")
+                    .setDirector("Test Director")
+                    .setIsDeleted(false)
+                    .build();
+            record = new ScreeningRecord(record.screening(), newMovie, record.date(), record.slot(), record.screen(), 0, 0);
+
             assertFalse(ScreeningService.validateAndSchedule(record));
         }
 

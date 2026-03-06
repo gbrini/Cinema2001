@@ -3,6 +3,8 @@ package com.cinema.service;
 import com.cinema.model.Movie;
 import com.cinema.model.Screening;
 import com.cinema.model.ScreeningRecord;
+import com.cinema.model.dao.MovieDAO;
+import com.cinema.model.dao.ScreenDAO;
 import com.cinema.model.dao.ScreeningDAO;
 import com.cinema.util.UnauthorizedAccessException;
 
@@ -18,6 +20,9 @@ public class ScreeningService {
         if (!PermissionService.hasPermission("screening:add")) {
             throw new UnauthorizedAccessException("Accesso non consentito");
         }
+
+        if (MovieDAO.getMovieById(screeningRecord.movie().getMovieId()) == null)
+            return false;
 
         ArrayList<Screening> screenings = ScreeningDAO.getScreeningByDateAndScreen(screeningRecord.screening().getStartTimeDate(), screeningRecord.screening().getScreenId());
         ZonedDateTime zoned = screeningRecord.screening().getLocalStartTime();
