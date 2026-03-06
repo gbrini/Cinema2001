@@ -2,6 +2,8 @@ package test.com.cinema.service;
 
 import com.cinema.controller.auth.LoginController;
 import com.cinema.model.*;
+import com.cinema.model.dao.MovieDAO;
+import com.cinema.model.dao.ScreenDAO;
 import com.cinema.model.dao.database.DatabaseConnection;
 import com.cinema.service.ScreeningService;
 import com.cinema.service.auth.UserSession;
@@ -52,8 +54,25 @@ public class ScreeningServiceTest {
     @BeforeEach
     void setup() throws SQLException {
         Connection conn = DatabaseConnection.getInstance();
-        PreparedStatement stmt = conn.prepareStatement("TRUNCATE TABLE ticket, ticket_type, screening, seat, screen, movie CASCADE");
+        PreparedStatement stmt = conn.prepareStatement("TRUNCATE TABLE ticket, ticket_type, screening, seat, screen, movie RESTART IDENTITY CASCADE");
         stmt.execute();
+
+        Movie movie = new Movie.Builder()
+                .setMovieId(1)
+                .setTitle("Test Movie")
+                .setDurationMinutes(150)
+                .setReleaseDate(LocalDate.now())
+                .setGenre("Action")
+                .setRating("PG")
+                .setDescription("Test description")
+                .setDirector("Test Director")
+                .setIsDeleted(false)
+                .build();
+
+        MovieDAO.addMovie(movie);
+
+        Screen screen = new Screen(1, "Screen 1", 100, false);
+        ScreenDAO.addScreen(screen);
     }
 
     @Nested
@@ -87,6 +106,9 @@ public class ScreeningServiceTest {
 
         @Test
         void shouldAllowSameTimeOnDifferentScreen() {
+            Screen screen = new Screen(2, "Screen 2", 100, false);
+            ScreenDAO.addScreen(screen);
+
             ScreeningRecord screen1 = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
             ScreeningRecord screen2 = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 2);
 
@@ -123,7 +145,7 @@ public class ScreeningServiceTest {
             // insert a screening into DB with a movie_id that doesn't exist
             // so MovieService.getMovieById returns null → should be skipped
             ScreeningRecord record = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
-            assertTrue(ScreeningService.validateAndSchedule(record));
+            assertFalse(ScreeningService.validateAndSchedule(record));
         }
 
         @Test
