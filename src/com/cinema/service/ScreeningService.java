@@ -11,6 +11,7 @@ import com.cinema.util.UnauthorizedAccessException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class ScreeningService {
 
         ArrayList<Screening> screenings = ScreeningDAO.getScreeningByDateAndScreen(screeningRecord.screening().getStartTimeDate(), screeningRecord.screening().getScreenId());
         ZonedDateTime zoned = screeningRecord.screening().getLocalStartTime();
-        LocalDateTime proposedStart = LocalDateTime.of(zoned.toLocalDate(), zoned.toLocalTime());
+        LocalDateTime proposedStart = LocalDateTime.of(zoned.toLocalDate(), zoned.toLocalTime()).truncatedTo(ChronoUnit.SECONDS);
         LocalDateTime proposedEnd = proposedStart.plusMinutes(screeningRecord.movie().getDurationMinutes() + 15);
 
         for (Screening scheduled: screenings) {
@@ -38,7 +39,7 @@ public class ScreeningService {
             int scheduledMinutes = scheduledMovie.getDurationMinutes() + 15;
             ZonedDateTime zonedDateTime = scheduled.getLocalStartTime();
 
-            LocalDateTime existingStart = LocalDateTime.of(zonedDateTime.toLocalDate(), zonedDateTime.toLocalTime());
+            LocalDateTime existingStart = LocalDateTime.of(zonedDateTime.toLocalDate(), zonedDateTime.toLocalTime()).truncatedTo(ChronoUnit.SECONDS);
             LocalDateTime existingEnd = existingStart.plusMinutes(scheduledMinutes);
 
             boolean conflict = proposedStart.isBefore(existingEnd) && proposedEnd.isAfter(existingStart);

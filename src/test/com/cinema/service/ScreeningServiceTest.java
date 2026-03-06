@@ -60,7 +60,7 @@ public class ScreeningServiceTest {
         Movie movie = new Movie.Builder()
                 .setMovieId(1)
                 .setTitle("Test Movie")
-                .setDurationMinutes(150)
+                .setDurationMinutes(120)
                 .setReleaseDate(LocalDate.now())
                 .setGenre("Action")
                 .setRating("PG")
@@ -96,11 +96,11 @@ public class ScreeningServiceTest {
 
         @Test
         void shouldReturnTrueForBackToBackScreening() {
-            ScreeningRecord first = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
+            ScreeningRecord first = buildRecord(LocalDateTime.now().plusDays(1).withHour(10).withMinute(0).withSecond(0), 120, 1);
             ScreeningService.validateAndSchedule(first);
 
             // starts exactly after first + duration + 15min buffer
-            ScreeningRecord second = buildRecord(LocalDateTime.now().plusDays(1).withHour(12).withMinute(15), 60, 1);
+            ScreeningRecord second = buildRecord(LocalDateTime.now().plusDays(1).withHour(12).withMinute(15).withSecond(0), 60, 1);
             assertTrue(ScreeningService.validateAndSchedule(second));
         }
 
