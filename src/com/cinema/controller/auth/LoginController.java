@@ -1,10 +1,12 @@
 package com.cinema.controller.auth;
 
-import com.cinema.model.auth.IAuthenticationService;
-import com.cinema.model.auth.core.AuthenticationService;
-import com.cinema.model.auth.security.SecurityAuthenticationProxy;
+import com.cinema.service.auth.IAuthenticationService;
+import com.cinema.service.auth.core.AuthenticationService;
+import com.cinema.service.auth.security.SecurityAuthenticationProxy;
 import com.cinema.model.User;
+import com.cinema.view.auth.LoginFrame;
 
+import javax.swing.*;
 import java.sql.SQLException;
 
 public class LoginController {
@@ -22,5 +24,14 @@ public class LoginController {
 
     public User login(String email, String password) throws SQLException {
         return proxyAuth.login(email, password);
+    }
+
+    public void logout(JFrame currentFrame) {
+        boolean isLogout = proxyAuth.logout();
+
+        if(currentFrame != null) {
+            currentFrame.dispose();
+            new LoginFrame().setVisible(true);
+        }
     }
 }

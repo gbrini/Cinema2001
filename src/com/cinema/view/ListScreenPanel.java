@@ -10,8 +10,8 @@ import java.awt.*;
 
 public class ListScreenPanel extends AbstractListPanel<Screen> {
 
-    public ListScreenPanel(PanelActionListener<Screen> actionListener, String roleName) {
-        super(actionListener, roleName);
+    public ListScreenPanel(PanelActionListener<Screen> actionListener, int roleId) {
+        super(actionListener, roleId);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class ListScreenPanel extends AbstractListPanel<Screen> {
         screenPanel.setBackground(backgroundColor);
         screenPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
-        JLabel infoLabel = new JLabel(item.getScreenName() + " (" + item.getcapacity() + ") seats");
+        JLabel infoLabel = new JLabel(item.getScreenName() + " (" + item.getCapacity() + ") seats");
         screenPanel.add(infoLabel, BorderLayout.WEST);
 
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));

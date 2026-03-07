@@ -28,4 +28,4 @@ INSERT INTO users (
 )
 VALUES (1, 'Admin', 'cognome', 'admin@me.com', '', '1999-10-11', 1),
 (2, 'Operatore', 'cognome', 'employee@me.com', '', '1999-10-11', 2),
-(3, 'Utente', 'cognome', 'user1@me.com', '', '1999-10-11', 3);
+(3, 'Utente', 'cognome', 'user@me.com', '', '1999-10-11', 3);

@@ -4,6 +4,7 @@ import com.cinema.model.Screening;
 import com.cinema.model.ScreeningRecord;
 import com.cinema.model.User;
 import com.cinema.service.ScreeningService;
+import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.view.ListScreeningPanel;
 import com.cinema.view.listener.PanelActionListener;
@@ -21,8 +22,8 @@ public class ScreeningListController implements PanelActionListener<Screening>, 
     private final User user;
     private final ListScreeningPanel view;
 
-    public ScreeningListController(User user) {
-        this.user = user;
+    public ScreeningListController() {
+        this.user = UserSession.getInstance().getCurrentUser();
         this.view = new ListScreeningPanel(this, this.user);
 
         this.onRefreshRequested();
@@ -35,7 +36,7 @@ public class ScreeningListController implements PanelActionListener<Screening>, 
         Instant todayInstant = Instant.now();
         Instant nextWeekInstant = todayInstant.plus(7, ChronoUnit.DAYS);
 
-        HashMap<LocalDate, ArrayList<ScreeningRecord>> screenings = ScreeningService.getScreeningByDateRange(Date.from(todayInstant), Date.from(nextWeekInstant), this.user);
+        HashMap<LocalDate, ArrayList<ScreeningRecord>> screenings = ScreeningService.getScreeningByDateRange(Date.from(todayInstant), Date.from(nextWeekInstant));
 
         this.view.setGroupedContent(screenings, true);
     }
@@ -47,7 +48,7 @@ public class ScreeningListController implements PanelActionListener<Screening>, 
 
         JDialog dialog = new JDialog(ownerFrame, (item == null ? "Add" : "Edit") + " screening", true);
 
-        ScreeningController screeningController = new ScreeningController(item, this.user);
+        ScreeningController screeningController = new ScreeningController(item);
         screeningController.addObserver(this);
 
         dialog.setContentPane(screeningController.getView());
@@ -55,6 +56,11 @@ public class ScreeningListController implements PanelActionListener<Screening>, 
         dialog.pack();
         dialog.setLocationRelativeTo(ownerFrame);
         dialog.setVisible(true);
+    }
+
+    @Override
+    public void onDeleteRequested(Screening item) {
+
     }
 
     @Override

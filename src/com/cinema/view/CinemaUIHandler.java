@@ -3,7 +3,9 @@ package com.cinema.view;
 import com.cinema.controller.MovieListController;
 import com.cinema.controller.ScreenListController;
 import com.cinema.controller.ScreeningListController;
+import com.cinema.controller.auth.LoginController;
 import com.cinema.model.User;
+import com.cinema.service.auth.UserSession;
 import com.cinema.util.constants.DimensionConstants;
 import com.cinema.util.constants.TextConstants;
 
@@ -12,29 +14,38 @@ import java.awt.*;
 
 public class CinemaUIHandler extends JFrame {
 
-    public CinemaUIHandler(User user) {
+    public CinemaUIHandler() {
         super(TextConstants.TITLE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(DimensionConstants.MAIN_FRAME_DIMENSION);
 
+        User user = UserSession.getInstance().getCurrentUser();
+
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
+
+        JLabel label = new JLabel(user.getFirstName() + " - " + user.getRole().getRoleName());
+        infoPanel.add(label);
+
+        JButton refreshButton = new JButton("Logout");
+        refreshButton.addActionListener(e -> LoginController.getInstance().logout(this));
+        infoPanel.add(refreshButton);
+
+        add(infoPanel, BorderLayout.NORTH);
         JTabbedPane mainTabbedPane = new JTabbedPane();
 
         switch (user.getRole().getRoleId()) {
             case 1:
-                mainTabbedPane.addTab(TextConstants.SCREEN_PANEL, new ScreenListController(user).getView());
-                mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController(user).getView());
-                //See screening situation
+                mainTabbedPane.addTab(TextConstants.SCREEN_PANEL, new ScreenListController().getView());
+                mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
+                mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController().getView());
                 break;
             case 2:
-                mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController(user).getView());
-                //Add/edit screening
-                mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController(user).getView());
-                //I can add a movie only if the start time is after the last movie in that screen + that movie_duration + 15 min...
-                //See screening situation
+                mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
+                mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController().getView());
                 break;
             case 3:
-                //List movie
-                mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController(user).getView());
+                mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
                 //Buy tickets
                 //Purchase history (cancel only before X hours)
             default:

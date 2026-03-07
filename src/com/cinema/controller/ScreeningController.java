@@ -6,6 +6,7 @@ import com.cinema.model.User;
 import com.cinema.service.MovieService;
 import com.cinema.service.ScreenService;
 import com.cinema.service.ScreeningService;
+import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.util.Observable;
 import com.cinema.util.TimeSlot;
@@ -20,8 +21,8 @@ public class ScreeningController implements Observable<DialogCloseObserver> {
     private final EditScreeningPanel view;
     private final ArrayList<DialogCloseObserver> observers = new ArrayList<>();
 
-    public ScreeningController(Screening screening, User user) {
-        this.user = user;
+    public ScreeningController(Screening screening) {
+        this.user = UserSession.getInstance().getCurrentUser();
         this.view = new EditScreeningPanel(screening, user);
 
         this.fillComboBox();
@@ -29,8 +30,8 @@ public class ScreeningController implements Observable<DialogCloseObserver> {
     }
 
     private void fillComboBox() {
-        this.view.setAvailableMovies(MovieService.getAllMovies(this.user));
-        this.view.setAvailableScreens(ScreenService.getAllScreen(this.user));
+        this.view.setAvailableMovies(MovieService.getAllMovies());
+        this.view.setAvailableScreens(ScreenService.getAllScreen());
         this.view.setAvailableTimeSlots(TimeSlot.SLOTS);
     }
 
@@ -43,7 +44,12 @@ public class ScreeningController implements Observable<DialogCloseObserver> {
     private void save() {
         ScreeningRecord screeningRecord = this.view.getScreeningData();
 
-        boolean isOk = ScreeningService.validateAndSchedule(screeningRecord, this.user);
+        if (screeningRecord == null) {
+            JOptionPane.showMessageDialog(this.view, "Errore nella creazione della proiezione", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        boolean isOk = ScreeningService.validateAndSchedule(screeningRecord);
 
         this.closeDialog();
         this.notifyObservers(isOk);

@@ -63,15 +63,14 @@ public class LoginFrame extends JFrame implements ActionListener {
             String psw = new String(pswField.getPassword());
 
             try {
-                LoginController loginController = LoginController.getInstance();
-                User user = loginController.login(email, psw);
+                User user = LoginController.getInstance().login(email, psw);
 
                 if(user == null) {
                     JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Login Error", JOptionPane.ERROR_MESSAGE);
                     pswField.setText("");
                 } else {
                     this.dispose();
-                    openMainWindow(user);
+                    openMainWindow();
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
@@ -79,7 +78,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         }
     }
 
-    private void openMainWindow(User user) {
-        new CinemaUIHandler(user);
+    private void openMainWindow() {
+        new CinemaUIHandler();
     }
 }

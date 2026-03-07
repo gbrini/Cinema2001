@@ -1,18 +1,15 @@
 package com.cinema.view;
 
-import com.cinema.controller.ScreeningController;
 import com.cinema.controller.ScreeningViewController;
 import com.cinema.model.*;
 import com.cinema.util.constants.DimensionConstants;
 import com.cinema.util.constants.ThemeConstants;
-import com.cinema.view.abstracts.AbstractListPanel;
 import com.cinema.view.abstracts.AbstractTabularGroupView;
 import com.cinema.view.listener.PanelActionListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public class ListScreeningPanel extends AbstractTabularGroupView<LocalDate, ScreeningRecord, Screening> {
@@ -63,7 +60,7 @@ public class ListScreeningPanel extends AbstractTabularGroupView<LocalDate, Scre
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        screeningPanel.add(new JLabel(screeningRecord.tickets_sold() + "/" + screen.getcapacity()), gbc);
+        screeningPanel.add(new JLabel(screeningRecord.tickets_sold() + "/" + screen.getCapacity()), gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -79,7 +76,7 @@ public class ListScreeningPanel extends AbstractTabularGroupView<LocalDate, Scre
         Frame ownerFrame = (ownerWindow instanceof Frame) ? (Frame) ownerWindow : JOptionPane.getRootFrame();
 
         JDialog dialog = new JDialog(ownerFrame, "View screening", true);
-        ScreeningViewController screeningViewController = new ScreeningViewController(screeningId, this.user);
+        ScreeningViewController screeningViewController = new ScreeningViewController(screeningId);
 
         dialog.setContentPane(screeningViewController.getView());
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

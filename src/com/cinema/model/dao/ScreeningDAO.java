@@ -117,17 +117,17 @@ public class ScreeningDAO {
                     results.getBoolean("scr_is_del")
                 );
 
-                Movie movie = new Movie(
-                    results.getInt("mid"),
-                    results.getString("title"),
-                    results.getInt("duration_minutes"),
-                    LocalDate.parse(results.getDate("release_date").toString()),
-                    results.getString("genre"),
-                    results.getString("rating"),
-                    results.getString("description"),
-                    results.getString("director"),
-                    results.getBoolean("mv_is_del")
-                );
+                Movie movie = new Movie.Builder()
+                        .setMovieId(results.getInt("mid"))
+                        .setTitle(results.getString("title"))
+                        .setDurationMinutes(results.getInt("duration_minutes"))
+                        .setReleaseDate(results.getTimestamp("start_time").toLocalDateTime().toLocalDate())
+                        .setGenre(results.getString("genre"))
+                        .setRating(results.getString("rating"))
+                        .setDescription(results.getString("description"))
+                        .setDirector(results.getString("director"))
+                        .setIsDeleted(results.getBoolean("mv_is_del"))
+                        .build();
 
                 Screen screen = new Screen(
                     results.getInt("sid"),

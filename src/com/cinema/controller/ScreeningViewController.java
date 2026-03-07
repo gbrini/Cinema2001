@@ -3,7 +3,7 @@ package com.cinema.controller;
 import com.cinema.model.SeatEditor;
 import com.cinema.model.User;
 import com.cinema.service.SeatService;
-import com.cinema.view.SeatComponent;
+import com.cinema.service.auth.UserSession;
 import com.cinema.view.SeatMapPanel;
 
 import javax.swing.*;
@@ -13,9 +13,9 @@ public class ScreeningViewController {
     private final User user;
     private final ArrayList<SeatEditor> seats;
 
-    public ScreeningViewController(int screeningId, User user) {
-        this.user = user;
-        this.seats = SeatService.getSeatsStatusByScreeningId(screeningId, user);
+    public ScreeningViewController(int screeningId) {
+        this.user = UserSession.getInstance().getCurrentUser();
+        this.seats = SeatService.getSeatsStatusByScreeningId(screeningId);
     }
 
     public JPanel getView() {

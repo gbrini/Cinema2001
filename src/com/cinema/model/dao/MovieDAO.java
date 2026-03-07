@@ -45,7 +45,7 @@ public class MovieDAO {
     }
 
     public static boolean updateMovie(Movie movie) {
-        String sql = "UPDATE movie SET title = ?, duration_minutes = ?, release_date = ?, genre = ?, rating = ?, description = ?, director = ? WHERE movie_id = ? ";
+        String sql = "UPDATE movie SET title = ?, duration_minutes = ?, release_date = ?, genre = ?, rating = ?, description = ?, director = ?, is_deleted = ? WHERE movie_id = ? ";
 
         try {
             Connection conn = DatabaseConnection.getInstance();
@@ -58,7 +58,8 @@ public class MovieDAO {
             stmt.setString(5, movie.getRating());
             stmt.setString(6, movie.getDescription());
             stmt.setString(7, movie.getDirector());
-            stmt.setInt(8, movie.getMovieId());
+            stmt.setBoolean(8, movie.isDeleted());
+            stmt.setInt(9, movie.getMovieId());
 
             return stmt.executeUpdate() == 1;
         } catch (SQLException ex) {
@@ -74,7 +75,17 @@ public class MovieDAO {
         if (movie == null)
             return false;
 
-        movie.setDeleted(true);
+        movie = new Movie.Builder()
+                .setMovieId(movie.getMovieId())
+                .setTitle(movie.getTitle())
+                .setDurationMinutes(movie.getDurationMinutes())
+                .setGenre(movie.getGenre())
+                .setRating(movie.getRating())
+                .setDescription(movie.getDescription())
+                .setReleaseDate(movie.getReleaseDate())
+                .setDirector(movie.getDirector())
+                .setIsDeleted(true)
+                .build();
 
         return MovieDAO.updateMovie(movie);
     }
@@ -91,17 +102,17 @@ public class MovieDAO {
             ResultSet results = stmt.getResultSet();
 
             if (results.next()) {
-                movie = new Movie(
-                    results.getInt("movie_id"),
-                    results.getString("title"),
-                    results.getInt("duration_minutes"),
-                    LocalDate.parse(results.getDate("release_date").toString()),
-                    results.getString("genre"),
-                    results.getString("rating"),
-                    results.getString("description"),
-                    results.getString("director"),
-                    results.getBoolean("is_deleted")
-                );
+                movie = new Movie.Builder()
+                        .setMovieId(results.getInt("movie_id"))
+                        .setTitle(results.getString("title"))
+                        .setDurationMinutes(results.getInt("duration_minutes"))
+                        .setReleaseDate(LocalDate.parse(results.getDate("release_date").toString()))
+                        .setGenre(results.getString("genre"))
+                        .setRating(results.getString("rating"))
+                        .setDescription(results.getString("description"))
+                        .setDirector(results.getString("director"))
+                        .setIsDeleted(results.getBoolean("is_deleted"))
+                        .build();
             }
 
             return movie;
@@ -124,17 +135,17 @@ public class MovieDAO {
             ResultSet results = stmt.getResultSet();
 
             while (results.next()) {
-                movies.add(new Movie(
-                    results.getInt("movie_id"),
-                    results.getString("title"),
-                    results.getInt("duration_minutes"),
-                    LocalDate.parse(results.getDate("release_date").toString()),
-                    results.getString("genre"),
-                    results.getString("rating"),
-                    results.getString("description"),
-                    results.getString("director"),
-                    results.getBoolean("is_deleted")
-                ));
+                movies.add(new Movie.Builder()
+                        .setMovieId(results.getInt("movie_id"))
+                        .setTitle(results.getString("title"))
+                        .setDurationMinutes(results.getInt("duration_minutes"))
+                        .setReleaseDate(LocalDate.parse(results.getDate("release_date").toString()))
+                        .setGenre(results.getString("genre"))
+                        .setRating(results.getString("rating"))
+                        .setDescription(results.getString("description"))
+                        .setDirector(results.getString("director"))
+                        .setIsDeleted(results.getBoolean("is_deleted"))
+                        .build());
             }
 
         } catch (SQLException ex) {

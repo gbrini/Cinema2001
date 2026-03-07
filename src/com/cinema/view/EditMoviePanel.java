@@ -5,6 +5,7 @@ import com.cinema.model.Movie;
 import com.cinema.model.User;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -79,20 +80,21 @@ public class EditMoviePanel extends JPanel {
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
-        dateField = new JFormattedTextField(this.DATE_FORMAT);
-        dateField.setColumns(20);
-        dateField.addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (!((c >= '0') && (c <= '9') ||
-                        (c == KeyEvent.VK_BACK_SPACE) ||
-                        (c == KeyEvent.VK_DELETE) || (c == '-')))
-                {
-                    e.consume();
-                }
+
+        try {
+            MaskFormatter dateMask = new MaskFormatter("####-##-##");
+            dateMask.setPlaceholderCharacter('_');
+
+            dateField = new JFormattedTextField(dateMask);
+            dateField.setColumns(10);
+
+            if(this.movie != null && this.movie.getReleaseDate() != null) {
+                dateField.setValue(this.movie.getReleaseDate());
             }
-        });
-        dateField.setText(this.movie == null ? "" : movie.getReleaseDate().toString());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
         add(dateField, gbc);
 
         //genre string
@@ -199,17 +201,17 @@ public class EditMoviePanel extends JPanel {
             selectedRating = this.ratingField.getSelectedItem().toString();
         }
 
-        return new Movie(
-            this.movie == null ? 0 : this.movie.getMovieId(),
-            this.titleField.getText().trim(),
-            durationMinute,
-            LocalDate.parse(parsedDate),
-            this.genreField.getText().trim(),
-            selectedRating,
-            this.descriptionField.getText().trim(),
-            this.directorField.getText().trim(),
-            false
-        );
+        return new Movie.Builder()
+                .setMovieId(this.movie == null ? 0 : this.movie.getMovieId())
+                .setTitle(this.titleField.getText().trim())
+                .setDurationMinutes(durationMinute)
+                .setReleaseDate(LocalDate.parse(parsedDate))
+                .setGenre(this.genreField.getText().trim())
+                .setRating(selectedRating)
+                .setDescription(this.descriptionField.getText().trim())
+                .setDirector(this.directorField.getText().trim())
+                .setIsDeleted(false)
+                .build();
     }
 
     public void displayError(String errorMsg) {
@@ -217,4 +219,6 @@ public class EditMoviePanel extends JPanel {
     }
 
     public void addSaveListener(ActionListener listener) { this.addButton.addActionListener(listener); }
+
+    public JButton getAddButton() { return this.addButton; }
 }

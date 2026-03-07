@@ -6,6 +6,7 @@ import com.cinema.model.SeatEditor;
 import com.cinema.model.User;
 import com.cinema.service.ScreenService;
 import com.cinema.service.SeatService;
+import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.util.Observable;
 import com.cinema.view.SeatComponent;
@@ -23,8 +24,8 @@ public class SeatMapController implements Observable<DialogCloseObserver> {
     private final Screen screen;
     private final List<DialogCloseObserver> observers = new ArrayList<>();
 
-    public SeatMapController(Screen screen, User user) {
-        this.user = user;
+    public SeatMapController(Screen screen) {
+        this.user = UserSession.getInstance().getCurrentUser();
         this.screen = screen;
 
         if (this.screen == null) {
@@ -37,7 +38,7 @@ public class SeatMapController implements Observable<DialogCloseObserver> {
     }
 
     private List<SeatEditor> loadInitialModels(int screenId) {
-        ArrayList<Seat> seats = SeatService.getSeatsByScreenId(screenId, this.user);
+        ArrayList<Seat> seats = SeatService.getSeatsByScreenId(screenId);
 
         if(seats.isEmpty()) {
             return this.generateDefaultLayout();
@@ -147,7 +148,7 @@ public class SeatMapController implements Observable<DialogCloseObserver> {
 
         if (this.screen == null) {
             Screen screen = new Screen(screenName, seatsEditorToSave.size(), false);
-            screenId = ScreenService.addScreen(screen, this.user);
+            screenId = ScreenService.addScreen(screen);
 
             if (screenId < 1) {
                 JOptionPane.showMessageDialog(this.view, "There was an error saving this screen.");
@@ -168,7 +169,7 @@ public class SeatMapController implements Observable<DialogCloseObserver> {
             ));
         }
 
-        boolean addedSeats = SeatService.upsertSeats(seatsToAdd, this.user);
+        boolean addedSeats = SeatService.upsertSeats(seatsToAdd);
         this.notifyObservers(addedSeats);
         this.closeDialog();
     }
