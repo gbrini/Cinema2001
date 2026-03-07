@@ -38,17 +38,13 @@ public class CinemaUIHandler extends JFrame {
             case 1:
                 mainTabbedPane.addTab(TextConstants.SCREEN_PANEL, new ScreenListController().getView());
                 mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
-                //See screening situation
+                mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController().getView());
                 break;
             case 2:
                 mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
-                //Add/edit screening
                 mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController().getView());
-                //I can add a movie only if the start time is after the last movie in that screen + that movie_duration + 15 min...
-                //See screening situation
                 break;
             case 3:
-                //List movie
                 mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
                 //Buy tickets
                 //Purchase history (cancel only before X hours)
