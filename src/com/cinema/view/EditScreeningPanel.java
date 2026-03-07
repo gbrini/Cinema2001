@@ -114,6 +114,10 @@ public class EditScreeningPanel extends JPanel {
         Screen screen = (Screen) this.screenSelect.getSelectedItem();
         LocalTime slot = (LocalTime) this.timeSlotSelect.getSelectedItem();
 
+        if (movie == null || screen == null || slot == null) {
+            return null;
+        }
+
         LocalDateTime localDateTime = LocalDateTime.of(date, slot);
 
         Screening screening = new Screening(

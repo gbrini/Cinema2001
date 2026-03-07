@@ -44,6 +44,11 @@ public class ScreeningController implements Observable<DialogCloseObserver> {
     private void save() {
         ScreeningRecord screeningRecord = this.view.getScreeningData();
 
+        if (screeningRecord == null) {
+            JOptionPane.showMessageDialog(this.view, "Errore nella creazione della proiezione", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         boolean isOk = ScreeningService.validateAndSchedule(screeningRecord);
 
         this.closeDialog();
