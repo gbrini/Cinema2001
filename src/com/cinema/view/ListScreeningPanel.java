@@ -10,6 +10,8 @@ import com.cinema.view.listener.PanelActionListener;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ListScreeningPanel extends AbstractTabularGroupView<LocalDate, ScreeningRecord, Screening> {
@@ -30,15 +32,20 @@ public class ListScreeningPanel extends AbstractTabularGroupView<LocalDate, Scre
         JPanel listContent = new JPanel();
         listContent.setLayout(new BoxLayout(listContent, BoxLayout.Y_AXIS));
 
+        LinkedHashMap<String, List<ScreeningRecord>> grouped = new LinkedHashMap<>();
+        for (ScreeningRecord sr : items) {
+            grouped.computeIfAbsent(sr.movie().getTitle(), k -> new ArrayList<>()).add(sr);
+        }
+
         int index = 0;
-        for (ScreeningRecord screeningRecord: items) {
-            listContent.add(this.createScreeningRow(screeningRecord, index++));
+        for (List<ScreeningRecord> group : grouped.values()) {
+            listContent.add(this.createGroupedScreeningRow(group, index++));
         }
 
         return new JScrollPane(listContent);
     }
 
-    private JPanel createScreeningRow(ScreeningRecord screeningRecord, int index) {
+    private JPanel createGroupedScreeningRow(List<ScreeningRecord> group, int index) {
         JPanel screeningPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = DimensionConstants.STANDARD_INSETS;
@@ -46,27 +53,25 @@ public class ListScreeningPanel extends AbstractTabularGroupView<LocalDate, Scre
         Color backgroundColor = (index % 2 == 0) ? ThemeConstants.EVEN_ROW_BG : ThemeConstants.ODD_ROW_BG;
         screeningPanel.setBackground(backgroundColor);
 
-        Screening screening = screeningRecord.screening();
-        Movie movie = screeningRecord.movie();
-        Screen screen = screeningRecord.screen();
+        ScreeningRecord first = group.get(0);
+        Movie movie = first.movie();
+        Screen screen = first.screen();
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        screeningPanel.add(new JLabel(screening.getScreenId() + " - " + screen.getScreenName() + " - " + screening.getStartTimeT()), gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridwidth = group.size();
         screeningPanel.add(new JLabel(movie.getTitle()), gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        screeningPanel.add(new JLabel(screeningRecord.tickets_sold() + "/" + screen.getCapacity()), gbc);
+        gbc.gridwidth = 1;
+        gbc.gridy = 1;
 
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        JButton viewButton = new JButton("View");
-        viewButton.addActionListener(e -> this.openDialogView(screening.getScreeningId()));
-        screeningPanel.add(viewButton, gbc);
+        for (int i = 0; i < group.size(); i++) {
+            ScreeningRecord sr = group.get(i);
+            gbc.gridx = i;
+            JButton timeButton = new JButton(sr.screening().getStartTimeT().toString());
+            timeButton.addActionListener(e -> this.openDialogView(sr.screening().getScreeningId()));
+            screeningPanel.add(timeButton, gbc);
+        }
 
         return screeningPanel;
     }
