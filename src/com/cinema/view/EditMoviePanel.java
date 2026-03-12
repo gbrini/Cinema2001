@@ -30,7 +30,7 @@ public class EditMoviePanel extends JPanel {
 
     private JButton addButton;
 
-    private final String[] S_COMBO = {"G", "PG", "PG-13", "R", "NC-17"};
+    private final String[] S_COMBO = {"T", "6+ / 10+", "VM14", "VM18"};
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public EditMoviePanel(Movie movie, User user) {
