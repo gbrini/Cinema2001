@@ -2,6 +2,7 @@ package com.cinema.view;
 
 import com.cinema.model.Movie;
 import com.cinema.util.constants.DimensionConstants;
+import com.cinema.util.constants.TextConstants;
 import com.cinema.util.constants.ThemeConstants;
 import com.cinema.view.abstracts.AbstractListPanel;
 import com.cinema.view.listener.PanelActionListener;
@@ -43,7 +44,7 @@ public class ListMoviePanel extends AbstractListPanel<Movie> {
         gbc.gridx = 0;
         gbc.gridy = 3;
 
-        JTextArea descriptionArea = new JTextArea(movie.getDescription());
+        JTextArea descriptionArea = new JTextArea(movie.getDescription() + "\n\n" + TextConstants.DESCRIPTION_DELAY);
         descriptionArea.setLineWrap(true);
         descriptionArea.setEditable(false);
         descriptionArea.setOpaque(true);
