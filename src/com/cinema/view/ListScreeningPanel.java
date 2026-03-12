@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class ListScreeningPanel extends AbstractTabularGroupView<LocalDate, Scre
     protected JScrollPane createGroupListPanel(LocalDate key, List<ScreeningRecord> items, boolean canEdit) {
         JPanel listContent = new JPanel();
         listContent.setLayout(new BoxLayout(listContent, BoxLayout.Y_AXIS));
+
+        items.sort(Comparator.comparing(sr -> sr.screening().getStartTimeT()));
 
         LinkedHashMap<String, List<ScreeningRecord>> grouped = new LinkedHashMap<>();
         for (ScreeningRecord sr : items) {
