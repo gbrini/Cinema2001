@@ -4,8 +4,10 @@ import com.cinema.model.*;
 import com.cinema.service.MovieService;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -16,7 +18,7 @@ public class EditScreeningPanel extends JPanel {
     private final User user;
     private ArrayList<Movie> movies;
 
-    private final JTextField dateField;
+    private final JFormattedTextField dateField;
     private final JComboBox movieSelect;
     private final JComboBox screenSelect;
     private final JComboBox timeSlotSelect;
@@ -39,7 +41,19 @@ public class EditScreeningPanel extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.dateField = new JTextField(LocalDate.now().toString());
+
+        try {
+            MaskFormatter dateMask = new MaskFormatter("####-##-##");
+            dateMask.setPlaceholderCharacter('_');
+
+            dateField = new JFormattedTextField(dateMask);
+            dateField.setColumns(10);
+
+            dateField.setValue(LocalDate.now().toString());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        
         add(this.dateField, gbc);
 
         gbc.gridx = 0;
