@@ -1,5 +1,7 @@
 package com.cinema.view.abstracts;
 
+import com.cinema.model.User;
+import com.cinema.service.auth.UserSession;
 import com.cinema.view.listener.PanelActionListener;
 
 import javax.swing.*;
@@ -27,9 +29,14 @@ public abstract class AbstractTabularGroupView<K, V, Z> extends JPanel {
         JButton refreshButton = new JButton("Refresh");
         refreshButton.addActionListener(e -> actionListener.onRefreshRequested());
         buttonPanel.add(refreshButton);
-        JButton addButton = new JButton("Add");
-        addButton.addActionListener(e -> actionListener.onEditRequested(null));
-        buttonPanel.add(addButton);
+
+        User user = UserSession.getInstance().getCurrentUser();
+
+        if (user.getRole().getRoleId() == 1) {
+            JButton addButton = new JButton("Add");
+            addButton.addActionListener(e -> actionListener.onEditRequested(null));
+            buttonPanel.add(addButton);
+        }
 
         add(buttonPanel, BorderLayout.NORTH);
     }
