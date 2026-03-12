@@ -40,10 +40,10 @@ public class CinemaUIHandler extends JFrame {
                 mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
                 mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController().getView());
                 break;
-            case 2:
-                mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
-                mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController().getView());
-                break;
+//            case 2:
+//                mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
+//                mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController().getView());
+//                break;
             case 3:
                 mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
                 //Buy tickets
