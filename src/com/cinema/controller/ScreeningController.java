@@ -16,7 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ScreeningController implements Observable<DialogCloseObserver> {
+public class ScreeningController extends BaseController implements Observable<DialogCloseObserver> {
     private final User user;
     private final EditScreeningPanel view;
     private final ArrayList<DialogCloseObserver> observers = new ArrayList<>();
@@ -49,10 +49,14 @@ public class ScreeningController implements Observable<DialogCloseObserver> {
             return;
         }
 
-        boolean isOk = ScreeningService.validateAndSchedule(screeningRecord);
+        try {
+            boolean isOk = ScreeningService.validateAndSchedule(screeningRecord);
 
-        this.closeDialog();
-        this.notifyObservers(isOk);
+            this.closeDialog();
+            this.notifyObservers(isOk);
+        } catch (Exception e) {
+            handleException(e);
+        }
     }
 
     private void closeDialog() {
