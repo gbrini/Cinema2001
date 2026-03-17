@@ -30,9 +30,13 @@ public class ScreeningController extends BaseController implements Observable<Di
     }
 
     private void fillComboBox() {
-        this.view.setAvailableMovies(MovieService.getAllMovies());
-        this.view.setAvailableScreens(ScreenService.getAllScreen());
-        this.view.setAvailableTimeSlots(TimeSlot.SLOTS);
+        try {
+            this.view.setAvailableMovies(MovieService.getAllMovies());
+            this.view.setAvailableScreens(ScreenService.getAllScreen());
+            this.view.setAvailableTimeSlots(TimeSlot.SLOTS);
+        } catch (Exception e) {
+            handleException(e);
+        }
     }
 
     private void attachListeners() {

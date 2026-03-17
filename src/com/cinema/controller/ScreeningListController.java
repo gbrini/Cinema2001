@@ -3,9 +3,12 @@ package com.cinema.controller;
 import com.cinema.model.Screening;
 import com.cinema.model.ScreeningRecord;
 import com.cinema.model.User;
+import com.cinema.service.MovieService;
+import com.cinema.service.ScreenService;
 import com.cinema.service.ScreeningService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
+import com.cinema.util.TimeSlot;
 import com.cinema.view.ListScreeningPanel;
 import com.cinema.view.listener.PanelActionListener;
 
@@ -18,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class ScreeningListController implements PanelActionListener<Screening>, DialogCloseObserver {
+public class ScreeningListController extends BaseController implements PanelActionListener<Screening>, DialogCloseObserver {
     private final User user;
     private final ListScreeningPanel view;
 
@@ -36,9 +39,12 @@ public class ScreeningListController implements PanelActionListener<Screening>, 
         Instant todayInstant = Instant.now();
         Instant nextWeekInstant = todayInstant.plus(7, ChronoUnit.DAYS);
 
-        HashMap<LocalDate, ArrayList<ScreeningRecord>> screenings = ScreeningService.getScreeningByDateRange(Date.from(todayInstant), Date.from(nextWeekInstant));
-
-        this.view.setGroupedContent(screenings, true);
+        try {
+            HashMap<LocalDate, ArrayList<ScreeningRecord>> screenings = ScreeningService.getScreeningByDateRange(Date.from(todayInstant), Date.from(nextWeekInstant));
+            this.view.setGroupedContent(screenings, true);
+        } catch (Exception e) {
+            handleException(e);
+        }
     }
 
     @Override
