@@ -13,7 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MovieListController implements PanelActionListener<Movie>, DialogCloseObserver {
+public class MovieListController extends BaseController implements PanelActionListener<Movie>, DialogCloseObserver {
     private final User user;
     private final ListMoviePanel view;
 
@@ -50,18 +50,11 @@ public class MovieListController implements PanelActionListener<Movie>, DialogCl
 
     @Override
     public void onDeleteRequested(Movie item) {
-        boolean ok;
-
         try {
-            ok = MovieService.deleteMovie(item.getMovieId());
-        } catch (UnauthorizedAccessException exc) {
-            ok = false;
-        }
-
-        if (ok) {
+            MovieService.deleteMovie(item.getMovieId());
             this.onRefreshRequested();
-        } else {
-            JOptionPane.showMessageDialog(this.view, "Errore!");
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 

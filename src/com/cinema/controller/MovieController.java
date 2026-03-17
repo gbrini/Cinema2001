@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieController implements Observable<DialogCloseObserver> {
+public class MovieController extends BaseController implements Observable<DialogCloseObserver> {
     private final User user;
     private final EditMoviePanel view;
     private final List<DialogCloseObserver> observers = new ArrayList<>();
@@ -77,8 +77,9 @@ public class MovieController implements Observable<DialogCloseObserver> {
             } else {
                 isOk = MovieService.updateMovie(newMovie);
             }
-        } catch (UnauthorizedAccessException e) {
+        } catch (Exception e) {
             isOk = false;
+            handleException(e);
         }
 
         this.notifyObservers(isOk);
