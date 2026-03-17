@@ -2,6 +2,7 @@ package com.cinema.controller;
 
 import com.cinema.model.Screen;
 import com.cinema.model.User;
+import com.cinema.service.MovieService;
 import com.cinema.service.ScreenService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
@@ -12,7 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ScreenListController implements PanelActionListener<Screen>, DialogCloseObserver {
+public class ScreenListController extends BaseController implements PanelActionListener<Screen>, DialogCloseObserver {
     private final User user;
     private final ListScreenPanel view;
 
@@ -26,8 +27,12 @@ public class ScreenListController implements PanelActionListener<Screen>, Dialog
 
     @Override
     public void onRefreshRequested() {
-        ArrayList<Screen> screens = ScreenService.getAllScreen();
-        this.view.setContentList(screens);
+        try {
+            ArrayList<Screen> screens = ScreenService.getAllScreen();
+            this.view.setContentList(screens);
+        } catch (Exception e) {
+            handleException(e);
+        }
     }
 
     @Override
