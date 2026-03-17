@@ -5,6 +5,7 @@ import com.cinema.model.User;
 import com.cinema.service.MovieService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
+import com.cinema.util.UnauthorizedAccessException;
 import com.cinema.view.ListMoviePanel;
 import com.cinema.view.listener.PanelActionListener;
 
@@ -49,7 +50,13 @@ public class MovieListController implements PanelActionListener<Movie>, DialogCl
 
     @Override
     public void onDeleteRequested(Movie item) {
-        boolean ok = MovieService.deleteMovie(item.getMovieId());
+        boolean ok;
+
+        try {
+            ok = MovieService.deleteMovie(item.getMovieId());
+        } catch (UnauthorizedAccessException exc) {
+            ok = false;
+        }
 
         if (ok) {
             this.onRefreshRequested();
