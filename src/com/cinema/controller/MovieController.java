@@ -6,6 +6,7 @@ import com.cinema.service.MovieService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.util.Observable;
+import com.cinema.util.UnauthorizedAccessException;
 import com.cinema.view.EditMoviePanel;
 
 import javax.swing.*;
@@ -70,10 +71,14 @@ public class MovieController implements Observable<DialogCloseObserver> {
 
         boolean isOk;
 
-        if (newMovie.getMovieId() == 0) {
-            isOk = MovieService.addMovie(newMovie) != 0;
-        } else {
-            isOk = MovieService.updateMovie(newMovie);
+        try {
+            if (newMovie.getMovieId() == 0) {
+                isOk = MovieService.addMovie(newMovie) != 0;
+            } else {
+                isOk = MovieService.updateMovie(newMovie);
+            }
+        } catch (UnauthorizedAccessException e) {
+            isOk = false;
         }
 
         this.notifyObservers(isOk);
