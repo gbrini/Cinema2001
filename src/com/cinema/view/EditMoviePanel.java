@@ -25,7 +25,7 @@ public class EditMoviePanel extends JPanel {
     private JFormattedTextField dateField;
     private JTextField genreField;
     private JComboBox ratingField;
-    private JTextField descriptionField;
+    private JTextArea descriptionField;
     private JTextField directorField;
 
     private JButton addButton;
@@ -149,7 +149,7 @@ public class EditMoviePanel extends JPanel {
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
-        descriptionField = new JTextField(20);
+        descriptionField = new JTextArea(5, 20);
         descriptionField.setText(this.movie == null ? "" : movie.getDescription());
         add(descriptionField, gbc);
 
