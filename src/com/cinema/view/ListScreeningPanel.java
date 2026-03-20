@@ -72,19 +72,19 @@ public class ListScreeningPanel extends AbstractTabularGroupView<LocalDate, Scre
             ScreeningRecord sr = group.get(i);
             gbc.gridx = i;
             JButton timeButton = new JButton(sr.screening().getStartTimeT().toString());
-            timeButton.addActionListener(e -> this.openDialogView(sr.screening().getScreeningId()));
+            timeButton.addActionListener(e -> this.openDialogView(sr));
             screeningPanel.add(timeButton, gbc);
         }
 
         return screeningPanel;
     }
 
-    private void openDialogView(int screeningId) {
+    private void openDialogView(ScreeningRecord screeningRecord) {
         Window ownerWindow = SwingUtilities.getWindowAncestor(this);
         Frame ownerFrame = (ownerWindow instanceof Frame) ? (Frame) ownerWindow : JOptionPane.getRootFrame();
 
         JDialog dialog = new JDialog(ownerFrame, "View screening", true);
-        ScreeningViewController screeningViewController = new ScreeningViewController(screeningId);
+        ScreeningViewController screeningViewController = new ScreeningViewController(screeningRecord.screening().getScreeningId());
 
         dialog.setContentPane(screeningViewController.getView());
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
