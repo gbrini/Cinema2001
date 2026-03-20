@@ -37,6 +37,10 @@ public class SeatMapPanel extends JPanel {
 
         JPanel infoContent = new JPanel();
 
+        if (this.screeningRecord != null) {
+            infoContent.add(new JLabel(screeningRecord.screening().getStartTime() + " - " + screeningRecord.screen().getScreenName()));
+        }
+
         int maxRow = 0;
         int maxCol = 0;
 
