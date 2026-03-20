@@ -45,16 +45,14 @@ public class SeatComponent extends JToggleButton {
         if(this.seatEditor.isTaken()) {
             setText("X");
             setEnabled(false);
+        } else if (!this.canEdit) {
+            setEnabled(false);
         }
 
 //        if(this.seatEditor.isSelected()) {
 //            fillColor = Color.YELLOW;
 //            setBorder(BorderFactory.createLineBorder(Color.RED, 4));
 //        }
-
-        if(!this.canEdit) {
-            setEnabled(false);
-        }
 
         setBackground(fillColor);
         setToolTipText(tooltip);
