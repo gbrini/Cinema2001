@@ -35,6 +35,8 @@ public class SeatMapPanel extends JPanel {
             return new JPanel();
         }
 
+        JPanel infoContent = new JPanel();
+
         int maxRow = 0;
         int maxCol = 0;
 
@@ -76,7 +78,11 @@ public class SeatMapPanel extends JPanel {
         wrapper.add(listContent, BorderLayout.WEST);
         wrapper.add(seatGridPanel, BorderLayout.CENTER);
 
-        return wrapper;
+        JPanel layout = new JPanel(new BorderLayout());
+        layout.add(infoContent, BorderLayout.NORTH);
+        layout.add(wrapper, BorderLayout.CENTER);
+
+        return layout;
     }
 
     private JLabel createRowLabel(String text) {
