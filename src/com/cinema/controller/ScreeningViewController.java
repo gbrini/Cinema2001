@@ -1,5 +1,6 @@
 package com.cinema.controller;
 
+import com.cinema.model.ScreeningRecord;
 import com.cinema.model.SeatEditor;
 import com.cinema.model.User;
 import com.cinema.service.SeatService;
@@ -13,9 +14,9 @@ public class ScreeningViewController {
     private final User user;
     private final ArrayList<SeatEditor> seats;
 
-    public ScreeningViewController(int screeningId) {
+    public ScreeningViewController(ScreeningRecord screeningRecord) {
         this.user = UserSession.getInstance().getCurrentUser();
-        this.seats = SeatService.getSeatsStatusByScreeningId(screeningId);
+        this.seats = SeatService.getSeatsStatusByScreeningId(screeningRecord.screening().getScreeningId());
     }
 
     public JPanel getView() {

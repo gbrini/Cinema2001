@@ -87,7 +87,7 @@ public class ListScreeningPanel extends AbstractTabularGroupView<LocalDate, Scre
         title += " - " + screeningRecord.movie().getTitle();
 
         JDialog dialog = new JDialog(ownerFrame, title, true);
-        ScreeningViewController screeningViewController = new ScreeningViewController(screeningRecord.screening().getScreeningId());
+        ScreeningViewController screeningViewController = new ScreeningViewController(screeningRecord);
 
         dialog.setContentPane(screeningViewController.getView());
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
