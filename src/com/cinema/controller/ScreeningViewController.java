@@ -22,7 +22,7 @@ public class ScreeningViewController {
     }
 
     public JPanel getView() {
-        SeatMapPanel seatMapPanel = new SeatMapPanel(this.seats, false, this.user, this.screeningRecord);
+        SeatMapPanel seatMapPanel = new SeatMapPanel(this.seats, this.user.getRole().getRoleId() != 1, this.user, this.screeningRecord);
         return seatMapPanel.getView();
     }
 }
