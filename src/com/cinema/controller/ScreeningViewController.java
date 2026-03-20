@@ -13,9 +13,11 @@ import java.util.ArrayList;
 public class ScreeningViewController {
     private final User user;
     private final ArrayList<SeatEditor> seats;
+    private final ScreeningRecord screeningRecord;
 
     public ScreeningViewController(ScreeningRecord screeningRecord) {
         this.user = UserSession.getInstance().getCurrentUser();
+        this.screeningRecord = screeningRecord;
         this.seats = SeatService.getSeatsStatusByScreeningId(screeningRecord.screening().getScreeningId());
     }
 
