@@ -6,6 +6,7 @@ import com.cinema.view.listener.PanelActionListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
 
@@ -52,6 +53,11 @@ public abstract class AbstractTabularGroupView<K, V, Z> extends JPanel {
             List<V> items = groupedData.get(key);
 
             JScrollPane contentPanel = this.createGroupListPanel(key, items, canEdit);
+
+            if (Objects.equals(tabTitle, LocalDate.now().toString())) {
+                tabTitle = "Oggi";
+            }
+
             tabbedPane.addTab(tabTitle, contentPanel);
         }
 
