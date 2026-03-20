@@ -42,7 +42,7 @@ public class SeatMapEditorPanel extends JPanel {
     }
 
     private void initializeLayout(List<SeatEditor> initialLayout) {
-        SeatMapPanel seatMapPanel = new SeatMapPanel(new ArrayList<>(initialLayout), true, this.user);
+        SeatMapPanel seatMapPanel = new SeatMapPanel(new ArrayList<>(initialLayout), true, this.user, null);
         JPanel seatView = seatMapPanel.getView();
         this.seatComponents = seatMapPanel.getSeatComponents();
         add(seatView, BorderLayout.CENTER);

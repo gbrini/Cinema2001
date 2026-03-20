@@ -1,5 +1,6 @@
 package com.cinema.view;
 
+import com.cinema.model.ScreeningRecord;
 import com.cinema.model.SeatEditor;
 import com.cinema.model.User;
 import com.cinema.service.SeatService;
@@ -15,15 +16,18 @@ public class SeatMapPanel extends JPanel {
     private final ArrayList<SeatEditor> seats;
     private final ArrayList<SeatComponent> seatComponents = new ArrayList<>();
     private boolean canEdit = false;
+    private final ScreeningRecord screeningRecord;
 
-    public SeatMapPanel(int screeningId, boolean canEdit, User user) {
+    public SeatMapPanel(int screeningId, boolean canEdit, User user, ScreeningRecord screeningRecord) {
         this.seats = SeatService.getSeatsStatusByScreeningId(screeningId);
         this.canEdit = canEdit;
+        this.screeningRecord = screeningRecord;
     }
 
-    public SeatMapPanel(ArrayList<SeatEditor> seats, boolean canEdit, User user) {
+    public SeatMapPanel(ArrayList<SeatEditor> seats, boolean canEdit, User user, ScreeningRecord screeningRecord) {
         this.seats = seats;
         this.canEdit = canEdit;
+        this.screeningRecord = screeningRecord;
     }
 
     public JPanel getView() {
