@@ -34,7 +34,29 @@ public class TicketTypeDAO {
         return ticketTypes;
     }
 
-    public static TicketType getTicketTypeById(int id) {
-        return null;
+    public static TicketType getTicketTypeById(int typeId) {
+        TicketType ticketType = null;
+
+        try {
+            Connection conn = DatabaseConnection.getInstance();
+            PreparedStatement stmt = conn.prepareStatement("select * from ticket_type where type_id = ?");
+
+            stmt.setInt(1, typeId);
+
+            ResultSet result = stmt.executeQuery();
+
+            if (result.next()) {
+                ticketType = new TicketType(
+                        result.getInt("type_id"),
+                        result.getString("type_name"),
+                        result.getFloat("base_discount_percent"),
+                        result.getFloat("base_price_addendum")
+                );
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error getting ticket types " + ex);
+        }
+
+        return ticketType;
     }
 }
