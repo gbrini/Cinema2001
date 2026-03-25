@@ -16,6 +16,10 @@ public class TicketFactory {
         return new Ticket.Builder()
                 .setFinalPrice(finalPrice)
                 .setPurchaseTime(LocalDateTime.now())
+                .setScreeningId(screening.getScreeningId())
+                .setSeatId(seat.getSeatId())
+                .setUserId(user.getUserId())
+                .setTypeId(ticketType.getTypeId())
                 .build();
     }
 }
