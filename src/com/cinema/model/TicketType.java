@@ -3,10 +3,10 @@ package com.cinema.model;
 public class TicketType {
     private final int typeId;
     private final String typeName;
-    private final double baseDiscountPercent;
-    private final double basePriceAddendum;
+    private final float baseDiscountPercent;
+    private final float basePriceAddendum;
 
-    public TicketType(int typeId, String typeName, double baseDiscountPercent, double basePriceAddendum) {
+    public TicketType(int typeId, String typeName, float baseDiscountPercent, float basePriceAddendum) {
         this.typeId = typeId;
         this.typeName = typeName;
         this.baseDiscountPercent = baseDiscountPercent;
@@ -21,11 +21,11 @@ public class TicketType {
         return typeName;
     }
 
-    public double getBaseDiscountPercent() {
+    public float getBaseDiscountPercent() {
         return baseDiscountPercent;
     }
 
-    public double getBasePriceAddendum() {
+    public float getBasePriceAddendum() {
         return basePriceAddendum;
     }
 }
