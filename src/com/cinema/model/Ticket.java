@@ -1,6 +1,7 @@
 package com.cinema.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Ticket {
     private final int ticketId;
@@ -8,7 +9,7 @@ public class Ticket {
     private final int typeId;
     private final int seatId;
     private final int userId;
-    private final LocalDate purchaseTime;
+    private final LocalDateTime purchaseTime;
     private final float finalPrice;
 
     public Ticket(Builder builder) {
@@ -27,7 +28,7 @@ public class Ticket {
         private int typeId;
         private int seatId;
         private int userId;
-        private LocalDate purchaseTime;
+        private LocalDateTime purchaseTime;
         private float finalPrice;
 
         public Builder setTicketId(int ticketId) { this.ticketId = ticketId; return this; }
@@ -35,7 +36,7 @@ public class Ticket {
         public Builder setTypeId(int typeId) { this.typeId = typeId; return this; }
         public Builder setSeatId(int seatId) { this.seatId = seatId; return this; }
         public Builder setUserId(int userId) { this.userId = userId; return this; }
-        public Builder setPurchaseTime(LocalDate purchaseTime) { this.purchaseTime = purchaseTime; return this; }
+        public Builder setPurchaseTime(LocalDateTime purchaseTime) { this.purchaseTime = purchaseTime; return this; }
         public Builder setFinalPrice(float finalPrice) { this.finalPrice = finalPrice; return this; }
 
         public Ticket build() { return new Ticket(this); }
@@ -61,7 +62,7 @@ public class Ticket {
         return userId;
     }
 
-    public LocalDate getPurchaseTime() {
+    public LocalDateTime getPurchaseTime() {
         return purchaseTime;
     }
 

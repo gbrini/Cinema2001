@@ -2,6 +2,9 @@ package com.cinema.util;
 
 import com.cinema.model.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class TicketFactory {
     public static Ticket createTicket(Screening screening, TicketType ticketType, Seat seat, User user) {
         float basePrice = screening.getTicketPrice();
@@ -10,6 +13,9 @@ public class TicketFactory {
 
         float finalPrice = basePrice - ( basePrice * discount / 100 ) + addendum;
 
-        return null;
+        return new Ticket.Builder()
+                .setFinalPrice(finalPrice)
+                .setPurchaseTime(LocalDateTime.now())
+                .build();
     }
 }
