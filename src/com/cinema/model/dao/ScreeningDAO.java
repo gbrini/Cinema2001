@@ -65,7 +65,7 @@ public class ScreeningDAO {
                     results.getInt("movie_id"),
                     results.getInt("screen_id"),
                     results.getTimestamp("start_time").toLocalDateTime(),
-                    results.getDouble("ticket_price"),
+                    results.getFloat("ticket_price"),
                     results.getBoolean("is_deleted")
                 ));
             }
@@ -113,7 +113,7 @@ public class ScreeningDAO {
                     results.getInt("mid"),
                     results.getInt("sid"),
                     results.getTimestamp("start_time").toLocalDateTime(),
-                    results.getDouble("ticket_price"),
+                    results.getFloat("ticket_price"),
                     results.getBoolean("scr_is_del")
                 );
 

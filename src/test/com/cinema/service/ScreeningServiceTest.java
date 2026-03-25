@@ -33,7 +33,7 @@ public class ScreeningServiceTest {
                 .setIsDeleted(false)
                 .build();
 
-        Screening screening = new Screening(movie.getMovieId(), screenId, startTime, 10.00, false);
+        Screening screening = new Screening(movie.getMovieId(), screenId, startTime, 10.00F, false);
 
         Screen screen = new Screen(screenId, "Screen " + screenId, 100, false);
 
