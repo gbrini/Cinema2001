@@ -11,7 +11,7 @@ public class Ticket {
     private final LocalDate purchaseTime;
     private final float finalPrice;
 
-    private Ticket(Builder builder) {
+    public Ticket(Builder builder) {
         this.ticketId = builder.ticketId;
         this.screeningId = builder.screeningId;
         this.typeId = builder.typeId;
