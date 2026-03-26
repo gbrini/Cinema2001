@@ -6,6 +6,7 @@ import com.cinema.service.TicketTypeService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.util.Observable;
+import com.cinema.util.TicketFactory;
 import com.cinema.view.SeatComponent;
 import com.cinema.view.SeatMapPanel;
 
@@ -20,6 +21,7 @@ public class TicketController extends BaseController implements Observable<Dialo
     private final ScreeningRecord screeningRecord;
     private final SeatMapPanel view;
     private final List<DialogCloseObserver> observers = new ArrayList<>();
+    private ArrayList<Ticket> tickets;
 
     public TicketController(ScreeningRecord screeningRecord) {
         this.user = UserSession.getInstance().getCurrentUser();
@@ -30,7 +32,7 @@ public class TicketController extends BaseController implements Observable<Dialo
                 this.user,
                 screeningRecord
         );
-//        this.attachListeners();
+        tickets = new ArrayList<>();
     }
 
     private void attachListeners() {
@@ -62,7 +64,7 @@ public class TicketController extends BaseController implements Observable<Dialo
 
         JDialog dialog = new JDialog(
                 SwingUtilities.getWindowAncestor(this.view.getView()),
-                "Acquisto — Posto " + seatEditor.getSeatRow() + seatEditor.getSeatNumber(),
+                "Aggiungi posto " + seatEditor.getSeatRow() + seatEditor.getSeatNumber(),
                 Dialog.ModalityType.APPLICATION_MODAL
         );
 
@@ -107,7 +109,7 @@ public class TicketController extends BaseController implements Observable<Dialo
         gbc.gridy = 4;
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton cancelButton  = new JButton("Annulla");
-        JButton confirmButton = new JButton("Acquista");
+        JButton confirmButton = new JButton("Aggiungi");
         confirmButton.setBackground(new Color(0, 150, 80));
         confirmButton.setForeground(Color.WHITE);
         buttonPanel.add(cancelButton);
@@ -117,7 +119,7 @@ public class TicketController extends BaseController implements Observable<Dialo
         cancelButton.addActionListener(e -> dialog.dispose());
         confirmButton.addActionListener(e -> {
             TicketType selectedType = (TicketType) typeComboBox.getSelectedItem();
-            if (selectedType != null) this.buyTicket(seatEditor, selectedType, dialog);
+            if (selectedType != null) this.addTicket(seatEditor, selectedType, dialog);
         });
 
         dialog.setContentPane(panel);
@@ -133,7 +135,23 @@ public class TicketController extends BaseController implements Observable<Dialo
         label.setText(String.format("Prezzo finale: %.2f $", finalPrice));
     }
 
-    private void buyTicket(SeatEditor seatEditor, TicketType ticketType, JDialog dialog) {
+    private void addTicket(SeatEditor seatEditor, TicketType ticketType, JDialog dialog) {
+        Screening screening = screeningRecord.screening();
+
+        Seat seat = new Seat(
+                seatEditor.getSeatId(),
+                screening.getScreenId(),
+                seatEditor.getSeatRow(),
+                seatEditor.getSeatNumber(),
+                seatEditor.isVip(),
+                seatEditor.isHandicap(),
+                seatEditor.isActive()
+        );
+
+        tickets.add(TicketFactory.createTicket(screening, ticketType, seat, user));
+    }
+
+    private void buyTickets(SeatEditor seatEditor, TicketType ticketType, JDialog dialog) {
         Screening screening = screeningRecord.screening();
 
         Seat seat = new Seat(
