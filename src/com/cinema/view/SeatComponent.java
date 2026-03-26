@@ -47,6 +47,9 @@ public class SeatComponent extends JToggleButton {
             setEnabled(false);
         } else if (!this.canEdit) {
             setEnabled(false);
+        } else {
+            setText("");
+            setEnabled(true);
         }
 
 //        if(this.seatEditor.isSelected()) {

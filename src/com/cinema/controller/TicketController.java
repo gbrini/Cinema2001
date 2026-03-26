@@ -27,6 +27,8 @@ public class TicketController extends BaseController implements Observable<Dialo
     private final JPanel cartItemsPanel = new JPanel();
     private final JLabel totalLabel     = new JLabel("Totale: 0.00 €");
     private final JButton buyButton     = new JButton("Acquista");
+    private JPanel cachedView = null;
+    private JPanel seatMapView;
 
     public TicketController(ScreeningRecord screeningRecord) {
         this.user = UserSession.getInstance().getCurrentUser();
@@ -40,7 +42,9 @@ public class TicketController extends BaseController implements Observable<Dialo
     }
 
     public JPanel getView() {
-        JPanel seatMapView = view.getView();
+        if (cachedView != null) return cachedView;
+
+        seatMapView = view.getView();
         this.attachListeners();
 
         JSplitPane splitPane = new JSplitPane(
@@ -50,11 +54,10 @@ public class TicketController extends BaseController implements Observable<Dialo
         );
         splitPane.setResizeWeight(0.75);
         splitPane.setDividerSize(6);
-        splitPane.setOneTouchExpandable(false);
 
-        JPanel wrapper = new JPanel(new BorderLayout());
-        wrapper.add(splitPane, BorderLayout.CENTER);
-        return wrapper;
+        cachedView = new JPanel(new BorderLayout());
+        cachedView.add(splitPane, BorderLayout.CENTER);
+        return cachedView;
     }
 
     private JPanel buildCartPanel() {
@@ -139,10 +142,28 @@ public class TicketController extends BaseController implements Observable<Dialo
     }
 
     private void refreshSeatComponent(SeatEditor seatEditor) {
+//        System.out.println("Cerco seatEditor: " + seatEditor.getSeatRow() + seatEditor.getSeatNumber());
+//        System.out.println("SeatComponents disponibili: " + view.getSeatComponents().size());
+//
+//        for (SeatComponent sc : view.getSeatComponents()) {
+//            System.out.println("  → " + sc.getSeatEditor().getSeatRow() + sc.getSeatEditor().getSeatNumber()
+//                    + " | stesso oggetto? " + (sc.getSeatEditor() == seatEditor));
+//        }
+
         for (SeatComponent sc : view.getSeatComponents()) {
             if (sc.getSeatEditor() == seatEditor) {
+                sc.getSeatEditor().setTaken(false);
                 sc.setSelected(false);
                 sc.updateAppearance();
+
+                System.out.println("cachedView showing: " + cachedView.isShowing());
+                System.out.println("sc showing: " + sc.isShowing());
+                System.out.println("sc parent size: " + sc.getParent().getSize());
+                System.out.println("sc size: " + sc.getSize());
+
+                cachedView.revalidate();
+                cachedView.repaint();
+
                 break;
             }
         }
