@@ -83,7 +83,7 @@ public class TicketController extends BaseController implements Observable<Dialo
 
         gbc.gridy = 1;
         float basePrice = screeningRecord.screening().getTicketPrice();
-        panel.add(new JLabel("Prezzo base: " + String.format("%.2f $", basePrice)), gbc);
+        panel.add(new JLabel("Prezzo base: " + String.format("%.2f €", basePrice)), gbc);
 
         gbc.gridy = 2; gbc.gridwidth = 1;
         panel.add(new JLabel("Tipo biglietto:"), gbc);
@@ -132,7 +132,7 @@ public class TicketController extends BaseController implements Observable<Dialo
         if (ticketType == null) return;
         float discount   = basePrice * ticketType.getBaseDiscountPercent() / 100f;
         float finalPrice = basePrice - discount + ticketType.getBasePriceAddendum();
-        label.setText(String.format("Prezzo finale: %.2f $", finalPrice));
+        label.setText(String.format("Prezzo finale: %.2f €", finalPrice));
     }
 
     private void addTicket(SeatEditor seatEditor, TicketType ticketType, JDialog dialog) {
@@ -149,6 +149,8 @@ public class TicketController extends BaseController implements Observable<Dialo
         );
 
         tickets.add(TicketFactory.createTicket(screening, ticketType, seat, user));
+        dialog.dispose();
+        seatEditor.setTaken(true);
     }
 
     private void buyTickets(SeatEditor seatEditor, TicketType ticketType, JDialog dialog) {
