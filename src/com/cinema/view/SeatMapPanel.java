@@ -8,6 +8,7 @@ import com.cinema.util.constants.DimensionConstants;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -97,5 +98,11 @@ public class SeatMapPanel extends JPanel {
 
     public ArrayList<SeatComponent> getSeatComponents() {
         return this.seatComponents;
+    }
+
+    public void addSeatSelectionListener(ActionListener listener) {
+        for (SeatComponent seatComponent: seatComponents) {
+            seatComponent.addActionListener(listener);
+        }
     }
 }

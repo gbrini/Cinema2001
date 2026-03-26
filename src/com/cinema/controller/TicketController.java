@@ -30,7 +30,7 @@ public class TicketController extends BaseController implements Observable<Dialo
                 this.user,
                 screeningRecord
         );
-        this.attachListeners();
+//        this.attachListeners();
     }
 
     private void attachListeners() {
@@ -38,7 +38,6 @@ public class TicketController extends BaseController implements Observable<Dialo
             SeatComponent seatComponent = (SeatComponent) e.getSource();
             SeatEditor seatEditor = seatComponent.getSeatEditor();
 
-            // Ignora posti inattivi o già occupati
             if (!seatEditor.isActive() || seatEditor.isTaken()) return;
 
             this.openTicketTypeDialog(seatEditor);
@@ -61,7 +60,6 @@ public class TicketController extends BaseController implements Observable<Dialo
             return;
         }
 
-        // ── Dialog ───────────────────────────────────────────────────────────
         JDialog dialog = new JDialog(
                 SwingUtilities.getWindowAncestor(this.view.getView()),
                 "Acquisto — Posto " + seatEditor.getSeatRow() + seatEditor.getSeatNumber(),
@@ -73,7 +71,6 @@ public class TicketController extends BaseController implements Observable<Dialo
         gbc.insets = new Insets(8, 12, 8, 12);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Info posto
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
         String postoInfo = String.format("Posto: %s%d%s%s",
                 seatEditor.getSeatRow(),
@@ -82,12 +79,10 @@ public class TicketController extends BaseController implements Observable<Dialo
                 seatEditor.isHandicap() ? " · Handicap" : "");
         panel.add(new JLabel(postoInfo), gbc);
 
-        // Prezzo base proiezione
         gbc.gridy = 1;
         float basePrice = screeningRecord.screening().getTicketPrice();
         panel.add(new JLabel("Prezzo base: " + String.format("%.2f $", basePrice)), gbc);
 
-        // ComboBox tipo biglietto
         gbc.gridy = 2; gbc.gridwidth = 1;
         panel.add(new JLabel("Tipo biglietto:"), gbc);
 
@@ -100,7 +95,6 @@ public class TicketController extends BaseController implements Observable<Dialo
         gbc.gridx = 1;
         panel.add(typeComboBox, gbc);
 
-        // Prezzo finale (aggiornato dinamicamente)
         gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 2;
         JLabel priceLabel = new JLabel();
         priceLabel.setFont(priceLabel.getFont().deriveFont(Font.BOLD, 14f));
@@ -110,7 +104,6 @@ public class TicketController extends BaseController implements Observable<Dialo
         typeComboBox.addActionListener(e ->
                 updatePriceLabel(priceLabel, (TicketType) typeComboBox.getSelectedItem(), basePrice));
 
-        // Bottoni
         gbc.gridy = 4;
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton cancelButton  = new JButton("Annulla");
@@ -157,7 +150,7 @@ public class TicketController extends BaseController implements Observable<Dialo
             TicketService.buyTicket(screening, ticketType, seat, this.user);
 
             seatEditor.setTaken(true);
-            this.view.refreshSeatMap();
+            //this.view.refreshSeatMap();
             dialog.dispose();
 
             JOptionPane.showMessageDialog(
@@ -175,7 +168,11 @@ public class TicketController extends BaseController implements Observable<Dialo
         }
     }
 
-    public SeatMapPanel getView() { return view; }
+    public JPanel getView() {
+        JPanel rview = view.getView();
+        this.attachListeners();
+        return rview;
+    }
 
     @Override
     public void addObserver(DialogCloseObserver observer) { this.observers.add(observer); }

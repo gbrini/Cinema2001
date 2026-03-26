@@ -1,6 +1,7 @@
 package com.cinema.view;
 
 import com.cinema.controller.ScreeningViewController;
+import com.cinema.controller.TicketController;
 import com.cinema.model.*;
 import com.cinema.util.constants.DimensionConstants;
 import com.cinema.util.constants.ThemeConstants;
@@ -89,7 +90,8 @@ public class ListScreeningPanel extends AbstractTabularGroupView<LocalDate, Scre
         JDialog dialog = new JDialog(ownerFrame, title, true);
         ScreeningViewController screeningViewController = new ScreeningViewController(screeningRecord);
 
-        dialog.setContentPane(screeningViewController.getView());
+        //dialog.setContentPane(screeningViewController.getView());
+        dialog.setContentPane(new TicketController(screeningRecord).getView());
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.pack();
         dialog.setLocationRelativeTo(ownerFrame);
