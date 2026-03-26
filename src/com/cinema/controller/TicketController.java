@@ -26,7 +26,7 @@ public class TicketController extends BaseController implements Observable<Dialo
         this.screeningRecord = screeningRecord;
         this.view = new SeatMapPanel(
                 screeningRecord.screening().getScreeningId(),
-                true,
+                this.user.getRole().getRoleId() == 3,
                 this.user,
                 screeningRecord
         );
