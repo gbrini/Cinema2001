@@ -1,5 +1,6 @@
 package com.cinema.view;
 
+import com.cinema.controller.HistoryController;
 import com.cinema.controller.MovieListController;
 import com.cinema.controller.ScreenListController;
 import com.cinema.controller.ScreeningListController;
@@ -47,7 +48,7 @@ public class CinemaUIHandler extends JFrame {
             case 3:
                 mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
                 mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController().getView());
-                mainTabbedPane.addTab(TextConstants.HISTORY_PANEL, new ScreeningListController().getView());
+                mainTabbedPane.addTab(TextConstants.HISTORY_PANEL, new HistoryController().getView());
             default:
                 break;
         }
