@@ -12,5 +12,6 @@ public final class ThemeConstants {
     public static final Border HANDICAP_BORDER = BorderFactory.createLineBorder(Color.GREEN.darker(), 2);
     public static final Color EVEN_ROW_BG = Color.WHITE;
     public static final Color ODD_ROW_BG = new Color(240, 240, 240);
+    public static final Color IS_IN_CHART = Color.GREEN;
 
 }
