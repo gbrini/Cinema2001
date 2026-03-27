@@ -5,6 +5,7 @@ import com.cinema.model.Seat;
 import com.cinema.model.Ticket;
 import com.cinema.model.TicketType;
 import com.cinema.model.User;
+import com.cinema.model.dao.SeatDAO;
 import com.cinema.model.dao.TicketDAO;
 import com.cinema.util.TicketFactory;
 import com.cinema.util.UnauthorizedAccessException;
@@ -17,7 +18,7 @@ public class TicketService {
         if (!PermissionService.hasPermission("ticket:buy"))
             throw new UnauthorizedAccessException("Accesso non consentito");
 
-        if (TicketDAO.isSeatTaken(screening.getScreeningId(), seat.getSeatId()))
+        if (SeatDAO.isSeatTaken(screening.getScreeningId(), seat.getSeatId()))
             throw new IllegalStateException("Il posto è già occupato");
 
         if (screening.getStartTime().isBefore(LocalDateTime.now()))
@@ -30,6 +31,24 @@ public class TicketService {
             throw new IllegalStateException("Errore durante il salvataggio del biglietto");
 
         return ticket;
+    }
+
+    public static boolean buyTickets(ArrayList<Ticket> tickets, User user) {
+        if (!PermissionService.hasPermission("ticket:buy"))
+            throw new UnauthorizedAccessException("Accesso non consentito");
+
+//        if (SeatDAO.isSeatTaken(screening.getScreeningId(), seat.getSeatId()))
+//            throw new IllegalStateException("Il posto è già occupato");
+//
+//        if (screening.getStartTime().isBefore(LocalDateTime.now()))
+//            throw new IllegalStateException("La proiezione è già iniziata");
+
+        boolean saved = TicketDAO.saveBatchTickets(tickets);
+
+        if (!saved)
+            throw new IllegalStateException("Errore durante il salvataggio dei biglietti");
+
+        return true;
     }
 
     public static ArrayList<Ticket> getTicketsByUser(int userId) {

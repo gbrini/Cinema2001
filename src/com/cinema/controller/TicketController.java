@@ -293,7 +293,7 @@ public class TicketController extends BaseController implements Observable<Dialo
         if (tickets.isEmpty()) return;
 
         try {
-            //aceuisto i tickets
+            
 
             int n = tickets.size();
             JOptionPane.showMessageDialog(

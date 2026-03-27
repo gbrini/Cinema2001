@@ -158,4 +158,23 @@ public class SeatDAO {
 
         return seats;
     }
+
+    public static boolean isSeatTaken(int screeningId, int seatId) {
+        String sql = "SELECT 1 FROM ticket WHERE screening_id = ? AND seat_id = ?";
+
+        try {
+            Connection conn = DatabaseConnection.getInstance();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, screeningId);
+            stmt.setInt(2, seatId);
+            ResultSet result = stmt.executeQuery();
+
+            return result.next();
+
+        } catch (SQLException ex) {
+            System.out.println("Error checking seat availability: " + ex);
+            return false;
+        }
+    }
 }

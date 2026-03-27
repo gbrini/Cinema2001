@@ -32,6 +32,50 @@ public class TicketDAO {
         }
     }
 
+    public static boolean saveBatchTickets(ArrayList<Ticket> tickets) {
+        if (tickets == null || tickets.isEmpty()) return false;
+
+        String sql = "INSERT INTO ticket (screening_id, type_id, seat_id, user_id, purchase_time, final_price) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        Connection conn = null;
+        try {
+            conn = DatabaseConnection.getInstance();
+            conn.setAutoCommit(false);
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            for (Ticket ticket : tickets) {
+                stmt.setInt(1, ticket.getScreeningId());
+                stmt.setInt(2, ticket.getTypeId());
+                stmt.setInt(3, ticket.getSeatId());
+                stmt.setInt(4, ticket.getUserId());
+                stmt.setTimestamp(5, Timestamp.valueOf(ticket.getPurchaseTime()));
+                stmt.setFloat(6, ticket.getFinalPrice());
+                stmt.addBatch();
+            }
+
+            stmt.executeBatch();
+            conn.commit();
+            return true;
+
+        } catch (SQLException ex) {
+            System.out.println("Error saving batch tickets: " + ex);
+            try {
+                if (conn != null) conn.rollback();
+            } catch (SQLException rollbackEx) {
+                System.out.println("Error during rollback: " + rollbackEx);
+            }
+            return false;
+        } finally {
+            try {
+                if (conn != null) conn.setAutoCommit(true);
+            } catch (SQLException ex) {
+                System.out.println("Error restoring autocommit: " + ex);
+            }
+        }
+    }
+
     public static ArrayList<Ticket> getTicketsByUserId(int userId) {
         ArrayList<Ticket> tickets = new ArrayList<>();
         String sql = "SELECT * FROM ticket WHERE user_id = ? ORDER BY purchase_time DESC";
@@ -67,25 +111,6 @@ public class TicketDAO {
 
         } catch (SQLException ex) {
             System.out.println("Error deleting ticket: " + ex);
-            return false;
-        }
-    }
-
-    public static boolean isSeatTaken(int screeningId, int seatId) {
-        String sql = "SELECT 1 FROM ticket WHERE screening_id = ? AND seat_id = ?";
-
-        try {
-            Connection conn = DatabaseConnection.getInstance();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-
-            stmt.setInt(1, screeningId);
-            stmt.setInt(2, seatId);
-            ResultSet result = stmt.executeQuery();
-
-            return result.next();
-
-        } catch (SQLException ex) {
-            System.out.println("Error checking seat availability: " + ex);
             return false;
         }
     }
