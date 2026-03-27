@@ -126,17 +126,23 @@ public class SeatDAO {
         ArrayList<SeatEditor> seats = new ArrayList<>();
         try {
             Connection conn = DatabaseConnection.getInstance();
-            PreparedStatement stmt = conn.prepareStatement("SELECT " +
-                    "seat.*, " +
-                    "CASE WHEN ticket.ticket_id IS NULL THEN FALSE ELSE TRUE END AS taken " +
-                    "FROM seat " +
-                    "LEFT JOIN ticket " +
-                    "ON ticket.seat_id = seat.seat_id " +
-                    "LEFT JOIN screening " +
-                    "ON screening.screen_id = seat.screen_id " +
-                    "WHERE screening.screening_id = ?");
+            String query = """
+                SELECT
+                    seat.*,
+                    CASE WHEN ticket.ticket_id IS NULL THEN FALSE ELSE TRUE END AS taken
+                FROM seat
+                LEFT JOIN ticket
+                    ON ticket.seat_id = seat.seat_id
+                    AND ticket.screening_id = ?
+                WHERE seat.screen_id = (
+                    SELECT screen_id FROM screening WHERE screening_id = ?
+                )
+            """;
+
+            PreparedStatement stmt = conn.prepareStatement(query);
 
             stmt.setInt(1, screeningId);
+            stmt.setInt(2, screeningId);
 
             ResultSet result = stmt.executeQuery();
 
