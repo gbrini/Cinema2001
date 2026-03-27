@@ -45,6 +45,11 @@ public class HistoryController extends BaseController implements PanelActionList
 
     @Override
     public void onDeleteRequested(TicketRecord item) {
-
+        try {
+            TicketService.cancelTicket(item.ticket().getTicketId(), item.screening());
+            this.onRefreshRequested();
+        } catch (Exception e) {
+            handleException(e);
+        }
     }
 }

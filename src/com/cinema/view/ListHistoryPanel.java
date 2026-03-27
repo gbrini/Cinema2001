@@ -50,7 +50,7 @@ public class ListHistoryPanel extends AbstractListPanel<TicketRecord> {
         if (item.screening().getStartTime().minusHours(1).isAfter(LocalDateTime.now())) {
             JButton cancelBtn = new JButton("Annulla");
             cancelBtn.setForeground(Color.RED);
-            //cancelBtn.addActionListener(e -> actionListener.onDeleteRequested(item.ticket()));
+            cancelBtn.addActionListener(e -> actionListener.onDeleteRequested(item));
             ticketPanel.add(cancelBtn, gbc);
         } else {
             ticketPanel.add(new JLabel("—"), gbc);
