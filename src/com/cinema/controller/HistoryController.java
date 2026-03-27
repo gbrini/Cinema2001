@@ -39,12 +39,12 @@ public class HistoryController extends BaseController implements PanelActionList
     }
 
     @Override
-    public void onEditRequested(Ticket item) {
+    public void onEditRequested(TicketRecord item) {
 
     }
 
     @Override
-    public void onDeleteRequested(Ticket item) {
+    public void onDeleteRequested(TicketRecord item) {
 
     }
 }
