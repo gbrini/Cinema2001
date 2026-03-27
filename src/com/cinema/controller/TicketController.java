@@ -156,11 +156,6 @@ public class TicketController extends BaseController implements Observable<Dialo
                 sc.setSelected(false);
                 sc.updateAppearance();
 
-                System.out.println("cachedView showing: " + cachedView.isShowing());
-                System.out.println("sc showing: " + sc.isShowing());
-                System.out.println("sc parent size: " + sc.getParent().getSize());
-                System.out.println("sc size: " + sc.getSize());
-
                 cachedView.revalidate();
                 cachedView.repaint();
 
