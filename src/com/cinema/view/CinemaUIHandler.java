@@ -47,7 +47,7 @@ public class CinemaUIHandler extends JFrame {
             case 3:
                 mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
                 mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController().getView());
-                //Purchase history (cancel only before X hours)
+                mainTabbedPane.addTab(TextConstants.HISTORY_PANEL, new ScreeningListController().getView());
             default:
                 break;
         }
