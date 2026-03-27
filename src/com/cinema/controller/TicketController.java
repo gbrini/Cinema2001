@@ -118,6 +118,7 @@ public class TicketController extends BaseController implements Observable<Dialo
         tickets.remove(ticket);
 
         seatEditor.setTaken(false);
+        seatEditor.setInChart(false);
         refreshSeatComponent(seatEditor);
 
         int index = cartItemsPanel.getComponentZOrder(row);
@@ -153,6 +154,7 @@ public class TicketController extends BaseController implements Observable<Dialo
         for (SeatComponent sc : view.getSeatComponents()) {
             if (sc.getSeatEditor() == seatEditor) {
                 sc.getSeatEditor().setTaken(false);
+                sc.getSeatEditor().setInChart(false);
                 sc.setSelected(false);
                 sc.updateAppearance();
 
@@ -279,7 +281,8 @@ public class TicketController extends BaseController implements Observable<Dialo
         Ticket ticket = TicketFactory.createTicket(screening, ticketType, seat, user);
         tickets.add(ticket);
 
-        seatEditor.setTaken(true);
+        //seatEditor.setTaken(true);
+        seatEditor.setInChart(false);
         seatComponent.setSelected(false);
         seatComponent.updateAppearance();
 
