@@ -80,22 +80,24 @@ public class ScreeningDAO {
 
     public static HashMap<LocalDate, ArrayList<ScreeningRecord>> getScreeningByDateRange(Date from, Date to) {
         HashMap<LocalDate, ArrayList<ScreeningRecord>> screenings = new HashMap<>();
-        String sql = "SELECT " +
-                "screening.screening_id AS scr_id, screening.movie_id AS mid, screen.screen_id AS sid, start_time, ticket_price, screening.is_deleted AS scr_is_del," +
-                "title, duration_minutes, releASe_date, genre, rating, description, director, movie.is_deleted AS mv_is_del," +
-                "screen_name, capacity, screen.is_deleted AS scr_is_del," +
-                "(start_time + (duration_minutes * INTERVAL '1 minute')) AS end_time," +
-                "COALESCE(t.sold_count, 0) AS tickets_sold," +
-                "(capacity - COALESCE(t.sold_count, 0)) AS seats_remaining " +
-                "FROM screening " +
-                "JOIN movie ON movie.movie_id = screening.movie_id " +
-                "JOIN screen ON screen.screen_id = screening.screen_id " +
-                "LEFT JOIN ( SELECT " +
-                "screening_id," +
-                "COUNT(ticket_id) AS sold_count " +
-                "FROM ticket " +
-                "GROUP BY screening_id) AS t ON t.screening_id = screening.screening_id " +
-                "WHERE screening.start_time >= ? AND screening.start_time <= ? AND screening.is_deleted = false ";
+        String sql = """ 
+                SELECT
+                    screening.screening_id AS scr_id, screening.movie_id AS mid, screen.screen_id AS sid, start_time, ticket_price, screening.is_deleted AS scr_is_del,
+                    title, duration_minutes, releASe_date, genre, rating, description, director, movie.is_deleted AS mv_is_del,
+                    screen_name, capacity, screen.is_deleted AS scr_is_del,
+                    (start_time + (duration_minutes * INTERVAL '1 minute')) AS end_time,
+                    COALESCE(t.sold_count, 0) AS tickets_sold,
+                    (capacity - COALESCE(t.sold_count, 0)) AS seats_remaining 
+                    FROM screening 
+                    JOIN movie ON movie.movie_id = screening.movie_id 
+                    JOIN screen ON screen.screen_id = screening.screen_id 
+                    LEFT JOIN ( SELECT 
+                    screening_id,
+                    COUNT(ticket_id) AS sold_count 
+                FROM ticket 
+                GROUP BY screening_id) AS t ON t.screening_id = screening.screening_id
+                WHERE screening.start_time >= ? AND screening.start_time <= ? AND screening.is_deleted = false
+        """;
 
         try {
             Connection conn = DatabaseConnection.getInstance();
