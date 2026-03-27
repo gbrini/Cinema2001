@@ -33,15 +33,17 @@ public class TicketService {
         return ticket;
     }
 
-    public static boolean buyTickets(ArrayList<Ticket> tickets, User user) {
+    public static boolean buyTickets(ArrayList<Ticket> tickets, Screening screening) {
         if (!PermissionService.hasPermission("ticket:buy"))
             throw new UnauthorizedAccessException("Accesso non consentito");
 
-//        if (SeatDAO.isSeatTaken(screening.getScreeningId(), seat.getSeatId()))
-//            throw new IllegalStateException("Il posto è già occupato");
-//
-//        if (screening.getStartTime().isBefore(LocalDateTime.now()))
-//            throw new IllegalStateException("La proiezione è già iniziata");
+        if (screening.getStartTime().isBefore(LocalDateTime.now()))
+            throw new IllegalStateException("La proiezione è già iniziata");
+
+        for (Ticket t: tickets) {
+            if (SeatDAO.isSeatTaken(screening.getScreeningId(), t.getSeatId()))
+                throw new IllegalStateException("Il posto è già occupato");
+        }
 
         boolean saved = TicketDAO.saveBatchTickets(tickets);
 
