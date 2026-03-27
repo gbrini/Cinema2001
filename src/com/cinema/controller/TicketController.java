@@ -282,7 +282,7 @@ public class TicketController extends BaseController implements Observable<Dialo
         tickets.add(ticket);
 
         //seatEditor.setTaken(true);
-        seatEditor.setInChart(false);
+        seatEditor.setInChart(true);
         seatComponent.setSelected(false);
         seatComponent.updateAppearance();
 
@@ -303,6 +303,14 @@ public class TicketController extends BaseController implements Observable<Dialo
                     this.view.getView(),
                     n + " bigliett" + (n == 1 ? "o acquistato" : "i acquistati") + " con successo!",
                     "Acquisto completato", JOptionPane.INFORMATION_MESSAGE);
+
+            for (SeatComponent sc : view.getSeatComponents()) {
+                if (sc.getSeatEditor().isInChart()) {
+                    sc.getSeatEditor().setInChart(false);
+                    sc.getSeatEditor().setTaken(true);
+                    sc.updateAppearance();
+                }
+            }
 
             tickets.clear();
             cartItemsPanel.removeAll();
