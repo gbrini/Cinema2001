@@ -1,10 +1,6 @@
 package com.cinema.service;
 
-import com.cinema.model.Screening;
-import com.cinema.model.Seat;
-import com.cinema.model.Ticket;
-import com.cinema.model.TicketType;
-import com.cinema.model.User;
+import com.cinema.model.*;
 import com.cinema.model.dao.SeatDAO;
 import com.cinema.model.dao.TicketDAO;
 import com.cinema.util.TicketFactory;
@@ -53,11 +49,11 @@ public class TicketService {
         return true;
     }
 
-    public static ArrayList<Ticket> getTicketsByUser(int userId) {
+    public static ArrayList<TicketRecord> getTicketsByUser(int userId) {
         if (!PermissionService.hasPermission("ticket:view"))
             throw new UnauthorizedAccessException("Accesso non consentito");
 
-        return TicketDAO.getTicketsByUserId(userId);
+        return TicketDAO.getTicketRecordsByUserId(userId);
     }
 
     public static boolean cancelTicket(int ticketId, Screening screening) {
