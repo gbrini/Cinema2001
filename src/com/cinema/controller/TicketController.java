@@ -293,7 +293,7 @@ public class TicketController extends BaseController implements Observable<Dialo
         if (tickets.isEmpty()) return;
 
         try {
-            
+            TicketService.buyTickets(tickets, this.screeningRecord.screening());
 
             int n = tickets.size();
             JOptionPane.showMessageDialog(
