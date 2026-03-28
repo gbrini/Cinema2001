@@ -6,10 +6,7 @@ import com.cinema.model.dao.database.DatabaseConnection;
 import com.cinema.service.MovieService;
 import com.sun.net.httpserver.Authenticator;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -78,7 +75,7 @@ public class ScreeningDAO {
         return screenings;
     }
 
-    public static HashMap<LocalDate, ArrayList<ScreeningRecord>> getScreeningByDateRange(Date from, Date to) {
+    public static HashMap<LocalDate, ArrayList<ScreeningRecord>> getScreeningByDateRange(LocalDateTime from, LocalDateTime to) {
         HashMap<LocalDate, ArrayList<ScreeningRecord>> screenings = new HashMap<>();
         String sql = """ 
                 SELECT
@@ -103,8 +100,8 @@ public class ScreeningDAO {
             Connection conn = DatabaseConnection.getInstance();
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            stmt.setDate(1, new java.sql.Date(from.getTime()));
-            stmt.setDate(2, new java.sql.Date(to.getTime()));
+            stmt.setTimestamp(1, Timestamp.valueOf(from));
+            stmt.setTimestamp(2, Timestamp.valueOf(to));
 
             stmt.execute();
             ResultSet results = stmt.getResultSet();

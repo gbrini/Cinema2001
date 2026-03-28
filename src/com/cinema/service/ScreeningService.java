@@ -58,7 +58,7 @@ public class ScreeningService {
         return ScreeningDAO.getScreeningByDateAndScreen(date, screenId);
     }
 
-    public static HashMap<LocalDate, ArrayList<ScreeningRecord>> getScreeningByDateRange(Date from, Date to) {
+    public static HashMap<LocalDate, ArrayList<ScreeningRecord>> getScreeningByDateRange(LocalDateTime from, LocalDateTime to) {
         if (!PermissionService.hasPermission("screening:view"))
             throw new UnauthorizedAccessException("Accesso non consentito");
         return ScreeningDAO.getScreeningByDateRange(from, to);

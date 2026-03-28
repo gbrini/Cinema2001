@@ -16,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,11 +37,11 @@ public class ScreeningListController extends BaseController implements PanelActi
 
     @Override
     public void onRefreshRequested() {
-        Instant todayInstant = Instant.now();
-        Instant nextWeekInstant = todayInstant.plus(7, ChronoUnit.DAYS);
+        LocalDateTime from = LocalDateTime.now();
+        LocalDateTime to = from.plusDays(7);
 
         try {
-            HashMap<LocalDate, ArrayList<ScreeningRecord>> screenings = ScreeningService.getScreeningByDateRange(Date.from(todayInstant), Date.from(nextWeekInstant));
+            HashMap<LocalDate, ArrayList<ScreeningRecord>> screenings = ScreeningService.getScreeningByDateRange(from, to);
             this.view.setGroupedContent(screenings, true);
         } catch (Exception e) {
             handleException(e);
