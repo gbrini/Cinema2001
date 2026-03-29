@@ -9,6 +9,7 @@ import com.cinema.service.ScreeningService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.util.TimeSlot;
+import com.cinema.util.constants.TextConstants;
 import com.cinema.view.ListScreeningPanel;
 import com.cinema.view.listener.PanelActionListener;
 
@@ -50,7 +51,7 @@ public class ScreeningListController extends BaseController implements PanelActi
         Window ownerWindow = SwingUtilities.getWindowAncestor(this.view);
         Frame ownerFrame = (ownerWindow instanceof Frame) ? (Frame) ownerWindow : JOptionPane.getRootFrame();
 
-        JDialog dialog = new JDialog(ownerFrame, (item == null ? "Add" : "Edit") + " screening", true);
+        JDialog dialog = new JDialog(ownerFrame, (item == null ? TextConstants.ADD_TXT : TextConstants.EDIT_TXT) + " proiezione", true);
 
         ScreeningController screeningController = new ScreeningController(item);
         screeningController.addObserver(this);
