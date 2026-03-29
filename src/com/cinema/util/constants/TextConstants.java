@@ -8,4 +8,6 @@ public class TextConstants {
     public static final String SCREENING_PANEL = "Proiezioni";
     public static final String DESCRIPTION_DELAY = "Si ricorda che il film inizia circa 15 minuti dopo l’orario di inizio proiezione comunicato";
     public static final String HISTORY_PANEL = "Acquisti";
+    public static final String REFRESH_TXT = "Ricarica";
+    public static final String ADD_TXT = "Aggiungi";
 }

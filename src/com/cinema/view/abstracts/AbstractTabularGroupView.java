@@ -2,6 +2,7 @@ package com.cinema.view.abstracts;
 
 import com.cinema.model.User;
 import com.cinema.service.auth.UserSession;
+import com.cinema.util.constants.TextConstants;
 import com.cinema.view.listener.PanelActionListener;
 
 import javax.swing.*;
@@ -27,14 +28,14 @@ public abstract class AbstractTabularGroupView<K, V, Z> extends JPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
-        JButton refreshButton = new JButton("Refresh");
+        JButton refreshButton = new JButton(TextConstants.REFRESH_TXT);
         refreshButton.addActionListener(e -> actionListener.onRefreshRequested());
         buttonPanel.add(refreshButton);
 
         User user = UserSession.getInstance().getCurrentUser();
 
         if (user.getRole().getRoleId() == 1) {
-            JButton addButton = new JButton("Add");
+            JButton addButton = new JButton(TextConstants.ADD_TXT);
             addButton.addActionListener(e -> actionListener.onEditRequested(null));
             buttonPanel.add(addButton);
         }
