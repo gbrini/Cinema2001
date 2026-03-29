@@ -58,11 +58,7 @@ public class ListMoviePanel extends AbstractListPanel<Movie> {
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         controlPanel.setBackground(backgroundColor);
 
-        if (this.getRoleId() == 3) {
-            JButton editButton = new JButton("Buy tickets");
-            editButton.addActionListener(e -> this.actionListener.onEditRequested(movie));
-            controlPanel.add(editButton);
-        } else {
+        if (this.getRoleId() != 3) {
             JButton editButton = new JButton("Edit");
             editButton.addActionListener(e -> this.actionListener.onEditRequested(movie));
             controlPanel.add(editButton);
