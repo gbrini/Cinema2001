@@ -60,7 +60,7 @@ public class EditScreeningPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.WEST;
-        add(new JLabel("Movie: "), gbc);
+        add(new JLabel("Film: "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -71,7 +71,7 @@ public class EditScreeningPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.WEST;
-        add(new JLabel("Screen: "), gbc);
+        add(new JLabel("Sala: "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -82,7 +82,7 @@ public class EditScreeningPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.WEST;
-        add(new JLabel("Time slot: "), gbc);
+        add(new JLabel("Slot temporale: "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
