@@ -14,12 +14,9 @@ import com.cinema.view.listener.PanelActionListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class ScreeningListController extends BaseController implements PanelActionListener<Screening>, DialogCloseObserver {
