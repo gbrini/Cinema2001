@@ -1,18 +1,16 @@
 package com.cinema.model;
 
-import com.cinema.model.Role;
-
-import java.util.Date;
+import java.time.LocalDate;
 
 public class User {
     private final int userId;
     private final String firstName;
     private final String lastName;
-    private final Date birthDate;
+    private final LocalDate birthDate;
     private final String email;
     private final Role role;
 
-    public User(int userId, String firstName, String lastName, Date birthDate, String email, Role role) {
+    public User(int userId, String firstName, String lastName, LocalDate birthDate, String email, Role role) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -33,7 +31,7 @@ public class User {
         return lastName;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
