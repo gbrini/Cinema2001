@@ -4,6 +4,7 @@ import com.cinema.controller.ScreeningViewController;
 import com.cinema.controller.TicketController;
 import com.cinema.model.*;
 import com.cinema.util.constants.DimensionConstants;
+import com.cinema.util.constants.TextConstants;
 import com.cinema.util.constants.ThemeConstants;
 import com.cinema.view.abstracts.AbstractTabularGroupView;
 import com.cinema.view.listener.PanelActionListener;
@@ -83,7 +84,7 @@ public class ListScreeningPanel extends AbstractTabularGroupView<LocalDate, Scre
     private void openDialogView(ScreeningRecord screeningRecord) {
         Window ownerWindow = SwingUtilities.getWindowAncestor(this);
         Frame ownerFrame = (ownerWindow instanceof Frame) ? (Frame) ownerWindow : JOptionPane.getRootFrame();
-        String title = this.user.getRole().getRoleId() == 1 ? "View screening" : "Buy tickets";
+        String title = this.user.getRole().getRoleId() == 1 ? TextConstants.V_PROIEZIONE_TXT : TextConstants.B_TICKETS_TXT;
         title += " - " + screeningRecord.movie().getTitle();
         JDialog dialog = new JDialog(ownerFrame, title, true);
 
