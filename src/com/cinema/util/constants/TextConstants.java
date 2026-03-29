@@ -10,4 +10,6 @@ public class TextConstants {
     public static final String HISTORY_PANEL = "Acquisti";
     public static final String REFRESH_TXT = "Ricarica";
     public static final String ADD_TXT = "Aggiungi";
+    public static final String EDIT_TXT = "Modifica";
+    public static final String REMOVE_TXT = "Rimuovi";
 }

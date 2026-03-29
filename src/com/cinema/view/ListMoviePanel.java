@@ -59,10 +59,10 @@ public class ListMoviePanel extends AbstractListPanel<Movie> {
         controlPanel.setBackground(backgroundColor);
 
         if (this.getRoleId() != 3) {
-            JButton editButton = new JButton("Edit");
+            JButton editButton = new JButton(TextConstants.EDIT_TXT);
             editButton.addActionListener(e -> this.actionListener.onEditRequested(movie));
             controlPanel.add(editButton);
-            JButton removeButton = new JButton("Remove");
+            JButton removeButton = new JButton(TextConstants.REMOVE_TXT);
             removeButton.addActionListener(e -> this.actionListener.onDeleteRequested(movie));
             controlPanel.add(removeButton);
         }
