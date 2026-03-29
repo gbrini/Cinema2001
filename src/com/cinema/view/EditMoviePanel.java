@@ -6,9 +6,11 @@ import com.cinema.util.constants.TextConstants;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -17,8 +19,8 @@ import java.util.Objects;
 public class EditMoviePanel extends JPanel {
     private final Movie movie;
     private final User user;
-    private  JTextField titleField;
-    private JTextField durationField;
+    private JTextField titleField;
+    private JFormattedTextField durationField;
     private JFormattedTextField dateField;
     private JTextField genreField;
     private JComboBox ratingField;
@@ -61,8 +63,20 @@ public class EditMoviePanel extends JPanel {
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
-        durationField = new JTextField(20);
+
+        NumberFormat format = NumberFormat.getIntegerInstance();
+        format.setGroupingUsed(false);
+
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setMinimum(1);
+        formatter.setMaximum(999);
+        formatter.setAllowsInvalid(false);
+        formatter.setCommitsOnValidEdit(true);
+
+        durationField = new JFormattedTextField(formatter);
+        durationField.setColumns(10);
         durationField.setText(this.movie == null ? "" : String.valueOf(movie.getDurationMinutes()));
+
         add(durationField, gbc);
 
         gbc.gridx = 0;
