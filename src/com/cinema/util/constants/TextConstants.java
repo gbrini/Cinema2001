@@ -12,6 +12,6 @@ public class TextConstants {
     public static final String ADD_TXT = "Aggiungi";
     public static final String EDIT_TXT = "Modifica";
     public static final String REMOVE_TXT = "Rimuovi";
-    public static final String V_PROIEZIONE_TXT = "View screening";
-    public static final String B_TICKETS_TXT = "Buy tickets";
+    public static final String V_SCREENING_TXT = "Vedi proiezione";
+    public static final String B_TICKETS_TXT = "Acquista biglietti";
 }

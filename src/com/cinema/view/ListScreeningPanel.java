@@ -84,7 +84,7 @@ public class ListScreeningPanel extends AbstractTabularGroupView<LocalDate, Scre
     private void openDialogView(ScreeningRecord screeningRecord) {
         Window ownerWindow = SwingUtilities.getWindowAncestor(this);
         Frame ownerFrame = (ownerWindow instanceof Frame) ? (Frame) ownerWindow : JOptionPane.getRootFrame();
-        String title = this.user.getRole().getRoleId() == 1 ? TextConstants.V_PROIEZIONE_TXT : TextConstants.B_TICKETS_TXT;
+        String title = this.user.getRole().getRoleId() == 1 ? TextConstants.V_SCREENING_TXT : TextConstants.B_TICKETS_TXT;
         title += " - " + screeningRecord.movie().getTitle();
         JDialog dialog = new JDialog(ownerFrame, title, true);
 
