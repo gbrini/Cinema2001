@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MovieDAO {
@@ -150,20 +149,6 @@ public class MovieDAO {
 
         } catch (SQLException ex) {
             System.out.println("Error getting all movies " + ex);
-        }
-
-        return movies;
-    }
-
-    public static List<Movie> getMoviesByScreenDates(Date from, Date to) {
-        ArrayList<Movie> movies = new ArrayList<>();
-
-        try {
-            Connection conn = DatabaseConnection.getInstance();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM movie LEFT JOIN screening on screening.movie_id = movie.movie_id WHERE x");
-            //WHERE start_time >= '2025-11-14T00:00:00' and start_time <= '2025-11-14T:23:59:59'
-        } catch (SQLException ex) {
-
         }
 
         return movies;
