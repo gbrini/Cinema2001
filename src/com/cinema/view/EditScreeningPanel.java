@@ -37,7 +37,7 @@ public class EditScreeningPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
-        add(new JLabel("Date (yyyy-MM-dd): "), gbc);
+        add(new JLabel("Data (yyyy-MM-dd): "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
