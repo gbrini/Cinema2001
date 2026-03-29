@@ -1,6 +1,5 @@
 package com.cinema.view;
 
-import com.cinema.service.MovieService;
 import com.cinema.model.Movie;
 import com.cinema.model.User;
 
@@ -8,13 +7,10 @@ import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 public class EditMoviePanel extends JPanel {
