@@ -2,6 +2,7 @@ package com.cinema.view;
 
 import com.cinema.model.*;
 import com.cinema.service.MovieService;
+import com.cinema.util.constants.TextConstants;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -94,7 +95,7 @@ public class EditScreeningPanel extends JPanel {
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
-        this.saveButton = new JButton((this.screening == null ? "Add" : "Edit")  + " Screening");
+        this.saveButton = new JButton((this.screening == null ? TextConstants.ADD_TXT : TextConstants.EDIT_TXT)  + " Proiezione");
         add(this.saveButton, gbc);
     }
 
