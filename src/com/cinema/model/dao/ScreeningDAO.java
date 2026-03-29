@@ -1,22 +1,13 @@
 package com.cinema.model.dao;
 
-import com.cinema.controller.MovieController;
 import com.cinema.model.*;
 import com.cinema.model.dao.database.DatabaseConnection;
-import com.cinema.service.MovieService;
-import com.sun.net.httpserver.Authenticator;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ScreeningDAO {
 
