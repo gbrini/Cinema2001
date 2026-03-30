@@ -8,6 +8,7 @@ import com.cinema.service.MovieService;
 import com.cinema.util.EnvConfig;
 import com.cinema.util.UnauthorizedAccessException;
 import org.junit.jupiter.api.*;
+import test.com.cinema.BaseTest;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -15,12 +16,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("MovieService - BlackBox")
-public class MovieServiceTest {
-    @BeforeAll
-    static void setUp() {
-        DatabaseConfig.useTestDB();
-    }
-
+public class MovieServiceTest extends BaseTest {
     private Movie getMovie() {
         return new Movie.Builder()
                 .setTitle("Test Film - " + System.currentTimeMillis())
