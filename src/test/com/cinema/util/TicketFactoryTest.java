@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("TicketFactory — White Box")
+@DisplayName("TicketFactory - White Box")
 class TicketFactoryTest {
     private Screening screening;
     private Seat seat;
