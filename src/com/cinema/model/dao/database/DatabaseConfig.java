@@ -5,19 +5,12 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class DatabaseConfig {
-    private static final Properties properties = new Properties();
-    private static String propertiesFile = "db.properties";
+    private static Properties properties = null;
 
-    public static void useTestDB() {
-        propertiesFile = "db-test.properties";
-    }
+    private static void load(String fileName) {
+        properties = new Properties();
 
-    static {
-        reload();
-    }
-
-    private static void reload() {
-        try (InputStream input = DatabaseConfig.class.getClassLoader().getResourceAsStream(propertiesFile)) {
+        try (InputStream input = DatabaseConfig.class.getClassLoader().getResourceAsStream(fileName)) {
             if (input == null) {
                 System.out.println("Sorry, unable to find db.properties");
                 System.exit(1);
@@ -29,15 +22,25 @@ public class DatabaseConfig {
         }
     }
 
+    private static Properties get() {
+        if(properties == null) load("db.properties");
+        return properties;
+    }
+
+    public static void useTestDB() {
+        load("db-test.properties");
+        DatabaseConnection.resetInstance();
+    }
+
     public static String getDbUrl() {
-        return properties.getProperty("db.url");
+        return get().getProperty("db.url");
     }
 
     public static String getDbUsername() {
-        return properties.getProperty("db.username");
+        return get().getProperty("db.username");
     }
 
     public static String getDbPassword() {
-        return properties.getProperty("db.password");
+        return get().getProperty("db.password");
     }
 }
