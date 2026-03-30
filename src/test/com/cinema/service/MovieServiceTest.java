@@ -3,6 +3,7 @@ package test.com.cinema.service;
 import com.cinema.controller.auth.LoginController;
 import com.cinema.model.Movie;
 import com.cinema.model.User;
+import com.cinema.model.dao.database.DatabaseConfig;
 import com.cinema.service.MovieService;
 import com.cinema.util.EnvConfig;
 import com.cinema.util.UnauthorizedAccessException;
@@ -15,6 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("MovieService - BlackBox")
 public class MovieServiceTest {
+    @BeforeAll
+    static void setUp() {
+        DatabaseConfig.useTestDB();
+    }
+
     private Movie getMovie() {
         return new Movie.Builder()
                 .setTitle("Test Film - " + System.currentTimeMillis())
