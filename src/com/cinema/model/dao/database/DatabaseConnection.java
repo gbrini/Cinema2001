@@ -29,7 +29,7 @@ public class DatabaseConnection {
         return instance.getConnection();
     }
 
-    public static void resetInstance() {
+    public static void reset() {
         instance = null;
     }
 }

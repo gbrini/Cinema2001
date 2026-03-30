@@ -23,13 +23,13 @@ public class DatabaseConfig {
     }
 
     private static Properties get() {
-        if(properties == null) load("db.properties");
+        if (properties == null) load("db.properties");
         return properties;
     }
 
     public static void useTestDB() {
         load("db-test.properties");
-        DatabaseConnection.resetInstance();
+        DatabaseConnection.reset();
     }
 
     public static String getDbUrl() {
