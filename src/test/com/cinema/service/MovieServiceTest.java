@@ -55,7 +55,7 @@ public class MovieServiceTest {
     @Test
     void getMovieById() throws SQLException {
         LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
-        Movie film = MovieService.getMovieById(1);
+        Movie film = MovieService.getMovieById(5);
         assertNotNull(film);
     }
 
