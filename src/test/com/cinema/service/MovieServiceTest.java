@@ -12,6 +12,7 @@ import test.com.cinema.BaseTest;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -66,5 +67,19 @@ public class MovieServiceTest extends BaseTest {
         LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
         Movie film = MovieService.getMovieById(-1);
         assertNull(film);
+    }
+
+    @Test
+    void deleteMovie() throws SQLException {
+        LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
+        ArrayList<Movie> movies = MovieService.getAllMovies();
+
+        if(!movies.isEmpty()) {
+            int idR = movies.getFirst().getMovieId();
+            MovieService.deleteMovie(idR);
+
+            Movie movie = MovieService.getMovieById(idR);
+            assertTrue(movie.isDeleted());
+        }
     }
 }
