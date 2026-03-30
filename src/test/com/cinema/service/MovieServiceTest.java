@@ -51,4 +51,18 @@ public class MovieServiceTest {
         LoginController.getInstance().login("user@me.com", EnvConfig.getInstance().get("password"));
         assertThrows(UnauthorizedAccessException.class, () -> MovieService.addMovie(getMovie()));
     }
+
+    @Test
+    void getMovieById() throws SQLException {
+        LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
+        Movie film = MovieService.getMovieById(1);
+        assertNotNull(film);
+    }
+
+    @Test
+    void getMovieByIdF() throws SQLException {
+        LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
+        Movie film = MovieService.getMovieById(-1);
+        assertNull(film);
+    }
 }
