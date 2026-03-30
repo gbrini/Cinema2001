@@ -27,15 +27,20 @@ public class MovieServiceTest {
                 .build();
     }
 
+    @AfterEach
+    void clearSession() {
+        LoginController.getInstance().logout(null);
+    }
+
     @Test
     void getAllMoviesSuccess() throws SQLException {
-        User user = LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
+        LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
         assertDoesNotThrow(MovieService::getAllMovies);
     }
 
     @Test
     void addMovie() throws SQLException {
-        User user = LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
+        LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
         int id = MovieService.addMovie(getMovie());
         assertTrue(id > 0);
     }
