@@ -6,9 +6,18 @@ import java.util.Properties;
 
 public class DatabaseConfig {
     private static final Properties properties = new Properties();
+    private static String propertiesFile = "db.properties";
+
+    public static void useTestDB() {
+        propertiesFile = "db-test.properties";
+    }
 
     static {
-        try (InputStream input = DatabaseConfig.class.getClassLoader().getResourceAsStream("db.properties")) {
+        reload();
+    }
+
+    private static void reload() {
+        try (InputStream input = DatabaseConfig.class.getClassLoader().getResourceAsStream(propertiesFile)) {
             if (input == null) {
                 System.out.println("Sorry, unable to find db.properties");
                 System.exit(1);
