@@ -5,6 +5,7 @@ import com.cinema.model.Movie;
 import com.cinema.model.User;
 import com.cinema.service.MovieService;
 import com.cinema.util.EnvConfig;
+import com.cinema.util.UnauthorizedAccessException;
 import org.junit.jupiter.api.*;
 
 import java.sql.SQLException;
@@ -43,5 +44,11 @@ public class MovieServiceTest {
         LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
         int id = MovieService.addMovie(getMovie());
         assertTrue(id > 0);
+    }
+
+    @Test
+    void addMovieF() throws SQLException {
+        LoginController.getInstance().login("user@me.com", EnvConfig.getInstance().get("password"));
+        assertThrows(UnauthorizedAccessException.class, () -> MovieService.addMovie(getMovie()));
     }
 }
