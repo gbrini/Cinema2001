@@ -3,7 +3,6 @@ package com.cinema.view.admin;
 import com.cinema.model.*;
 import com.cinema.service.MovieService;
 import com.cinema.util.constants.TextConstants;
-import com.cinema.view.ComboBoxRenderer;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
