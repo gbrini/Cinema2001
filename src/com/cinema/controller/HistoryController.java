@@ -1,15 +1,13 @@
 package com.cinema.controller;
 
-import com.cinema.model.Ticket;
 import com.cinema.model.TicketRecord;
 import com.cinema.model.User;
 import com.cinema.service.TicketService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
-import com.cinema.view.ListHistoryPanel;
+import com.cinema.view.client.ListHistoryPanel;
 import com.cinema.view.listener.PanelActionListener;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class HistoryController extends BaseController implements PanelActionListener<TicketRecord>, DialogCloseObserver {

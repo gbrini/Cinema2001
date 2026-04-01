@@ -1,6 +1,5 @@
-package com.cinema.view;
+package com.cinema.view.client;
 
-import com.cinema.model.Ticket;
 import com.cinema.model.TicketRecord;
 import com.cinema.util.constants.DimensionConstants;
 import com.cinema.util.constants.ThemeConstants;

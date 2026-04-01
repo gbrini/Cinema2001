@@ -10,7 +10,7 @@ import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.util.Observable;
 import com.cinema.util.TimeSlot;
-import com.cinema.view.EditScreeningPanel;
+import com.cinema.view.admin.EditScreeningPanel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package com.cinema.view;
+package com.cinema.view.admin;
 
 import com.cinema.model.Movie;
 import com.cinema.model.User;

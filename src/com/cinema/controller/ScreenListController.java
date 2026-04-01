@@ -2,11 +2,10 @@ package com.cinema.controller;
 
 import com.cinema.model.Screen;
 import com.cinema.model.User;
-import com.cinema.service.MovieService;
 import com.cinema.service.ScreenService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
-import com.cinema.view.ListScreenPanel;
+import com.cinema.view.admin.ListScreenPanel;
 import com.cinema.view.listener.PanelActionListener;
 
 import javax.swing.*;
