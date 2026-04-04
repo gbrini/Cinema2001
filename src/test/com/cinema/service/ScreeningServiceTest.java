@@ -10,6 +10,7 @@ import com.cinema.service.auth.UserSession;
 import com.cinema.util.EnvConfig;
 import com.cinema.util.UnauthorizedAccessException;
 import org.junit.jupiter.api.*;
+import test.com.cinema.BaseTest;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ScreeningServiceTest {
+public class ScreeningServiceTest extends BaseTest {
     private ScreeningRecord buildRecord(LocalDateTime startTime, int movieDuration, int screenId) {
         Movie movie = new Movie.Builder()
                 .setMovieId(1)
@@ -89,7 +90,6 @@ public class ScreeningServiceTest {
             ScreeningRecord first = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
             ScreeningService.validateAndSchedule(first);
 
-            // starts 1 hour into the first screening
             ScreeningRecord second = buildRecord(LocalDateTime.now().plusDays(1).withHour(11), 60, 1);
             assertFalse(ScreeningService.validateAndSchedule(second));
         }
@@ -99,7 +99,6 @@ public class ScreeningServiceTest {
             ScreeningRecord first = buildRecord(LocalDateTime.now().plusDays(1).withHour(10).withMinute(0).withSecond(0), 120, 1);
             ScreeningService.validateAndSchedule(first);
 
-            // starts exactly after first + duration + 15min buffer
             ScreeningRecord second = buildRecord(LocalDateTime.now().plusDays(1).withHour(12).withMinute(15).withSecond(0), 60, 1);
             assertTrue(ScreeningService.validateAndSchedule(second));
         }
@@ -125,7 +124,6 @@ public class ScreeningServiceTest {
             ScreeningRecord first = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
             ScreeningService.validateAndSchedule(first);
 
-            // starts 30min in, ends after — partial overlap
             ScreeningRecord second = buildRecord(LocalDateTime.now().plusDays(1).withHour(10).withMinute(30), 120, 1);
             assertFalse(ScreeningService.validateAndSchedule(second));
         }
@@ -135,15 +133,12 @@ public class ScreeningServiceTest {
             ScreeningRecord first = buildRecord(LocalDateTime.now().plusDays(1).withHour(11), 60, 1);
             ScreeningService.validateAndSchedule(first);
 
-            // starts before and ends after the existing one
             ScreeningRecord second = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 180, 1);
             assertFalse(ScreeningService.validateAndSchedule(second));
         }
 
         @Test
         void shouldNotConflictWhenExistingMovieIsNull() {
-            // insert a screening into DB with a movie_id that doesn't exist
-            // so MovieService.getMovieById returns null → should be skipped
             ScreeningRecord record = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
             Movie newMovie = new Movie.Builder()
                     .setMovieId(6)
@@ -166,7 +161,6 @@ public class ScreeningServiceTest {
             ScreeningRecord first = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
             ScreeningService.validateAndSchedule(first);
 
-            // 10:00 + 120min + 15min buffer = 12:15, so 12:14 should still conflict
             ScreeningRecord second = buildRecord(LocalDateTime.now().plusDays(1).withHour(12).withMinute(14), 60, 1);
             assertFalse(ScreeningService.validateAndSchedule(second));
         }
