@@ -37,40 +37,40 @@ public class MovieServiceTest extends BaseTest {
     }
 
     @Test
-    void getAllMoviesSuccess() throws SQLException {
+    void testGetAllMoviesSuccess() throws SQLException {
         LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
         assertDoesNotThrow(MovieService::getAllMovies);
     }
 
     @Test
-    void addMovie() throws SQLException {
+    void testAddMovie() throws SQLException {
         LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
         int id = MovieService.addMovie(getMovie());
         assertTrue(id > 0);
     }
 
     @Test
-    void addMovieF() throws SQLException {
+    void testAddMovieClient() throws SQLException {
         LoginController.getInstance().login("user@me.com", EnvConfig.getInstance().get("password"));
         assertThrows(UnauthorizedAccessException.class, () -> MovieService.addMovie(getMovie()));
     }
 
     @Test
-    void getMovieById() throws SQLException {
+    void testGetMovieById() throws SQLException {
         LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
         Movie film = MovieService.getMovieById(5);
         assertNotNull(film);
     }
 
     @Test
-    void getMovieByIdF() throws SQLException {
+    void testGetMovieByIdF() throws SQLException {
         LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
         Movie film = MovieService.getMovieById(-1);
         assertNull(film);
     }
 
     @Test
-    void deleteMovie() throws SQLException {
+    void testDeleteMovie() throws SQLException {
         LoginController.getInstance().login("admin@me.com", EnvConfig.getInstance().get("password"));
         ArrayList<Movie> movies = MovieService.getAllMovies();
 
