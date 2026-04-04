@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("SecurityAuthenticationProxy — White Box")
+@DisplayName("SecurityAuthenticationProxy - White Box")
 public class SecurityAuthenticationProxyTest {
 
     //Stub del servizio reale, non mi serve il db
