@@ -141,7 +141,7 @@ public class ScreeningServiceTest extends BaseTest {
         void shouldNotConflictWhenExistingMovieIsNull() {
             ScreeningRecord record = buildRecord(LocalDateTime.now().plusDays(1).withHour(10), 120, 1);
             Movie newMovie = new Movie.Builder()
-                    .setMovieId(1)
+                    .setMovieId(-1)
                     .setTitle("Test Movie")
                     .setDurationMinutes(200)
                     .setReleaseDate(LocalDate.now())
