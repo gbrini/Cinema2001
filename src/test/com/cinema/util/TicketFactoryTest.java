@@ -30,7 +30,7 @@ class TicketFactoryTest {
 
     @Test
     @DisplayName("Biglietto Intero: nessuno sconto, nessun addendum → prezzo base invariato")
-    void testPrezzoIntero() {
+    void testFullPrice() {
         TicketType intero = new TicketType(1, "Intero", 0f, 0f);
         Ticket ticket = TicketFactory.createTicket(screening, intero, seat, user);
         assertEquals(12.0f, ticket.getFinalPrice(), 0.01f);
@@ -38,7 +38,7 @@ class TicketFactoryTest {
 
     @Test
     @DisplayName("Biglietto Ridotto: sconto 20% → 9.60€")
-    void testPrezzoRidotto() {
+    void testReducedPrice() {
         TicketType ridotto = new TicketType(2, "Ridotto", 20f, 0f);
         Ticket ticket = TicketFactory.createTicket(screening, ridotto, seat, user);
         // 12 - (12 * 20 / 100) = 9.6
@@ -47,7 +47,7 @@ class TicketFactoryTest {
 
     @Test
     @DisplayName("Biglietto Anziani: sconto 30% → 8.40€")
-    void testPrezzoAnziani() {
+    void testElderlyPrice() {
         TicketType anziani = new TicketType(3, "Anziani", 30f, 0f);
         Ticket ticket = TicketFactory.createTicket(screening, anziani, seat, user);
         // 12 - (12 * 30 / 100) = 8.4
@@ -56,7 +56,7 @@ class TicketFactoryTest {
 
     @Test
     @DisplayName("Biglietto VIP: nessuno sconto + sovrapprezzo 5€ → 17.00€")
-    void testPrezzoVip() {
+    void testVipPrice() {
         TicketType vip = new TicketType(4, "VIP", 0f, 5f);
         Ticket ticket = TicketFactory.createTicket(screening, vip, seat, user);
         // 12 + 5 = 17
@@ -65,7 +65,7 @@ class TicketFactoryTest {
 
     @Test
     @DisplayName("Sconto e addendum combinati → prezzo corretto")
-    void testPrezzoScontoEAddendum() {
+    void testSaleAndAddendum() {
         TicketType tipo = new TicketType(5, "Special", 20f, 2f);
         Ticket ticket = TicketFactory.createTicket(screening, tipo, seat, user);
         // 12 - (12 * 20 / 100) + 2 = 11.6
@@ -75,7 +75,7 @@ class TicketFactoryTest {
     @ParameterizedTest
     @DisplayName("Prezzo base variabile con sconto fisso 20%")
     @CsvSource({"10.0, 8.0", "15.0, 12.0", "20.0, 16.0"})
-    void testPrezzoBaseVariabile(float basePrice, float expectedPrice) {
+    void testVariablePrice(float basePrice, float expectedPrice) {
         Screening s = new Screening(1, 1, 1,
                 LocalDateTime.now().plusHours(2), basePrice, false);
         TicketType ridotto = new TicketType(2, "Ridotto", 20f, 0f);
