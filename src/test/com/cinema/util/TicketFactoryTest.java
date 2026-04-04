@@ -75,7 +75,7 @@ class TicketFactoryTest {
     @ParameterizedTest
     @DisplayName("Prezzo base variabile con sconto fisso 20%")
     @CsvSource({"10.0, 8.0", "15.0, 12.0", "20.0, 16.0"})
-    void testVariablePrice(float basePrice, float expectedPrice) {
+    void testVariableBasePriceFixedSale(float basePrice, float expectedPrice) {
         Screening s = new Screening(1, 1, 1,
                 LocalDateTime.now().plusHours(2), basePrice, false);
         TicketType ridotto = new TicketType(2, "Ridotto", 20f, 0f);
