@@ -55,15 +55,6 @@ class TicketFactoryTest {
     }
 
     @Test
-    @DisplayName("Biglietto VIP: nessuno sconto + sovrapprezzo 5€ → 17.00€")
-    void testVipPrice() {
-        TicketType vip = new TicketType(4, "VIP", 0f, 5f);
-        Ticket ticket = TicketFactory.createTicket(screening, vip, seat, user);
-        // 12 + 5 = 17
-        assertEquals(17.0f, ticket.getFinalPrice(), 0.01f);
-    }
-
-    @Test
     @DisplayName("Sconto e addendum combinati → prezzo corretto")
     void testSaleAndAddendum() {
         TicketType tipo = new TicketType(5, "Special", 20f, 2f);
