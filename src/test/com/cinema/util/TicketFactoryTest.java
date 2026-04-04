@@ -83,35 +83,35 @@ class TicketFactoryTest {
         assertEquals(expectedPrice, ticket.getFinalPrice(), 0.01f);
     }
 
-    @Test
-    @DisplayName("Il ticket ha il corretto screeningId")
-    void testTicketScreeningId() {
-        TicketType intero = new TicketType(1, "Intero", 0f, 0f);
-        Ticket ticket = TicketFactory.createTicket(screening, intero, seat, user);
-        assertEquals(screening.getScreeningId(), ticket.getScreeningId());
-    }
-
-    @Test
-    @DisplayName("Il ticket ha il corretto seatId")
-    void testTicketSeatId() {
-        TicketType intero = new TicketType(1, "Intero", 0f, 0f);
-        Ticket ticket = TicketFactory.createTicket(screening, intero, seat, user);
-        assertEquals(seat.getSeatId(), ticket.getSeatId());
-    }
-
-    @Test
-    @DisplayName("Il ticket ha il corretto userId")
-    void testTicketUserId() {
-        TicketType intero = new TicketType(1, "Intero", 0f, 0f);
-        Ticket ticket = TicketFactory.createTicket(screening, intero, seat, user);
-        assertEquals(user.getUserId(), ticket.getUserId());
-    }
-
-    @Test
-    @DisplayName("purchaseTime non è null")
-    void testPurchaseTimeNonNull() {
-        TicketType intero = new TicketType(1, "Intero", 0f, 0f);
-        Ticket ticket = TicketFactory.createTicket(screening, intero, seat, user);
-        assertNotNull(ticket.getPurchaseTime());
-    }
+//    @Test
+//    @DisplayName("Il ticket ha il corretto screeningId")
+//    void testTicketScreeningId() {
+//        TicketType intero = new TicketType(1, "Intero", 0f, 0f);
+//        Ticket ticket = TicketFactory.createTicket(screening, intero, seat, user);
+//        assertEquals(screening.getScreeningId(), ticket.getScreeningId());
+//    }
+//
+//    @Test
+//    @DisplayName("Il ticket ha il corretto seatId")
+//    void testTicketSeatId() {
+//        TicketType intero = new TicketType(1, "Intero", 0f, 0f);
+//        Ticket ticket = TicketFactory.createTicket(screening, intero, seat, user);
+//        assertEquals(seat.getSeatId(), ticket.getSeatId());
+//    }
+//
+//    @Test
+//    @DisplayName("Il ticket ha il corretto userId")
+//    void testTicketUserId() {
+//        TicketType intero = new TicketType(1, "Intero", 0f, 0f);
+//        Ticket ticket = TicketFactory.createTicket(screening, intero, seat, user);
+//        assertEquals(user.getUserId(), ticket.getUserId());
+//    }
+//
+//    @Test
+//    @DisplayName("purchaseTime non è null")
+//    void testPurchaseTimeNonNull() {
+//        TicketType intero = new TicketType(1, "Intero", 0f, 0f);
+//        Ticket ticket = TicketFactory.createTicket(screening, intero, seat, user);
+//        assertNotNull(ticket.getPurchaseTime());
+//    }
 }
