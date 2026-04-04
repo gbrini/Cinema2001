@@ -33,7 +33,7 @@ public class UserSessionTest {
 
     @Test
     @DisplayName("Sessione vuota → getCurrentUser() è null")
-    void testSessioneVuota() {
+    void testEmptySession() {
         assertNull(UserSession.getInstance().getCurrentUser());
     }
 
@@ -66,7 +66,7 @@ public class UserSessionTest {
 
     @Test
     @DisplayName("cleanSession() su sessione già vuota non lancia eccezioni")
-    void testCleanSessionVuota() {
+    void testCleanSessionEmpty() {
         assertDoesNotThrow(() -> UserSession.getInstance().cleanSession());
     }
 }
