@@ -36,55 +36,55 @@ public class SecurityAuthenticationProxyTest {
     }
 
     @Test
-    @DisplayName("Email null → restituisce null")
+    @DisplayName("Email null -> restituisce null")
     void testEmailNull() throws Exception {
         assertNull(proxy.login(null, "password"));
     }
 
     @Test
-    @DisplayName("Password null → restituisce null")
+    @DisplayName("Password null -> restituisce null")
     void testPasswordNull() throws Exception {
         assertNull(proxy.login("mario@test.it", null));
     }
 
     @Test
-    @DisplayName("Email blank → restituisce null")
+    @DisplayName("Email blank -> restituisce null")
     void testEmailBlank() throws Exception {
         assertNull(proxy.login("   ", "password"));
     }
 
     @Test
-    @DisplayName("Password blank → restituisce null")
+    @DisplayName("Password blank -> restituisce null")
     void testPasswordBlank() throws Exception {
         assertNull(proxy.login("mario@test.it", "   "));
     }
 
     @Test
-    @DisplayName("Email vuota → restituisce null")
+    @DisplayName("Email vuota -> restituisce null")
     void testEmailVuota() throws Exception {
         assertNull(proxy.login("", "password"));
     }
 
     @Test
-    @DisplayName("Password vuota → restituisce null")
+    @DisplayName("Password vuota -> restituisce null")
     void testPasswordVuota() throws Exception {
         assertNull(proxy.login("mario@test.it", ""));
     }
 
     @Test
-    @DisplayName("Entrambi null → restituisce null")
+    @DisplayName("Entrambi null -> restituisce null")
     void testEntrambiNull() throws Exception {
         assertNull(proxy.login(null, null));
     }
 
     @Test
-    @DisplayName("Entrambi blank → restituisce null")
+    @DisplayName("Entrambi blank -> restituisce null")
     void testEntrambiBlank() throws Exception {
         assertNull(proxy.login("", ""));
     }
 
     @Test
-    @DisplayName("Credenziali valide → restituisce utente dal servizio reale")
+    @DisplayName("Credenziali valide -> restituisce utente dal servizio reale")
     void testCredenzialiValide() throws Exception {
         User result = proxy.login("mario@test.it", "password");
         assertNotNull(result);
