@@ -5,12 +5,13 @@ import com.cinema.model.User;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.EnvConfig;
 import org.junit.jupiter.api.*;
+import test.com.cinema.BaseTest;
 
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LoginControllerTest {
+class LoginControllerTest extends BaseTest {
     @Test
     void testLoginErrorFlowUpdateSession() throws SQLException {
         LoginController loginController = LoginController.getInstance();
