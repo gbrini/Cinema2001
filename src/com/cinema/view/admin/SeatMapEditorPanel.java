@@ -61,7 +61,7 @@ public class SeatMapEditorPanel extends JPanel {
     private JPanel createButtonPanel() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 10));
 
-        panel.add(new JLabel("Screen Name "));
+        panel.add(new JLabel("Nome sala "));
         panel.add(screenNameField);
         panel.add(vipButton);
         panel.add(handicapButton);
