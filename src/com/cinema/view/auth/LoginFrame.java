@@ -66,7 +66,7 @@ public class LoginFrame extends JFrame implements ActionListener {
                 User user = LoginController.getInstance().login(email, psw);
 
                 if(user == null) {
-                    JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Login Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Email o Password errati!", "Errore Login", JOptionPane.ERROR_MESSAGE);
                     pswField.setText("");
                 } else {
                     this.dispose();
