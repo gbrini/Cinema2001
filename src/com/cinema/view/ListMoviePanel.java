@@ -9,6 +9,7 @@ import com.cinema.view.listener.PanelActionListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class ListMoviePanel extends AbstractListPanel<Movie> {
@@ -28,7 +29,7 @@ public class ListMoviePanel extends AbstractListPanel<Movie> {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        moviePanel.add(new JLabel(movie.getTitle() + " (" + movie.getReleaseDate().toString() + ")"), gbc);
+        moviePanel.add(new JLabel(movie.getTitle() + " (" + movie.getReleaseDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ")"), gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
