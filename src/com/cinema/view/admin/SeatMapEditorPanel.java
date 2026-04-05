@@ -75,10 +75,10 @@ public class SeatMapEditorPanel extends JPanel {
     private JPanel createLegendPanel() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 5));
 
-        panel.add(this.createLegendItem(Color.ORANGE, "VIP Seat"));
-        panel.add(this.createLegendItem(Color.GREEN, "Handicap Seat"));
-        panel.add(this.createLegendItem(Color.DARK_GRAY.brighter(), "Disabled Seat"));
-        panel.add(this.createLegendItem(new Color(0, 150, 255), "Selected Seat"));
+        panel.add(this.createLegendItem(Color.ORANGE, "Posto VIP"));
+        panel.add(this.createLegendItem(Color.GREEN, "Posto Handicap"));
+        panel.add(this.createLegendItem(Color.DARK_GRAY.brighter(), "Posto disabilitato"));
+        panel.add(this.createLegendItem(new Color(0, 150, 255), "Posto selezionato"));
 
         return panel;
     }
