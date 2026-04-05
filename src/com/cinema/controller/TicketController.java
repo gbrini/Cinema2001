@@ -93,7 +93,7 @@ public class TicketController extends BaseController implements Observable<Dialo
         row.setBorder(new EmptyBorder(4, 4, 4, 4));
         row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
 
-        String label = String.format("%s%d · %s · %.2f €",
+        String label = String.format("%s%d - %s - %.2f €",
                 seatEditor.getSeatRow(),
                 seatEditor.getSeatNumber(),
                 ticketType.getTypeName(),
@@ -198,8 +198,8 @@ public class TicketController extends BaseController implements Observable<Dialo
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
         String postoInfo = String.format("Posto: %s%d%s%s",
                 seatEditor.getSeatRow(), seatEditor.getSeatNumber(),
-                seatEditor.isVip()      ? " · VIP"      : "",
-                seatEditor.isHandicap() ? " · Handicap" : "");
+                seatEditor.isVip()      ? " - VIP"      : "",
+                seatEditor.isHandicap() ? " - Handicap" : "");
         panel.add(new JLabel(postoInfo), gbc);
 
         gbc.gridy = 1;
