@@ -9,6 +9,7 @@ import com.cinema.util.constants.DimensionConstants;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,7 +40,7 @@ public class SeatMapPanel extends JPanel {
         JPanel infoContent = new JPanel();
 
         if (this.screeningRecord != null) {
-            infoContent.add(new JLabel(screeningRecord.screening().getStartTime() + " - " + screeningRecord.screen().getScreenName()));
+            infoContent.add(new JLabel(screeningRecord.screening().getStartTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm")) + " - " + screeningRecord.screen().getScreenName()));
         }
 
         int maxRow = 0;
