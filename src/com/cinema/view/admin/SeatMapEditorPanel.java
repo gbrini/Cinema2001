@@ -23,11 +23,11 @@ public class SeatMapEditorPanel extends JPanel {
     private final int screenId;
 
     private final JTextField screenNameField = new JTextField(10);
-    private final JButton vipButton = new JButton("Set Selected as VIP");
-    private final JButton handicapButton = new JButton("Set Selected as Handicap");
-    private final JButton removeButton = new JButton("Set Selected as Removed");
-    private final JButton clearButton = new JButton("Clear Selected");
-    private final JButton saveButton = new JButton("Save Layout");
+    private final JButton vipButton = new JButton("Imposta come VIP");
+    private final JButton handicapButton = new JButton("Imposta come Handicap");
+    private final JButton removeButton = new JButton("Imposta come Removed");
+    private final JButton clearButton = new JButton("Cancella selezionati");
+    private final JButton saveButton = new JButton("Salva Layout");
 
     public SeatMapEditorPanel(int screenId, List<SeatEditor> initialLayout, String screenName, User user) {
         this.user = user;
