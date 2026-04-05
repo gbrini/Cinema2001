@@ -6,6 +6,7 @@ import com.cinema.service.MovieService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.util.UnauthorizedAccessException;
+import com.cinema.util.constants.TextConstants;
 import com.cinema.view.ListMoviePanel;
 import com.cinema.view.listener.PanelActionListener;
 
@@ -36,7 +37,7 @@ public class MovieListController extends BaseController implements PanelActionLi
         Window ownerWindow = SwingUtilities.getWindowAncestor(this.view);
         Frame ownerFrame = (ownerWindow instanceof Frame) ? (Frame) ownerWindow : JOptionPane.getRootFrame();
 
-        JDialog dialog = new JDialog(ownerFrame, (item == null ? "Add" : "Edit") + " movie", true);
+        JDialog dialog = new JDialog(ownerFrame, (item == null ? TextConstants.ADD_TXT : TextConstants.EDIT_TXT) + " film", true);
 
         MovieController movieController = new MovieController(item);
         movieController.addObserver(this);

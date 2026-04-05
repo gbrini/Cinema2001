@@ -5,6 +5,7 @@ import com.cinema.model.User;
 import com.cinema.service.ScreenService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
+import com.cinema.util.constants.TextConstants;
 import com.cinema.view.admin.ListScreenPanel;
 import com.cinema.view.listener.PanelActionListener;
 
@@ -39,7 +40,7 @@ public class ScreenListController extends BaseController implements PanelActionL
         Window ownerWindow = SwingUtilities.getWindowAncestor(this.view);
         Frame ownerFrame = (ownerWindow instanceof Frame) ? (Frame) ownerWindow : JOptionPane.getRootFrame();
 
-        JDialog dialog = new JDialog(ownerFrame, (item == null ? "Add" : "Edit") + " screen", true);
+        JDialog dialog = new JDialog(ownerFrame, (item == null ? TextConstants.ADD_TXT : TextConstants.EDIT_TXT) + " screen", true);
 
         SeatMapController seatMapController = new SeatMapController(item);
         seatMapController.addObserver(this);
