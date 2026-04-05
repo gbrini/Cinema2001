@@ -153,11 +153,15 @@ public class EditMoviePanel extends JPanel {
 
         gbc.gridx = 1;
         gbc.gridy = 5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
-        descriptionField = new JTextArea(5, 20);
-        descriptionField.setText(this.movie == null ? "" : movie.getDescription());
-        add(descriptionField, gbc);
+        gbc.weighty = 1.0;
+        descriptionField = new JTextArea(this.movie == null ? "" : movie.getDescription(),5, 8);
+        descriptionField.setLineWrap(true);
+        descriptionField.setWrapStyleWord(true);
+        JScrollPane scrollDesc = new JScrollPane(descriptionField);
+        add(scrollDesc, gbc);
+        gbc.weighty = 0;
 
         gbc.gridx = 0;
         gbc.gridy = 6;
