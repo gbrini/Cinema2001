@@ -9,6 +9,7 @@ import com.cinema.view.listener.PanelActionListener;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ListHistoryPanel extends AbstractListPanel<TicketRecord> {
     public ListHistoryPanel(PanelActionListener<TicketRecord> actionListener, int roleId) {
@@ -31,7 +32,7 @@ public class ListHistoryPanel extends AbstractListPanel<TicketRecord> {
         ticketPanel.add(titleLabel, gbc);
 
         gbc.gridx = 1;
-        ticketPanel.add(new JLabel(item.screening().getStartTime().toString()), gbc);
+        ticketPanel.add(new JLabel(item.screening().getStartTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))), gbc);
 
         gbc.gridx = 2;
         String posto = item.seat().getSeatRow() + item.seat().getSeatNumber()
@@ -47,12 +48,10 @@ public class ListHistoryPanel extends AbstractListPanel<TicketRecord> {
 
         gbc.gridx = 5;
         if (item.screening().getStartTime().minusHours(1).isAfter(LocalDateTime.now())) {
-            JButton cancelBtn = new JButton("Annulla");
+            JButton cancelBtn = new JButton("Cancella");
             cancelBtn.setForeground(Color.RED);
             cancelBtn.addActionListener(e -> actionListener.onDeleteRequested(item));
             ticketPanel.add(cancelBtn, gbc);
-        } else {
-            ticketPanel.add(new JLabel("—"), gbc);
         }
 
         return ticketPanel;
