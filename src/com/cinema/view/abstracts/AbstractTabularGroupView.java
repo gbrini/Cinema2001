@@ -57,6 +57,9 @@ public abstract class AbstractTabularGroupView<K, V, Z> extends JPanel {
 
             if (Objects.equals(tabTitle, LocalDate.now().toString())) {
                 tabTitle = "Oggi";
+            } else {
+                String[] dates = tabTitle.split("-");
+                tabTitle = dates[2] + "/" + dates[1] + "/" + dates[0];
             }
 
             tabbedPane.addTab(tabTitle, contentPanel);
