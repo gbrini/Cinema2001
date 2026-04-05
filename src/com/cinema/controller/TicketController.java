@@ -50,7 +50,7 @@ public class TicketController extends BaseController implements Observable<Dialo
         JSplitPane splitPane = new JSplitPane(
                 JSplitPane.HORIZONTAL_SPLIT,
                 seatMapView,
-                buildCartPanel()
+                this.user.getRole().getRoleId() == 3 ? buildCartPanel() : null
         );
         splitPane.setResizeWeight(0.75);
         splitPane.setDividerSize(6);
@@ -143,14 +143,6 @@ public class TicketController extends BaseController implements Observable<Dialo
     }
 
     private void refreshSeatComponent(SeatEditor seatEditor) {
-//        System.out.println("Cerco seatEditor: " + seatEditor.getSeatRow() + seatEditor.getSeatNumber());
-//        System.out.println("SeatComponents disponibili: " + view.getSeatComponents().size());
-//
-//        for (SeatComponent sc : view.getSeatComponents()) {
-//            System.out.println("  → " + sc.getSeatEditor().getSeatRow() + sc.getSeatEditor().getSeatNumber()
-//                    + " | stesso oggetto? " + (sc.getSeatEditor() == seatEditor));
-//        }
-
         for (SeatComponent sc : view.getSeatComponents()) {
             if (sc.getSeatEditor() == seatEditor) {
                 sc.getSeatEditor().setTaken(false);
