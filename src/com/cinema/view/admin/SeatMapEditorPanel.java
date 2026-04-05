@@ -25,7 +25,7 @@ public class SeatMapEditorPanel extends JPanel {
     private final JTextField screenNameField = new JTextField(10);
     private final JButton vipButton = new JButton("Imposta come VIP");
     private final JButton handicapButton = new JButton("Imposta come Handicap");
-    private final JButton removeButton = new JButton("Imposta come disabilitato");
+    private final JButton removeButton = new JButton("Imposta come Disabilitato");
     private final JButton clearButton = new JButton("Cancella selezionati");
     private final JButton saveButton = new JButton("Salva Layout");
 
