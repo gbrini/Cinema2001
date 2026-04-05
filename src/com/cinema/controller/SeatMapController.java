@@ -163,7 +163,7 @@ public class SeatMapController extends BaseController implements Observable<Dial
             }
 
             if (screenId < 1) {
-                JOptionPane.showMessageDialog(this.view, "There was an error saving this screen.");
+                JOptionPane.showMessageDialog(this.view, "Errore durante il salvataggio della sala");
                 return;
             }
         } else {

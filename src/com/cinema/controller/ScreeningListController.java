@@ -73,7 +73,7 @@ public class ScreeningListController extends BaseController implements PanelActi
         if (changedSaved) {
             this.onRefreshRequested();
         } else {
-            JOptionPane.showMessageDialog(this.view, "There was an error saving the screening.");
+            JOptionPane.showMessageDialog(this.view, "Errore durante il salvataggio della proiezione.");
         }
     }
 }
