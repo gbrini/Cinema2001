@@ -40,7 +40,7 @@ public class ScreenListController extends BaseController implements PanelActionL
         Window ownerWindow = SwingUtilities.getWindowAncestor(this.view);
         Frame ownerFrame = (ownerWindow instanceof Frame) ? (Frame) ownerWindow : JOptionPane.getRootFrame();
 
-        JDialog dialog = new JDialog(ownerFrame, (item == null ? TextConstants.ADD_TXT : TextConstants.EDIT_TXT) + " screen", true);
+        JDialog dialog = new JDialog(ownerFrame, (item == null ? TextConstants.ADD_TXT : TextConstants.EDIT_TXT) + " sala", true);
 
         SeatMapController seatMapController = new SeatMapController(item);
         seatMapController.addObserver(this);
