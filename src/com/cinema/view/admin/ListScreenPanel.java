@@ -1,6 +1,7 @@
-package com.cinema.view;
+package com.cinema.view.admin;
 
 import com.cinema.model.Screen;
+import com.cinema.util.constants.TextConstants;
 import com.cinema.util.constants.ThemeConstants;
 import com.cinema.view.abstracts.AbstractListPanel;
 import com.cinema.view.listener.PanelActionListener;
@@ -22,13 +23,13 @@ public class ListScreenPanel extends AbstractListPanel<Screen> {
         screenPanel.setBackground(backgroundColor);
         screenPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
-        JLabel infoLabel = new JLabel(item.getScreenName() + " (" + item.getCapacity() + ") seats");
+        JLabel infoLabel = new JLabel(item.getScreenName() + " (" + item.getCapacity() + ") posti");
         screenPanel.add(infoLabel, BorderLayout.WEST);
 
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
         controlPanel.setBackground(backgroundColor);
 
-        JButton editButton = new JButton("Edit Map");
+        JButton editButton = new JButton(TextConstants.EDIT_TXT);
         editButton.addActionListener(e -> this.actionListener.onEditRequested(item));
 
         controlPanel.add(editButton);

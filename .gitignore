@@ -87,7 +87,5 @@ nb-configuration.xml
 ##############################
 *.log
 
-
-src/db.properties
-src/env.properties
+src/*.properties
 postgresql-*.jar

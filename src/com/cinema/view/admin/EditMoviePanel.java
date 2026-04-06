@@ -1,36 +1,35 @@
-package com.cinema.view;
+package com.cinema.view.admin;
 
-import com.cinema.service.MovieService;
 import com.cinema.model.Movie;
 import com.cinema.model.User;
+import com.cinema.util.constants.TextConstants;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 public class EditMoviePanel extends JPanel {
     private final Movie movie;
     private final User user;
-    private  JTextField titleField;
-    private JTextField durationField;
+    private JTextField titleField;
+    private JFormattedTextField durationField;
     private JFormattedTextField dateField;
     private JTextField genreField;
     private JComboBox ratingField;
-    private JTextField descriptionField;
+    private JTextArea descriptionField;
     private JTextField directorField;
 
     private JButton addButton;
 
-    private final String[] S_COMBO = {"G", "PG", "PG-13", "R", "NC-17"};
+    private final String[] S_COMBO = {"T", "6+ / 10+", "VM14", "VM18"};
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public EditMoviePanel(Movie movie, User user) {
@@ -44,7 +43,7 @@ public class EditMoviePanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
-        add(new JLabel("Movie Title: "), gbc);
+        add(new JLabel("Titolo: "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -54,27 +53,37 @@ public class EditMoviePanel extends JPanel {
         titleField.setText(this.movie == null ? "" : movie.getTitle());
         add(titleField, gbc);
 
-        //duration integer
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 0.0;
-        add(new JLabel("Duration (Minutes): "), gbc);
+        add(new JLabel("Durata (Minuti): "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
-        durationField = new JTextField(20);
+
+        NumberFormat format = NumberFormat.getIntegerInstance();
+        format.setGroupingUsed(false);
+
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setMinimum(1);
+        formatter.setMaximum(999);
+        formatter.setAllowsInvalid(false);
+        formatter.setCommitsOnValidEdit(true);
+
+        durationField = new JFormattedTextField(formatter);
+        durationField.setColumns(10);
         durationField.setText(this.movie == null ? "" : String.valueOf(movie.getDurationMinutes()));
+
         add(durationField, gbc);
 
-        //release_date date
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 0.0;
-        add(new JLabel("Release Date (yyyy-MM-dd): "), gbc);
+        add(new JLabel("Data d'uscita (yyyy-MM-dd): "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -97,12 +106,11 @@ public class EditMoviePanel extends JPanel {
 
         add(dateField, gbc);
 
-        //genre string
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 0.0;
-        add(new JLabel("Genres: "), gbc);
+        add(new JLabel("Generi: "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -112,7 +120,6 @@ public class EditMoviePanel extends JPanel {
         genreField.setText(this.movie == null ? "" : movie.getGenre());
         add(genreField, gbc);
 
-        //rating select
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.NONE;
@@ -138,26 +145,29 @@ public class EditMoviePanel extends JPanel {
         }
         add(ratingField, gbc);
 
-        //description string
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 0.0;
-        add(new JLabel("Description: "), gbc);
+        add(new JLabel("Descrizione: "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
-        descriptionField = new JTextField(20);
-        descriptionField.setText(this.movie == null ? "" : movie.getDescription());
-        add(descriptionField, gbc);
+        gbc.weighty = 1.0;
+        descriptionField = new JTextArea(this.movie == null ? "" : movie.getDescription(),5, 8);
+        descriptionField.setLineWrap(true);
+        descriptionField.setWrapStyleWord(true);
+        JScrollPane scrollDesc = new JScrollPane(descriptionField);
+        add(scrollDesc, gbc);
+        gbc.weighty = 0;
 
         gbc.gridx = 0;
         gbc.gridy = 6;
         gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 0.0;
-        add(new JLabel("Director: "), gbc);
+        add(new JLabel("Regista: "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 6;
@@ -172,7 +182,7 @@ public class EditMoviePanel extends JPanel {
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
-        addButton = new JButton((this.movie == null ? "Add" : "Edit")  + " Movie");
+        addButton = new JButton((this.movie == null ? TextConstants.ADD_TXT : TextConstants.EDIT_TXT)  + " Film");
         add(addButton, gbc);
         //addButton.addActionListener(e -> addMovie());
     }

@@ -23,11 +23,11 @@ public class SeatMapEditorPanel extends JPanel {
     private final int screenId;
 
     private final JTextField screenNameField = new JTextField(10);
-    private final JButton vipButton = new JButton("Set Selected as VIP");
-    private final JButton handicapButton = new JButton("Set Selected as Handicap");
-    private final JButton removeButton = new JButton("Set Selected as Removed");
-    private final JButton clearButton = new JButton("Clear Selected");
-    private final JButton saveButton = new JButton("Save Layout");
+    private final JButton vipButton = new JButton("Imposta come VIP");
+    private final JButton handicapButton = new JButton("Imposta come Handicap");
+    private final JButton removeButton = new JButton("Imposta come Disabilitato");
+    private final JButton clearButton = new JButton("Cancella selezionati");
+    private final JButton saveButton = new JButton("Salva Layout");
 
     public SeatMapEditorPanel(int screenId, List<SeatEditor> initialLayout, String screenName, User user) {
         this.user = user;
@@ -42,7 +42,7 @@ public class SeatMapEditorPanel extends JPanel {
     }
 
     private void initializeLayout(List<SeatEditor> initialLayout) {
-        SeatMapPanel seatMapPanel = new SeatMapPanel(new ArrayList<>(initialLayout), true, this.user);
+        SeatMapPanel seatMapPanel = new SeatMapPanel(new ArrayList<>(initialLayout), true, this.user, null);
         JPanel seatView = seatMapPanel.getView();
         this.seatComponents = seatMapPanel.getSeatComponents();
         add(seatView, BorderLayout.CENTER);
@@ -61,7 +61,7 @@ public class SeatMapEditorPanel extends JPanel {
     private JPanel createButtonPanel() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 10));
 
-        panel.add(new JLabel("Screen Name "));
+        panel.add(new JLabel("Nome sala "));
         panel.add(screenNameField);
         panel.add(vipButton);
         panel.add(handicapButton);
@@ -75,10 +75,10 @@ public class SeatMapEditorPanel extends JPanel {
     private JPanel createLegendPanel() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 5));
 
-        panel.add(this.createLegendItem(Color.ORANGE, "VIP Seat"));
-        panel.add(this.createLegendItem(Color.GREEN, "Handicap Seat"));
-        panel.add(this.createLegendItem(Color.DARK_GRAY.brighter(), "Disabled Seat"));
-        panel.add(this.createLegendItem(new Color(0, 150, 255), "Selected Seat"));
+        panel.add(this.createLegendItem(Color.ORANGE, "Posto VIP"));
+        panel.add(this.createLegendItem(Color.GREEN, "Posto Handicap"));
+        panel.add(this.createLegendItem(Color.DARK_GRAY.brighter(), "Posto disabilitato"));
+        panel.add(this.createLegendItem(new Color(0, 150, 255), "Posto selezionato"));
 
         return panel;
     }

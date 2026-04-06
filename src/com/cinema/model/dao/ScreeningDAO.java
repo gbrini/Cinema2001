@@ -1,25 +1,13 @@
 package com.cinema.model.dao;
 
-import com.cinema.controller.MovieController;
 import com.cinema.model.*;
 import com.cinema.model.dao.database.DatabaseConnection;
-import com.cinema.service.MovieService;
-import com.sun.net.httpserver.Authenticator;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ScreeningDAO {
 
@@ -65,7 +53,7 @@ public class ScreeningDAO {
                     results.getInt("movie_id"),
                     results.getInt("screen_id"),
                     results.getTimestamp("start_time").toLocalDateTime(),
-                    results.getDouble("ticket_price"),
+                    results.getFloat("ticket_price"),
                     results.getBoolean("is_deleted")
                 ));
             }
@@ -78,31 +66,33 @@ public class ScreeningDAO {
         return screenings;
     }
 
-    public static HashMap<LocalDate, ArrayList<ScreeningRecord>> getScreeningByDateRange(Date from, Date to) {
+    public static HashMap<LocalDate, ArrayList<ScreeningRecord>> getScreeningByDateRange(LocalDateTime from, LocalDateTime to) {
         HashMap<LocalDate, ArrayList<ScreeningRecord>> screenings = new HashMap<>();
-        String sql = "SELECT " +
-                "screening.screening_id AS scr_id, screening.movie_id AS mid, screen.screen_id AS sid, start_time, ticket_price, screening.is_deleted AS scr_is_del," +
-                "title, duration_minutes, releASe_date, genre, rating, description, director, movie.is_deleted AS mv_is_del," +
-                "screen_name, capacity, screen.is_deleted AS scr_is_del," +
-                "(start_time + (duration_minutes * INTERVAL '1 minute')) AS end_time," +
-                "COALESCE(t.sold_count, 0) AS tickets_sold," +
-                "(capacity - COALESCE(t.sold_count, 0)) AS seats_remaining " +
-                "FROM screening " +
-                "JOIN movie ON movie.movie_id = screening.movie_id " +
-                "JOIN screen ON screen.screen_id = screening.screen_id " +
-                "LEFT JOIN ( SELECT " +
-                "screening_id," +
-                "COUNT(ticket_id) AS sold_count " +
-                "FROM ticket " +
-                "GROUP BY screening_id) AS t ON t.screening_id = screening.screening_id " +
-                "WHERE screening.start_time >= ? AND screening.start_time <= ? AND screening.is_deleted = false ";
+        String sql = """ 
+                SELECT
+                    screening.screening_id AS scr_id, screening.movie_id AS mid, screen.screen_id AS sid, start_time, ticket_price, screening.is_deleted AS scr_is_del,
+                    title, duration_minutes, releASe_date, genre, rating, description, director, movie.is_deleted AS mv_is_del,
+                    screen_name, capacity, screen.is_deleted AS scr_is_del,
+                    (start_time + (duration_minutes * INTERVAL '1 minute')) AS end_time,
+                    COALESCE(t.sold_count, 0) AS tickets_sold,
+                    (capacity - COALESCE(t.sold_count, 0)) AS seats_remaining 
+                    FROM screening 
+                    JOIN movie ON movie.movie_id = screening.movie_id 
+                    JOIN screen ON screen.screen_id = screening.screen_id 
+                    LEFT JOIN ( SELECT 
+                    screening_id,
+                    COUNT(ticket_id) AS sold_count 
+                FROM ticket 
+                GROUP BY screening_id) AS t ON t.screening_id = screening.screening_id
+                WHERE screening.start_time >= ? AND screening.start_time <= ? AND screening.is_deleted = false
+        """;
 
         try {
             Connection conn = DatabaseConnection.getInstance();
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            stmt.setDate(1, new java.sql.Date(from.getTime()));
-            stmt.setDate(2, new java.sql.Date(to.getTime()));
+            stmt.setTimestamp(1, Timestamp.valueOf(from));
+            stmt.setTimestamp(2, Timestamp.valueOf(to));
 
             stmt.execute();
             ResultSet results = stmt.getResultSet();
@@ -113,7 +103,7 @@ public class ScreeningDAO {
                     results.getInt("mid"),
                     results.getInt("sid"),
                     results.getTimestamp("start_time").toLocalDateTime(),
-                    results.getDouble("ticket_price"),
+                    results.getFloat("ticket_price"),
                     results.getBoolean("scr_is_del")
                 );
 

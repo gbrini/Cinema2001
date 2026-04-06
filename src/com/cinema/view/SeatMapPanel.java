@@ -1,5 +1,6 @@
 package com.cinema.view;
 
+import com.cinema.model.ScreeningRecord;
 import com.cinema.model.SeatEditor;
 import com.cinema.model.User;
 import com.cinema.service.SeatService;
@@ -7,6 +8,8 @@ import com.cinema.util.constants.DimensionConstants;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,20 +18,29 @@ public class SeatMapPanel extends JPanel {
     private final ArrayList<SeatEditor> seats;
     private final ArrayList<SeatComponent> seatComponents = new ArrayList<>();
     private boolean canEdit = false;
+    private final ScreeningRecord screeningRecord;
 
-    public SeatMapPanel(int screeningId, boolean canEdit, User user) {
+    public SeatMapPanel(int screeningId, boolean canEdit, User user, ScreeningRecord screeningRecord) {
         this.seats = SeatService.getSeatsStatusByScreeningId(screeningId);
         this.canEdit = canEdit;
+        this.screeningRecord = screeningRecord;
     }
 
-    public SeatMapPanel(ArrayList<SeatEditor> seats, boolean canEdit, User user) {
+    public SeatMapPanel(ArrayList<SeatEditor> seats, boolean canEdit, User user, ScreeningRecord screeningRecord) {
         this.seats = seats;
         this.canEdit = canEdit;
+        this.screeningRecord = screeningRecord;
     }
 
     public JPanel getView() {
         if (this.seats == null || this.seats.isEmpty()) {
             return new JPanel();
+        }
+
+        JPanel infoContent = new JPanel();
+
+        if (this.screeningRecord != null) {
+            infoContent.add(new JLabel(screeningRecord.screening().getStartTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm")) + " - " + screeningRecord.screen().getScreenName()));
         }
 
         int maxRow = 0;
@@ -72,7 +84,11 @@ public class SeatMapPanel extends JPanel {
         wrapper.add(listContent, BorderLayout.WEST);
         wrapper.add(seatGridPanel, BorderLayout.CENTER);
 
-        return wrapper;
+        JPanel layout = new JPanel(new BorderLayout());
+        layout.add(infoContent, BorderLayout.NORTH);
+        layout.add(wrapper, BorderLayout.CENTER);
+
+        return layout;
     }
 
     private JLabel createRowLabel(String text) {
@@ -83,5 +99,11 @@ public class SeatMapPanel extends JPanel {
 
     public ArrayList<SeatComponent> getSeatComponents() {
         return this.seatComponents;
+    }
+
+    public void addSeatSelectionListener(ActionListener listener) {
+        for (SeatComponent seatComponent: seatComponents) {
+            seatComponent.addActionListener(listener);
+        }
     }
 }

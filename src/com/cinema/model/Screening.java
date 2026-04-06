@@ -1,18 +1,16 @@
 package com.cinema.model;
 
-import java.text.SimpleDateFormat;
 import java.time.*;
-import java.util.Date;
 
 public class Screening {
     private int screeningId;
     private int movieId;
     private int screenId;
     private LocalDateTime startTime;
-    private double ticketPrice;
+    private float ticketPrice;
     private boolean isDeleted;
 
-    public Screening(int screeningId, int movieId, int screenId, LocalDateTime startTime, double ticketPrice, boolean isDeleted) {
+    public Screening(int screeningId, int movieId, int screenId, LocalDateTime startTime, float ticketPrice, boolean isDeleted) {
         this.screeningId = screeningId;
         this.movieId = movieId;
         this.screenId = screenId;
@@ -21,7 +19,7 @@ public class Screening {
         this.isDeleted = isDeleted;
     }
 
-    public Screening(int movieId, int screenId, LocalDateTime startTime, double ticketPrice, boolean isDeleted) {
+    public Screening(int movieId, int screenId, LocalDateTime startTime, float ticketPrice, boolean isDeleted) {
         this.movieId = movieId;
         this.screenId = screenId;
         this.startTime = startTime;
@@ -61,11 +59,11 @@ public class Screening {
         this.startTime = startTime;
     }
 
-    public double getTicketPrice() {
+    public float getTicketPrice() {
         return ticketPrice;
     }
 
-    public void setTicketPrice(double ticketPrice) {
+    public void setTicketPrice(float ticketPrice) {
         this.ticketPrice = ticketPrice;
     }
 

@@ -3,22 +3,24 @@ package com.cinema.controller;
 import com.cinema.model.Screening;
 import com.cinema.model.ScreeningRecord;
 import com.cinema.model.User;
+import com.cinema.service.MovieService;
+import com.cinema.service.ScreenService;
 import com.cinema.service.ScreeningService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
+import com.cinema.util.TimeSlot;
+import com.cinema.util.constants.TextConstants;
 import com.cinema.view.ListScreeningPanel;
 import com.cinema.view.listener.PanelActionListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
-public class ScreeningListController implements PanelActionListener<Screening>, DialogCloseObserver {
+public class ScreeningListController extends BaseController implements PanelActionListener<Screening>, DialogCloseObserver {
     private final User user;
     private final ListScreeningPanel view;
 
@@ -33,12 +35,15 @@ public class ScreeningListController implements PanelActionListener<Screening>, 
 
     @Override
     public void onRefreshRequested() {
-        Instant todayInstant = Instant.now();
-        Instant nextWeekInstant = todayInstant.plus(7, ChronoUnit.DAYS);
+        LocalDateTime from = LocalDateTime.now();
+        LocalDateTime to = from.plusDays(7);
 
-        HashMap<LocalDate, ArrayList<ScreeningRecord>> screenings = ScreeningService.getScreeningByDateRange(Date.from(todayInstant), Date.from(nextWeekInstant));
-
-        this.view.setGroupedContent(screenings, true);
+        try {
+            HashMap<LocalDate, ArrayList<ScreeningRecord>> screenings = ScreeningService.getScreeningByDateRange(from, to);
+            this.view.setGroupedContent(screenings, true);
+        } catch (Exception e) {
+            handleException(e);
+        }
     }
 
     @Override
@@ -46,7 +51,7 @@ public class ScreeningListController implements PanelActionListener<Screening>, 
         Window ownerWindow = SwingUtilities.getWindowAncestor(this.view);
         Frame ownerFrame = (ownerWindow instanceof Frame) ? (Frame) ownerWindow : JOptionPane.getRootFrame();
 
-        JDialog dialog = new JDialog(ownerFrame, (item == null ? "Add" : "Edit") + " screening", true);
+        JDialog dialog = new JDialog(ownerFrame, (item == null ? TextConstants.ADD_TXT : TextConstants.EDIT_TXT) + " proiezione", true);
 
         ScreeningController screeningController = new ScreeningController(item);
         screeningController.addObserver(this);
@@ -68,7 +73,7 @@ public class ScreeningListController implements PanelActionListener<Screening>, 
         if (changedSaved) {
             this.onRefreshRequested();
         } else {
-            JOptionPane.showMessageDialog(this.view, "There was an error saving the screening.");
+            JOptionPane.showMessageDialog(this.view, "Errore durante il salvataggio della proiezione.");
         }
     }
 }

@@ -6,14 +6,14 @@ import com.cinema.service.MovieService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.util.Observable;
-import com.cinema.view.EditMoviePanel;
+import com.cinema.view.admin.EditMoviePanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieController implements Observable<DialogCloseObserver> {
+public class MovieController extends BaseController implements Observable<DialogCloseObserver> {
     private final User user;
     private final EditMoviePanel view;
     private final List<DialogCloseObserver> observers = new ArrayList<>();
@@ -70,10 +70,15 @@ public class MovieController implements Observable<DialogCloseObserver> {
 
         boolean isOk;
 
-        if (newMovie.getMovieId() == 0) {
-            isOk = MovieService.addMovie(newMovie) != 0;
-        } else {
-            isOk = MovieService.updateMovie(newMovie);
+        try {
+            if (newMovie.getMovieId() == 0) {
+                isOk = MovieService.addMovie(newMovie) != 0;
+            } else {
+                isOk = MovieService.updateMovie(newMovie);
+            }
+        } catch (Exception e) {
+            isOk = false;
+            handleException(e);
         }
 
         this.notifyObservers(isOk);

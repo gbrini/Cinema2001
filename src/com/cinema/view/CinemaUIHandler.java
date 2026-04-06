@@ -1,5 +1,6 @@
 package com.cinema.view;
 
+import com.cinema.controller.HistoryController;
 import com.cinema.controller.MovieListController;
 import com.cinema.controller.ScreenListController;
 import com.cinema.controller.ScreeningListController;
@@ -40,14 +41,14 @@ public class CinemaUIHandler extends JFrame {
                 mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
                 mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController().getView());
                 break;
-            case 2:
-                mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
-                mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController().getView());
-                break;
+//            case 2:
+//                mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
+//                mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController().getView());
+//                break;
             case 3:
                 mainTabbedPane.addTab(TextConstants.MOVIE_PANEL, new MovieListController().getView());
-                //Buy tickets
-                //Purchase history (cancel only before X hours)
+                mainTabbedPane.addTab(TextConstants.SCREENING_PANEL, new ScreeningListController().getView());
+                mainTabbedPane.addTab(TextConstants.HISTORY_PANEL, new HistoryController().getView());
             default:
                 break;
         }

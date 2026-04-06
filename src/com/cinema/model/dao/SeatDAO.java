@@ -126,17 +126,23 @@ public class SeatDAO {
         ArrayList<SeatEditor> seats = new ArrayList<>();
         try {
             Connection conn = DatabaseConnection.getInstance();
-            PreparedStatement stmt = conn.prepareStatement("SELECT " +
-                    "seat.*, " +
-                    "CASE WHEN ticket.ticket_id IS NULL THEN FALSE ELSE TRUE END AS taken " +
-                    "FROM seat " +
-                    "LEFT JOIN ticket " +
-                    "ON ticket.seat_id = seat.seat_id " +
-                    "LEFT JOIN screening " +
-                    "ON screening.screen_id = seat.screen_id " +
-                    "WHERE screening.screening_id = ?");
+            String query = """
+                SELECT
+                    seat.*,
+                    CASE WHEN ticket.ticket_id IS NULL THEN FALSE ELSE TRUE END AS taken
+                FROM seat
+                LEFT JOIN ticket
+                    ON ticket.seat_id = seat.seat_id
+                    AND ticket.screening_id = ?
+                WHERE seat.screen_id = (
+                    SELECT screen_id FROM screening WHERE screening_id = ?
+                )
+            """;
+
+            PreparedStatement stmt = conn.prepareStatement(query);
 
             stmt.setInt(1, screeningId);
+            stmt.setInt(2, screeningId);
 
             ResultSet result = stmt.executeQuery();
 
@@ -157,5 +163,24 @@ public class SeatDAO {
         }
 
         return seats;
+    }
+
+    public static boolean isSeatTaken(int screeningId, int seatId) {
+        String sql = "SELECT 1 FROM ticket WHERE screening_id = ? AND seat_id = ?";
+
+        try {
+            Connection conn = DatabaseConnection.getInstance();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, screeningId);
+            stmt.setInt(2, seatId);
+            ResultSet result = stmt.executeQuery();
+
+            return result.next();
+
+        } catch (SQLException ex) {
+            System.out.println("Error checking seat availability: " + ex);
+            return false;
+        }
     }
 }

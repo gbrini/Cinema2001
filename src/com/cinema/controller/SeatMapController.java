@@ -4,6 +4,7 @@ import com.cinema.model.Screen;
 import com.cinema.model.Seat;
 import com.cinema.model.SeatEditor;
 import com.cinema.model.User;
+import com.cinema.service.MovieService;
 import com.cinema.service.ScreenService;
 import com.cinema.service.SeatService;
 import com.cinema.service.auth.UserSession;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SeatMapController implements Observable<DialogCloseObserver> {
+public class SeatMapController extends BaseController implements Observable<DialogCloseObserver> {
     private final User user;
     private final SeatMapEditorPanel view;
     private final Screen screen;
@@ -38,7 +39,13 @@ public class SeatMapController implements Observable<DialogCloseObserver> {
     }
 
     private List<SeatEditor> loadInitialModels(int screenId) {
-        ArrayList<Seat> seats = SeatService.getSeatsByScreenId(screenId);
+        ArrayList<Seat> seats = new ArrayList<>();
+
+        try {
+            seats = SeatService.getSeatsByScreenId(screenId);
+        } catch (Exception e) {
+            handleException(e);
+        }
 
         if(seats.isEmpty()) {
             return this.generateDefaultLayout();
@@ -148,10 +155,15 @@ public class SeatMapController implements Observable<DialogCloseObserver> {
 
         if (this.screen == null) {
             Screen screen = new Screen(screenName, seatsEditorToSave.size(), false);
-            screenId = ScreenService.addScreen(screen);
+
+            try {
+                screenId = ScreenService.addScreen(screen);
+            } catch (Exception e) {
+                handleException(e);
+            }
 
             if (screenId < 1) {
-                JOptionPane.showMessageDialog(this.view, "There was an error saving this screen.");
+                JOptionPane.showMessageDialog(this.view, "Errore durante il salvataggio della sala");
                 return;
             }
         } else {
@@ -169,8 +181,13 @@ public class SeatMapController implements Observable<DialogCloseObserver> {
             ));
         }
 
-        boolean addedSeats = SeatService.upsertSeats(seatsToAdd);
-        this.notifyObservers(addedSeats);
+        try {
+            boolean addedSeats = SeatService.upsertSeats(seatsToAdd);
+            this.notifyObservers(addedSeats);
+        } catch (Exception e) {
+            handleException(e);
+        }
+
         this.closeDialog();
     }
 

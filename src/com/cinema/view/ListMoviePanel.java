@@ -2,12 +2,14 @@ package com.cinema.view;
 
 import com.cinema.model.Movie;
 import com.cinema.util.constants.DimensionConstants;
+import com.cinema.util.constants.TextConstants;
 import com.cinema.util.constants.ThemeConstants;
 import com.cinema.view.abstracts.AbstractListPanel;
 import com.cinema.view.listener.PanelActionListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class ListMoviePanel extends AbstractListPanel<Movie> {
@@ -27,7 +29,7 @@ public class ListMoviePanel extends AbstractListPanel<Movie> {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        moviePanel.add(new JLabel(movie.getTitle() + " (" + movie.getReleaseDate().toString() + ")"), gbc);
+        moviePanel.add(new JLabel(movie.getTitle() + " (" + movie.getReleaseDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ")"), gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
@@ -43,7 +45,7 @@ public class ListMoviePanel extends AbstractListPanel<Movie> {
         gbc.gridx = 0;
         gbc.gridy = 3;
 
-        JTextArea descriptionArea = new JTextArea(movie.getDescription());
+        JTextArea descriptionArea = new JTextArea(movie.getDescription() + "\n\n" + TextConstants.DESCRIPTION_DELAY);
         descriptionArea.setLineWrap(true);
         descriptionArea.setEditable(false);
         descriptionArea.setOpaque(true);
@@ -57,15 +59,11 @@ public class ListMoviePanel extends AbstractListPanel<Movie> {
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         controlPanel.setBackground(backgroundColor);
 
-        if (this.getRoleId() == 3) {
-            JButton editButton = new JButton("Buy tickets");
+        if (this.getRoleId() != 3) {
+            JButton editButton = new JButton(TextConstants.EDIT_TXT);
             editButton.addActionListener(e -> this.actionListener.onEditRequested(movie));
             controlPanel.add(editButton);
-        } else {
-            JButton editButton = new JButton("Edit");
-            editButton.addActionListener(e -> this.actionListener.onEditRequested(movie));
-            controlPanel.add(editButton);
-            JButton removeButton = new JButton("Remove");
+            JButton removeButton = new JButton(TextConstants.REMOVE_TXT);
             removeButton.addActionListener(e -> this.actionListener.onDeleteRequested(movie));
             controlPanel.add(removeButton);
         }

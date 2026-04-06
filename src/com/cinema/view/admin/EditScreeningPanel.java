@@ -1,11 +1,14 @@
-package com.cinema.view;
+package com.cinema.view.admin;
 
 import com.cinema.model.*;
 import com.cinema.service.MovieService;
+import com.cinema.util.constants.TextConstants;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -16,7 +19,7 @@ public class EditScreeningPanel extends JPanel {
     private final User user;
     private ArrayList<Movie> movies;
 
-    private final JTextField dateField;
+    private final JFormattedTextField dateField;
     private final JComboBox movieSelect;
     private final JComboBox screenSelect;
     private final JComboBox timeSlotSelect;
@@ -34,18 +37,30 @@ public class EditScreeningPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
-        add(new JLabel("Date (yyyy-MM-dd): "), gbc);
+        add(new JLabel("Data (yyyy-MM-dd): "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.dateField = new JTextField(LocalDate.now().toString());
+
+        try {
+            MaskFormatter dateMask = new MaskFormatter("####-##-##");
+            dateMask.setPlaceholderCharacter('_');
+
+            dateField = new JFormattedTextField(dateMask);
+            dateField.setColumns(10);
+
+            dateField.setValue(LocalDate.now().toString());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        
         add(this.dateField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.WEST;
-        add(new JLabel("Movie: "), gbc);
+        add(new JLabel("Film: "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -56,7 +71,7 @@ public class EditScreeningPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.WEST;
-        add(new JLabel("Screen: "), gbc);
+        add(new JLabel("Sala: "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -67,7 +82,7 @@ public class EditScreeningPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.WEST;
-        add(new JLabel("Time slot: "), gbc);
+        add(new JLabel("Slot temporale: "), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -80,7 +95,7 @@ public class EditScreeningPanel extends JPanel {
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
-        this.saveButton = new JButton((this.screening == null ? "Add" : "Edit")  + " Screening");
+        this.saveButton = new JButton((this.screening == null ? TextConstants.ADD_TXT : TextConstants.EDIT_TXT)  + " Proiezione");
         add(this.saveButton, gbc);
     }
 

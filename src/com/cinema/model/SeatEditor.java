@@ -9,6 +9,7 @@ public class SeatEditor {
     private boolean isActive = true;
     private boolean isSelected = false;
     private boolean isTaken = false;
+    private boolean isInChart = false;
 
     public SeatEditor(String seatRow, int seatNumber) {
         this.seatRow = seatRow;
@@ -80,6 +81,14 @@ public class SeatEditor {
 
     public void setTaken(boolean taken) {
         this.isTaken = taken;
+    }
+
+    public boolean isInChart() {
+        return isInChart;
+    }
+
+    public void setInChart(boolean inChart) {
+        isInChart = inChart;
     }
 
     @Override

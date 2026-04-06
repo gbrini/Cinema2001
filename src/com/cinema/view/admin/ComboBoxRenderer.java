@@ -1,4 +1,4 @@
-package com.cinema.view;
+package com.cinema.view.admin;
 
 import com.cinema.util.ComboBoxMethods;
 import com.cinema.util.TimeSlot;

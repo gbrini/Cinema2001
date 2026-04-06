@@ -10,13 +10,13 @@ import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
 import com.cinema.util.Observable;
 import com.cinema.util.TimeSlot;
-import com.cinema.view.EditScreeningPanel;
+import com.cinema.view.admin.EditScreeningPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ScreeningController implements Observable<DialogCloseObserver> {
+public class ScreeningController extends BaseController implements Observable<DialogCloseObserver> {
     private final User user;
     private final EditScreeningPanel view;
     private final ArrayList<DialogCloseObserver> observers = new ArrayList<>();
@@ -30,9 +30,13 @@ public class ScreeningController implements Observable<DialogCloseObserver> {
     }
 
     private void fillComboBox() {
-        this.view.setAvailableMovies(MovieService.getAllMovies());
-        this.view.setAvailableScreens(ScreenService.getAllScreen());
-        this.view.setAvailableTimeSlots(TimeSlot.SLOTS);
+        try {
+            this.view.setAvailableMovies(MovieService.getAllMovies());
+            this.view.setAvailableScreens(ScreenService.getAllScreen());
+            this.view.setAvailableTimeSlots(TimeSlot.SLOTS);
+        } catch (Exception e) {
+            handleException(e);
+        }
     }
 
     private void attachListeners() {
@@ -49,10 +53,14 @@ public class ScreeningController implements Observable<DialogCloseObserver> {
             return;
         }
 
-        boolean isOk = ScreeningService.validateAndSchedule(screeningRecord);
+        try {
+            boolean isOk = ScreeningService.validateAndSchedule(screeningRecord);
 
-        this.closeDialog();
-        this.notifyObservers(isOk);
+            this.closeDialog();
+            this.notifyObservers(isOk);
+        } catch (Exception e) {
+            handleException(e);
+        }
     }
 
     private void closeDialog() {

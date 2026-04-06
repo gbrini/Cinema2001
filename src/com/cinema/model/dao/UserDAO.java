@@ -23,7 +23,7 @@ public class UserDAO {
                         result.getInt("user_id"),
                         result.getString("first_name"),
                         result.getString("last_name"),
-                        result.getDate("birth_date"),
+                        result.getDate("birth_date").toLocalDate(),
                         result.getString("email"),
                         new Role(result.getInt("role_id"), result.getString("role_name"))
                 );

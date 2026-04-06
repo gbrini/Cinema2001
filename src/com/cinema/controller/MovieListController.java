@@ -5,6 +5,8 @@ import com.cinema.model.User;
 import com.cinema.service.MovieService;
 import com.cinema.service.auth.UserSession;
 import com.cinema.util.DialogCloseObserver;
+import com.cinema.util.UnauthorizedAccessException;
+import com.cinema.util.constants.TextConstants;
 import com.cinema.view.ListMoviePanel;
 import com.cinema.view.listener.PanelActionListener;
 
@@ -12,7 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MovieListController implements PanelActionListener<Movie>, DialogCloseObserver {
+public class MovieListController extends BaseController implements PanelActionListener<Movie>, DialogCloseObserver {
     private final User user;
     private final ListMoviePanel view;
 
@@ -35,7 +37,7 @@ public class MovieListController implements PanelActionListener<Movie>, DialogCl
         Window ownerWindow = SwingUtilities.getWindowAncestor(this.view);
         Frame ownerFrame = (ownerWindow instanceof Frame) ? (Frame) ownerWindow : JOptionPane.getRootFrame();
 
-        JDialog dialog = new JDialog(ownerFrame, (item == null ? "Add" : "Edit") + " movie", true);
+        JDialog dialog = new JDialog(ownerFrame, (item == null ? TextConstants.ADD_TXT : TextConstants.EDIT_TXT) + " film", true);
 
         MovieController movieController = new MovieController(item);
         movieController.addObserver(this);
@@ -49,12 +51,11 @@ public class MovieListController implements PanelActionListener<Movie>, DialogCl
 
     @Override
     public void onDeleteRequested(Movie item) {
-        boolean ok = MovieService.deleteMovie(item.getMovieId());
-
-        if (ok) {
+        try {
+            MovieService.deleteMovie(item.getMovieId());
             this.onRefreshRequested();
-        } else {
-            JOptionPane.showMessageDialog(this.view, "Errore!");
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
