@@ -52,7 +52,9 @@ public class MovieListController extends BaseController implements PanelActionLi
     @Override
     public void onDeleteRequested(Movie item) {
         try {
-            MovieService.deleteMovie(item.getMovieId());
+            if(!MovieService.deleteMovie(item.getMovieId())) {
+                throw new Exception("Impossibile rimuovere il film");
+            }
             this.onRefreshRequested();
         } catch (Exception e) {
             handleException(e);
