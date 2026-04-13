@@ -138,4 +138,35 @@ public class ScreeningDAO {
 
         return screenings;
     }
+
+    public static ArrayList<Screening> getScreeningByMovieId(int movieId) {
+        ArrayList<Screening> screenings = new ArrayList<>();
+        String sql = "SELECT * FROM screening WHERE movie_id = ? ";
+
+        try {
+            Connection conn = DatabaseConnection.getInstance();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, movieId);
+
+            stmt.execute();
+            ResultSet results = stmt.getResultSet();
+
+            while (results.next()) {
+                screenings.add(new Screening(
+                        results.getInt("screening_id"),
+                        results.getInt("movie_id"),
+                        results.getInt("screen_id"),
+                        results.getTimestamp("start_time").toLocalDateTime(),
+                        results.getFloat("ticket_price"),
+                        results.getBoolean("is_deleted")
+                ));
+            }
+
+            return screenings;
+        } catch (SQLException ex) {
+            System.out.println("Error retrieving screenings " + ex);
+        }
+
+        return screenings;
+    }
 }
