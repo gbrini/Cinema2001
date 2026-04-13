@@ -59,7 +59,7 @@ public class ScreenListController extends BaseController implements PanelActionL
 
     @Override
     public void onDialogClosed(boolean changedSaved) {
-        String message = changedSaved ? "Screen saved successfully" : "Editing cancelled or failed";
+        String message = changedSaved ? "Sala salvata" : "Errore";
         JOptionPane.showMessageDialog(this.view, message);
 
         if (changedSaved) {
