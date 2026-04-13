@@ -63,7 +63,7 @@ public class MovieListController extends BaseController implements PanelActionLi
 
     @Override
     public void onDialogClosed(boolean changedSaved) {
-        String message = changedSaved ? "Movie saved successfully" : "Editing cancelled or failed";
+        String message = changedSaved ? "Film inserito" : "Errore";
         JOptionPane.showMessageDialog(this.view, message);
 
         if (changedSaved) {
