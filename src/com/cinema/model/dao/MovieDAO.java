@@ -1,5 +1,6 @@
 package com.cinema.model.dao;
 
+import com.cinema.model.Screening;
 import com.cinema.model.dao.database.DatabaseConnection;
 import com.cinema.model.Movie;
 
@@ -8,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +76,16 @@ public class MovieDAO {
         if (movie == null)
             return false;
 
+        ArrayList<Screening> screenings = ScreeningDAO.getScreeningByMovieId(movieId);
+
+        if (!screenings.isEmpty()) {
+            int num = screenings.stream().filter(s -> s.getStartTime().isAfter(LocalDateTime.now())).toList().size();
+
+            if (num > 0) {
+                return false;
+            }
+        }
+
         movie = new Movie.Builder()
                 .setMovieId(movie.getMovieId())
                 .setTitle(movie.getTitle())
@@ -86,7 +98,8 @@ public class MovieDAO {
                 .setIsDeleted(true)
                 .build();
 
-        return MovieDAO.updateMovie(movie);
+        //return MovieDAO.updateMovie(movie);
+        return true;
     }
 
     public static Movie getMovieById(int movieId) {
