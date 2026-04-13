@@ -98,8 +98,7 @@ public class MovieDAO {
                 .setIsDeleted(true)
                 .build();
 
-        //return MovieDAO.updateMovie(movie);
-        return true;
+        return MovieDAO.updateMovie(movie);
     }
 
     public static Movie getMovieById(int movieId) {
