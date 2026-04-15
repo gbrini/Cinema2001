@@ -176,7 +176,7 @@ public class TicketDAO {
                         rs.getFloat("base_price_addendum")
                 );
 
-                records.add(new TicketRecord(ticket, screening, movie, seat, ticketType, rs.getString("screen_namec")));
+                records.add(new TicketRecord(ticket, screening, movie, seat, ticketType, rs.getString("screen_name")));
             }
 
         } catch (SQLException ex) {
