@@ -5,5 +5,6 @@ public record TicketRecord(
         Screening screening,
         Movie movie,
         Seat seat,
-        TicketType ticketType
+        TicketType ticketType,
+        String screenName
 ) {}

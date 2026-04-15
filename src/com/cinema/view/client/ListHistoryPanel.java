@@ -32,7 +32,7 @@ public class ListHistoryPanel extends AbstractListPanel<TicketRecord> {
         ticketPanel.add(titleLabel, gbc);
 
         gbc.gridx = 1;
-        ticketPanel.add(new JLabel(item.screening().getStartTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm"))), gbc);
+        ticketPanel.add(new JLabel(item.screening().getStartTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm")) + " - " + item.screenName()), gbc);
 
         gbc.gridx = 2;
         String posto = item.seat().getSeatRow() + item.seat().getSeatNumber()

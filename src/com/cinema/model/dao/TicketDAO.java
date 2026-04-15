@@ -111,12 +111,13 @@ public class TicketDAO {
                     se.seat_id AS seat_id_join, se.screen_id AS seat_screen_id,
                     se.seat_row, se.seat_number, se.is_vip, se.is_handicap, se.is_active,
                     tt.type_id AS type_id_join, tt.type_name,
-                    tt.base_discount_percent, tt.base_price_addendum
+                    tt.base_discount_percent, tt.base_price_addendum, sc.screen_name
                 FROM ticket t
                 JOIN screening s   ON t.screening_id = s.screening_id
                 JOIN movie m       ON s.movie_id     = m.movie_id
                 JOIN seat se       ON t.seat_id      = se.seat_id
                 JOIN ticket_type tt ON t.type_id     = tt.type_id
+                JOIN screen sc on sc.screen_id = s.screen_id
                 WHERE t.user_id = ?
                 ORDER BY t.purchase_time DESC
         """;
@@ -175,7 +176,7 @@ public class TicketDAO {
                         rs.getFloat("base_price_addendum")
                 );
 
-                records.add(new TicketRecord(ticket, screening, movie, seat, ticketType));
+                records.add(new TicketRecord(ticket, screening, movie, seat, ticketType, rs.getString("screen_namec")));
             }
 
         } catch (SQLException ex) {
